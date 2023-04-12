@@ -11,9 +11,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto,@Req() req:Request, @Res() res: Response) {
-    console.log("req.body==",req["session"],req["session"].isAuthenticated)
-    console.log(createUserDto)
+  async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     createUserDto["status"] = (createUserDto.status === "on") ? "1" : "0";
     createUserDto["password"] = CryptoJS.AES.encrypt(createUserDto["password"], 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9').toString();    
 
@@ -29,11 +27,9 @@ export class UserController {
     })
 
     await this.userService.create(createUserDto).then((succ:any) =>{
-      //const data:any = succ;
       return res.render('users/userlist', { title: 'Users' });
     }).catch((err:any)=>{
      // throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
-     console.log(err,"here are the errors")
       return res.render('users/createUser', { title: 'Create User', error: err.errors});
     });
    
@@ -67,7 +63,6 @@ export class UserController {
   }
   @Get()
   async findAll(@Res() res: Response) {
-
     await this.userService.findAll().then( (users:any ) =>{
       console.log(users)
       return res.render('users/userlist', { title: 'Users', users:users });
@@ -75,7 +70,6 @@ export class UserController {
       return res.render('users/userlist', { title: 'Users', users: [] });
     });
   }
-
   
   @Get("/new")
   createUser(@Res() res: Response) {
