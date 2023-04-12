@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
@@ -6,6 +6,11 @@ export type UserDocument = User & Document;
 
 export class User {
 
+    // @ObjectIdColumn()
+    // _id: string;
+  
+    // @PrimaryColumn()
+    // id: string;
     @Prop({required:true})
     first_name: string;
 
@@ -37,7 +42,7 @@ export class User {
     last_logout: Date;
 
     @Prop()
-    is_login: number;
+    is_login: string;
 
     @Prop({default: new Date()})
     created_at: Date;

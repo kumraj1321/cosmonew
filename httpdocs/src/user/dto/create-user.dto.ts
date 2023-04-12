@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 export class CreateUserDto {
+    _id: string; 
     first_name: string;
     last_name: string;
     email: string;    
@@ -8,7 +9,7 @@ export class CreateUserDto {
     role_id: Array<any>;
     site_id: string;
     status: string;
-    is_login: number;
+    is_login: string;
     last_login: Date;
     last_logout: Date;
     created_at: Date;
