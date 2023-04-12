@@ -17,4 +17,22 @@ export class UserService {
     //const querySend = showActive ? { langId: langId, status: 1} : { langId: langId};
     return await this.model.find().exec();
   }
+  async findUnique(username: string) {
+    let user=await this.model.aggregate([
+      {$match:{$and:[{username,"status":'1'}]}}
+    ])
+    console.log("user",user)
+    if (user.length===0){
+      return {
+            "message":"Invalid Login Credentials!",
+            "status":404,
+            "response":[]
+          }
+    }
+    return  {
+      "message":"User found ",
+      "status":200,
+      "response":user[0]
+    };
+  }
 }

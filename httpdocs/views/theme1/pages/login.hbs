@@ -1,3 +1,4 @@
+{{!-- {{{(submitHandler=()=>{console.log("hello there")})}}} --}}
 <div class="login-box">
   <div class="card card-outline card-danger">
     <div class="card-header text-center">
@@ -6,17 +7,25 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="/blank" method="get">
+      <form method="post" action="/users/login">
+      <div style="margin-bottom: 0%;" class="input-group mb-3">
+            <div id="error" style="color: red">{{error}}</div>
+          </div>
         <div class="input-group mb-3">
-          <input type="email" required name="email" class="form-control" placeholder="Email">
+          
+          <input type="text" class="form-control" name="username" placeholder="User Name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
             </div>
           </div>
         </div>
+
+          <input type="text" style="display: none;" id="token" name="token" placeholder="Token" value="12345678">
+
         <div class="input-group mb-3">
-          <input type="password" required name="password" class="form-control" placeholder="Password">
+         
+          <input type="password" class="form-control" name="password" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -29,6 +38,18 @@
           </div>
         </div>
       </form>
+
     </div>
   </div>
 </div>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../plugins/jquery-validation/jquery.validate.min.js"></script>  
+<script src="../plugins/jquery-validation/additional-methods.min.js"></script>
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<script>
+let token=document.getElementById("token")
+let tokenvalue=localStorage.getItem('USER_TOKEN')
+console.log("tokenvalue",tokenvalue)
+token.value=tokenvalue
+</script>

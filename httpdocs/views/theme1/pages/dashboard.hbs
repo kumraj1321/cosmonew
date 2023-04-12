@@ -1,4 +1,6 @@
 <div class="content-wrapper">
+<div style="display: none;" id="token">{{token}}</div>
+
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
@@ -47,3 +49,9 @@
   </section>
   <!-- /.content -->
 </div>
+
+<script>
+  
+  let token=document.getElementById("token").textContent
+  localStorage.setItem('USER_TOKEN',token)
+  </script>
