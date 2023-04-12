@@ -4,7 +4,7 @@ import * as hbs from 'express-handlebars';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
-var session = require('express-session')
+// var session = require('express-session')
 import { ValidationPipe } from '@nestjs/common';
 import customHelpers from "./services/customHelper";
 // import * as helperLib from "handlebars-helpers";

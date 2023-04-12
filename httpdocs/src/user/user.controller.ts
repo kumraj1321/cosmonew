@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response, Request } from 'express';
 import * as CryptoJS from 'crypto-js'
-let jwt=require("jsonwebtoken")
+// let jwt=require("jsonwebtoken")
 
 @Controller('users') 
 export class UserController {
