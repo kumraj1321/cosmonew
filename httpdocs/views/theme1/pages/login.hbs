@@ -9,7 +9,7 @@
 
       <form method="post" action="/users/login">
       <div style="margin-bottom: 0%;" class="input-group mb-3">
-            <div id="error" style="color: red">{{error}}</div>
+            <div id="error" style="color: red">{{err}}</div>
           </div>
         <div class="input-group mb-3">
           
@@ -21,7 +21,7 @@
           </div>
         </div>
 
-          <input type="text" style="display: none;" id="token" name="token" placeholder="Token" value="12345678">
+          {{!-- <input type="text" style="display: none;" id="token" name="token" placeholder="Token" value="12345678"> --}}
 
         <div class="input-group mb-3">
          
@@ -42,7 +42,7 @@
     </div>
   </div>
 </div>
-<script src="../plugins/jquery/jquery.min.js"></script>
+{{!-- <script src="../plugins/jquery/jquery.min.js"></script>
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>  
 <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
@@ -52,4 +52,4 @@ let token=document.getElementById("token")
 let tokenvalue=localStorage.getItem('USER_TOKEN')
 console.log("tokenvalue",tokenvalue)
 token.value=tokenvalue
-</script>
+</script> --}}

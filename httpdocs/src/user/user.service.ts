@@ -20,7 +20,6 @@ export class UserService {
     let user=await this.model.aggregate([
       {$match:{$and:[{username,"status":'1'}]}}
     ])
-    console.log("user",user)
     if (user.length===0){
       return {
             "message":"Invalid Login Credentials!",
