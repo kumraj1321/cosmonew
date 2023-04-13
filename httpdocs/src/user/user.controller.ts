@@ -10,19 +10,23 @@ export class UserController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    createUserDto["status"] = (createUserDto.status === "on") ? "1" : "0";
-    await this.userService.create(createUserDto).then((succ:any) =>{
-      return res.render('users/userlist', { title: 'Users' });
-    }).catch((err:any)=>{
-     // throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
-      return res.render('users/createUser', { title: 'Create User', error: err.errors});
-    });
-   
+
+    const details:any = await this.userService.readData(createUserDto.email, createUserDto.username);
+
+    if(details === null){ //user not found then create
+      await this.userService.create(createUserDto).then((users:any) =>{
+        return res.render('users/userlist', { title: 'Users', users });
+      }).catch((err:any)=>{
+        return res.render('users/createUser', { title: 'Create User', error: err.errors});
+      });
+    }else{
+      return res.render('users/createUser', { title: 'Create User', error: {msg:"Email already exists"}});
+    }   
   }
+
   @Get()
   async findAll(@Res() res: Response) {
     await this.userService.findAll().then( (users:any ) =>{
-      console.log(users)
       return res.render('users/userlist', { title: 'Users', users });
     }).catch((err:any) => {
       return res.render('users/userlist', { title: 'Users', users: [] });

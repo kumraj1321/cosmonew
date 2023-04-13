@@ -44,6 +44,8 @@
                   </tr>
                 </thead>
                   <tbody>
+                    {{!-- {{length users}} --}}
+                    {{!-- {{#contains {{length users}} 0}}Active{{else}}In-Active{{/contains}} --}}
                     {{#forEach users}}
                       <tr>
                         <td>{{add @index 1}}</td>
@@ -70,11 +72,7 @@
   </section>
   <!-- /.content -->
 </div>
-<!-- jQuery -->
-{{!-- <script src="../../assets/plugins/jquery/jquery.min.js"></script> --}}
-<script src="../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+{{#section 'script'}}
 <!-- DataTables  & Plugins -->
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -90,10 +88,12 @@
 <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
   $(function () {
-   // $("#userListing").DataTable({
-    //  "responsive": true, "lengthChange": false, "autoWidth": false,
-    //  "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-   // }).buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
+    $("#userListing").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": false,
+      //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    })
+    //.buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
 
   });
 </script>
+{{/section}}

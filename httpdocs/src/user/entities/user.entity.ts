@@ -29,7 +29,7 @@ export class User {
     @Prop({required:true})
     role_id: Array<any>;
 
-    @Prop({default: "0"})
+    @Prop({required:true})
     site_id: string;
 
     @Prop({required:true})

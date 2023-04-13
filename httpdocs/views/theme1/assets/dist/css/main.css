@@ -1,0 +1,4 @@
+:root {
+    --red: #ff0000;
+  }
+span.ip-req{color: var(--red);}

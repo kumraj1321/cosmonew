@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 <link rel="stylesheet" href="../plugins/select2/css/select2.css">
+<link rel="stylesheet" href="../dist/css/main.css">
 {{/section}}
 
 <div class="content-wrapper">
@@ -30,10 +31,10 @@
       <div class="row">
         <div class="container">
           <div class="col-md-12">
-            {{# if errors }}
-            {{# each errors }}
-            <p class="alert alert-danger">{{ this.msg }}</p>
-            {{/each}}
+            {{# if error }}
+            {{!-- {{# each errors }} --}}
+              <p class="alert alert-danger">{{ error.msg }}</p>
+            {{!-- {{/each}} --}}
             {{/if}}
             <div class="card card-info">
               <div class="card-header">
@@ -44,7 +45,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>First Name</label>
+                        <label>First Name <span class="ip-req">*</span></label>
                         {{!-- {{log data}} --}}
                         {{log error "error"}}
                         {{log data "data"}}
@@ -57,7 +58,7 @@
                     </div>
                     <div class="col-md-6">                      
                       <div class="form-group">
-                        <label>Last Name</label>
+                        <label>Last Name <span class="ip-req">*</span></label>
                         {{!-- {{log data}} --}}
                         {{log error "error"}}
                         {{log data "data"}}
@@ -72,7 +73,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email <span class="ip-req">*</span></label>
                         <input type="email" placeholder="Enter Email Address" id="email" value="{{data.email}}" class="form-control" name="email" />                  
                          {{#if error.email}}
                           <span class="error invalid-feedback" style="display:block">Please enter Email</span>
@@ -81,7 +82,7 @@
                     </div>
                     <div class="col-md-6">  
                       <div class="form-group">
-                        <label>Username</label>
+                        <label>Username <span class="ip-req">*</span></label>
                         {{!-- {{log data}} --}}
                         {{log error "error"}}
                         {{log data "data"}}
@@ -96,7 +97,7 @@
                   <div class="row">
                     <div class="col-md-6">                      
                       <div class="form-group">
-                        <label>Password</label>
+                        <label>Password <span class="ip-req">*</span></label>
                         <input type="password" id="password" placeholder="Enter Password" value="{{data.password}}" class="form-control" name="password" />
                         {{#if error.password}}
                           <span class="error invalid-feedback" style="display:block">Please enter password</span>
@@ -105,7 +106,7 @@
                     </div>
                     <div class="col-md-6">                        
                       <div class="form-group">
-                        <label>Confirm Password</label>
+                        <label>Confirm Password <span class="ip-req">*</span></label>
                         <input type="password" placeholder="Confirm your Password" value="{{data.confirm_password}}" class="form-control" name="confirm_password" />
                         {{#if error.confirm_password}}
                           <span class="error invalid-feedback" style="display:block">Please enter confirm password</span>
@@ -116,9 +117,9 @@
                   <div class="row">
                     <div class="col-md-6"> 
                       <div class="form-group">
-                        <label>Site</label>
-                        <select class="form-control" name="site_id">
-                          <option value="0">Select Site</option>
+                        <label>Site <span class="ip-req">*</span></label>
+                        <select class="form-control" name="site_id" id="site_id">
+                          <option value="">Select Site</option>
                           <option value="1">Cosmo</option>
                           <option value="2">Harper Bazaar</option>
                         </select>
@@ -129,7 +130,7 @@
                     </div>
                     <div class="col-12 col-md-6">                        
                       <div class="form-group">
-                        <label>Role</label>
+                        <label>Role <span class="ip-req">*</span></label>
                         <select class="select2" name="role_id" id="role_id" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
                           <option value="1">Site Admin</option>
                           <option value="2">Editor</option>
@@ -167,17 +168,17 @@
                  <div class="row">
                     <div class="col-md-6">  
                       <div class="form-group">
-                        <label>Status</label>
+                        <label>Status <span class="ip-req">*</span></label>
                         <div class="row mt-2">
                           <div class="col-md-6">                           
                             <div class="custom-control custom-radio">
-                              <input class="custom-control-input" type="radio" id="customRadio1" name="status">
+                              <input class="custom-control-input" type="radio" id="customRadio1" name="status" value="1" checked>
                               <label for="customRadio1" class="custom-control-label">Active</label>
                             </div> 
                           </div>
                           <div class="col-md-6">                           
                             <div class="custom-control custom-radio">
-                              <input class="custom-control-input" type="radio" id="customRadio2" name="status" checked>
+                              <input class="custom-control-input" type="radio" id="customRadio2" name="status" value="0">
                               <label for="customRadio2" class="custom-control-label">In-Active</label>
                             </div>
                           </div>  
@@ -206,7 +207,7 @@
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>  
 <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
-<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<script src="../plugins/select2/js/select2.full.min.js"></script>
 <script>
     
 $(function () {
@@ -220,12 +221,12 @@ $(function () {
     }
   });
   $.validator.addMethod("matchRegex", function(value, element){
-    if ( /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(value)) {
+    if ( /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(value)) {
         return true;
     } else {
         return false;
     };
-  }, "Password must have 1 special character"); 
+  }, "Password must have at least 1 special character, one letter and 1 number"); 
   $('#newUser').validate({
      rules: {
       email: {
@@ -252,6 +253,9 @@ $(function () {
         required: true
       },
       role_id: {
+        required: true
+      },
+      site_id: {
         required: true
       },
       status: {
@@ -283,6 +287,9 @@ $(function () {
       },
       role_id: {
         required: "Please select Role Id"
+      },
+      site_id: {
+        required: "Please select Site Id"
       },
       status: {
         required: "Please select status"
