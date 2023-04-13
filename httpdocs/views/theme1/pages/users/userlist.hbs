@@ -43,32 +43,19 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                {{!-- <div id="DocumentResults"></div>
-                <script id="document-template" type="text/x-handlebars-template"> --}}
                   <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>shanu</td>
-                        <td>new</td>
-                        <td>Admin</td>
-                        <td>06-04-2023</td>
-                        <td>Yes</td>
-                        <td>Edit</td>
-                      </tr>
-                    {{#each users}}                    
+                    {{#forEach users}}
                       <tr>
-                        <td>{{this}}</td>
-                        <td>{{username}}</td>
-                        <td>new</td>
-                        <td>Admin</td>
-                        <td>06-04-2023</td>
-                        <td>Yes</td>
-                        <td>Edit</td>
+                        <td>{{add @index 1}}</td>
+                        <td>{{this.first_name}}  {{this.last_name}}</td>
+                        <td>{{#contains this.status "1"}}Active{{else}}In-Active{{/contains}}</td>
+                        <td><ul>{{#each this.role_id}} <li>{{this}}</li> {{/each}}</ul></td>
+                        <td>{{dateFormat 'DD-MM-YY' this.created_at }}</td>
+                        <td>{{#unless this.is_login}}No{{else}}{{#contains this.is_login 1}}Yes{{else}}No{{/contains}}{{/unless}}</td>
+                        <td><a href={{append "/edituser/" this._id}}><i class="fas fa-edit"></i> Edit </a></td>
                       </tr>
-                    {{/each}}
-                    <tr>
+                    {{/forEach}}
                   </tbody>
-                {{!-- </script> --}}
               </table>
             </div>
             <!-- /.card-body -->
@@ -84,6 +71,7 @@
   <!-- /.content -->
 </div>
 <!-- jQuery -->
+{{!-- <script src="../../assets/plugins/jquery/jquery.min.js"></script> --}}
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -94,26 +82,18 @@
 <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../javascript/pager.js"></script>
-{{!-- <script src="../javascript/turbotables.js"></script> --}}
-{{!-- <script src="../plugins/jszip/jszip.min.js"></script>
-<script src="../plugins/pdfmake/pdfmake.min.js"></script> --}}
-{{!-- <script src="../plugins/pdfmake/vfs_fonts.js"></script> --}}
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
   $(function () {
-    $("#userListing").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
- //   bindGrid("users", "document-template", users, "DocumentResults")
- 
-    //var source = $("#document-template").html();
-    //var template = Handlebars.compile(source);
-    //var html = template(users);
-    //console.log(html)
-    //$('#DocumentResults').html(html);
+   // $("#userListing").DataTable({
+    //  "responsive": true, "lengthChange": false, "autoWidth": false,
+    //  "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+   // }).buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
+
   });
 </script>
