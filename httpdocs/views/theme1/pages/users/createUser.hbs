@@ -4,7 +4,6 @@
 <link rel="stylesheet" href="../plugins/select2/css/select2.css">
 <link rel="stylesheet" href="../dist/css/main.css">
 {{/section}}
-
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -131,35 +130,10 @@
                     <div class="col-12 col-md-6">                        
                       <div class="form-group">
                         <label>Role <span class="ip-req">*</span></label>
-                        <select class="select2" name="role_id" id="role_id" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                          <option value="1">Site Admin</option>
-                          <option value="2">Editor</option>
-                          <option value="3">Subeditor/Sr.Sub Editor</option>
-                          <option value="4">Intern</option>
-                          <option value="5">Seo</option>
-                          <option value="6">App Manager</option>
-                          <option value="7">Syndication</option>
-                          <option value="8">Profile Manager</option>
-                          <option value="9">Topic Manager</option>
-                          <option value="10">Ads Manager</option>
-                          <option value="11">Author/Guest</option>
-                          <option value="12">Copy Desk</option>
-                          <option value="13">Copy Editor</option>
-                          <option value="14">Correspondent</option>
-                          <option value="15">Co-ordinator</option>
-                          <option value="16">Designer</option>
-                          <option value="17">Design Head</option>
-                          <option value="18">Expert</option>
-                          <option value="19">Knowledge Centre</option>
-                          <option value="20">Marketing Manager</option>
-                          <option value="21">News Presso</option>
-                          <option value="22">Photo Coordinator</option>
-                          <option value="23">Photo Head</option>
-                          <option value="24">Section Editor/Anchor</option>
-                          <option value="25">Senior Editor</option>
-                          <option value="26">Social Media</option>
-                          <option value="27">Video Editor</option>
-                          <option value="28">Developer</option>
+                        <select class="select2" name="role_id" id="role_id" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">                          
+                          {{#each roles}}
+                            <option value={{this.value}}>{{this.name}}</option>
+                          {{/each}}
                         </select>
                         {{error.role_id}}
                       </div>
@@ -203,8 +177,9 @@
   </section>
   <!-- /.content -->
 </div>
-<script src="../plugins/jquery/jquery.min.js"></script>
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+{{#section 'script'}}
+{{!-- <script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
 <script src="../plugins/jquery-validation/jquery.validate.min.js"></script>  
 <script src="../plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="../plugins/select2/js/select2.full.min.js"></script>
@@ -309,3 +284,4 @@ $(function () {
   })
 })
 </script>
+{{/section}}

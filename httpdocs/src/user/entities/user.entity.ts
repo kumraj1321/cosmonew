@@ -5,12 +5,6 @@ export type UserDocument = User & Document;
 @Schema({ collection: 'user'})
 
 export class User {
-
-    // @ObjectIdColumn()
-    // _id: string;
-  
-    // @PrimaryColumn()
-    // id: string;
     @Prop({required:true})
     first_name: string;
 

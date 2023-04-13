@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response, Request } from 'express';
-
+import data from "../services/data"
 @Controller('users') 
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -29,21 +29,14 @@ export class UserController {
     await this.userService.findAll().then( (users:any ) =>{
       return res.render('users/userlist', { title: 'Users', users });
     }).catch((err:any) => {
+     // throw new BadRequestException(err)
+      console.log(err)
       return res.render('users/userlist', { title: 'Users', users: [] });
     });
   }
   
   @Get("/new")
   createUser(@Res() res: Response) {
-    console.log('hi')
-    return res.render('users/createUser', { title: 'Create User' });
-    // let finalData = {}
-    // this.usersService.findAll()
-    //   .then((res: any) => {
-    //     finalData = res;
-    //   }).catch((err) => {
-    //     throw new BadRequestException(err)
-    //   })
-    // return res.render('users/userlist', finalData);
+    return res.render('users/createUser', { title: 'Create User', roles: data.roles });
   }
 }
