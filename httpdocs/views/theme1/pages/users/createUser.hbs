@@ -35,6 +35,7 @@
               <p class="alert alert-danger">{{ error.msg }}</p>
             {{!-- {{/each}} --}}
             {{/if}}
+            
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Enter User Details</h3>
@@ -69,6 +70,7 @@
                       </div>
                     </div>
                   </div>
+                  {{!-- <input type="text" style="display: none;" id="token" name="token" placeholder="Token" value="12345678"> --}}
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -285,3 +287,8 @@ $(function () {
 })
 </script>
 {{/section}}
+{{!-- let token=document.getElementById("token")
+let tokenvalue=localStorage.getItem('USER_TOKEN')
+console.log("tokenvalue",tokenvalue)
+token.value=tokenvalue --}}
+{{!-- </script> --}}

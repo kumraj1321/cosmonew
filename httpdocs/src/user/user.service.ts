@@ -30,4 +30,21 @@ export class UserService {
   async readData(email:string, username:any): Promise<User>{
     return await this.model.findOne({ "$or": [{"email": email}, {"username": username}]}).lean();
   }
+  async findUnique(username: string) {
+    let user=await this.model.aggregate([
+      {$match:{$and:[{username,"status":'1'}]}}
+    ])
+    if (user.length===0){
+      return {
+            "message":"Invalid Login Credentials!",
+            "status":404,
+            "response":[]
+          }
+    }
+    return  {
+      "message":"User found ",
+      "status":200,
+      "response":user[0]
+    };
+  }
 }
