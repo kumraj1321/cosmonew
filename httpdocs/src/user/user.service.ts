@@ -5,6 +5,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User, UserDocument } from './entities/user.entity';
 import { Model } from 'mongoose';
 import data from 'src/services/data';
+import {ObjectId} from 'mongodb'
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private readonly model: Model<UserDocument>) {}
@@ -30,6 +31,13 @@ export class UserService {
   async readData(email:string, username:any): Promise<User>{
     return await this.model.findOne({ "$or": [{"email": email}, {"username": username}]}).lean();
   }
+
+  async findById(id:any){
+     id=new ObjectId(id)
+    return await this.model.find({"status":1,"_id":id})
+    
+  }
+
   async findUnique(username: string) {
     let user=await this.model.aggregate([
       {$match:{$and:[{username,"status":'1'}]}}

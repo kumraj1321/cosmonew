@@ -17,7 +17,12 @@ export class UserController {
 
     if(details === null){ //user not found then create
       createUserDto["password"] = CryptoJS.AES.encrypt(createUserDto["password"], 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9').toString();    
-      await this.userService.create(createUserDto).then((users:any) =>{
+      await this.userService.create(createUserDto).then( async (users:any) =>{
+        await this.userService.findAll().then((users:any)=>{
+           return res.render('users/userlist', { title: 'Users', users:users });
+        }).catch((e)=>{
+           return res.render('users/userlist', { title: 'Users', users:[] });
+        })
         return res.render('users/userlist', { title: 'Users', users });
       }).catch((err:any)=>{
         return res.render('users/createUser', { title: 'Create User', error: err.errors});
@@ -26,12 +31,22 @@ export class UserController {
       return res.render('users/createUser', { title: 'Create User', error: {msg:"Email already exists"}});
     }   
   }
+
+  @Get('/edituser/:id')
+  async edituser(@Res() res:Response,@Req() req:Request){
+    let id=req.params.id
+    let user:any=await this.userService.findById(id)
+    console.log(user,"user from user controller")
+    user=user[0]
+    return res.render('users/edituser', { title: 'Create User', roles: data.roles, data:user });
+  }
+
+
   @Post('/login')
   async login(@Res() res: Response,@Req() req:Request) {
     
     let username=req.body.username
     let result= await this.userService.findUnique(username)
-    console.log(result,"=====result")
     if(result.status===404){
       return  res.render('login', { layout: 'withoutHeadFoot', data:result,err:"Invalid Login Credentials!"  });
 
@@ -42,20 +57,12 @@ export class UserController {
         return  res.render('login', { layout: 'withoutHeadFoot',data:result,err:"Invalid Login Credentials!" });
 
       }
-      // let response=result["response"]
-      // let payload:any={id:response["_id"],email:response["email"],username:response["username"],first_name:response["first_name"],last_name:response["last_name"]}
-      // let token=jwt.sign({payload},"thisissecretkey",{expiresIn: 86400})
-      // // localStorage.setItem('USER_TOKEN',JSON.stringify(token))
-      // // console.log("token",token)
-      // // console.log("================")
-      // // console.log("localstoreage.get",localStorage.getItem('USER_TOKEN'))
       return  res.render('dashboard', { title: 'Users' });
     }
   }
   @Get()
   async findAll(@Res() res: Response) {
     await this.userService.findAll().then( (users:any ) =>{
-      console.log(users)
       return res.render('users/userlist', { title: 'Users', users:users });
     }).catch((err:any) => {
      // throw new BadRequestException(err)

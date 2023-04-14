@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import config from 'src/config/config';
 
 const customHelpers = {
     contentFor: function (name:any, options:any) {
@@ -22,6 +23,13 @@ const customHelpers = {
     },
     dateFormat: function(type:any, options:any=""){
         return moment(options).format(type)
+    },
+    basePath:function(){
+      return config.BASE_PATH
+    },
+    particularField:function(object:any,req:any){
+      console.log("object req",object,object["req"])
+      return object[req]
     }
   }
 

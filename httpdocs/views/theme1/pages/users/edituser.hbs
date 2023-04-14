@@ -10,13 +10,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Create User</h1>
+          <h1>Edit User</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
             <li class="breadcrumb-item active"><a href="/users">List Users</a></li>
-            <li class="breadcrumb-item active">Create User</li>
+            <li class="breadcrumb-item active">Edit User</li>
           </ol>
         </div>
       </div>
@@ -35,7 +35,7 @@
               <p class="alert alert-danger">{{ error.msg }}</p>
             {{!-- {{/each}} --}}
             {{/if}}
-            
+                     
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Enter User Details</h3>
@@ -46,11 +46,12 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>First Name <span class="ip-req">*</span></label>
+                        
                         {{!-- {{log data}} --}}
                         {{log error "error"}}
-                        {{log data "data"}}
+                        {{log data "data of the email"}}
                         {{log response "response"}}
-                        <input type="text" value="{{data.first_name}}" class="form-control" name="first_name" placeholder="Enter First Name"/>                        
+                        <input type="text" value=" {{particularField data "first_name"}} " class="form-control" name="first_name" placeholder="Enter First Name"/>                        
                         {{#if error.first_name}}
                           <span class="error invalid-feedback" style="display:block">Please enter First Name</span>
                         {{/if}} 
@@ -63,9 +64,9 @@
                         {{log error "error"}}
                         {{log data "data"}}
                         {{log response "response"}}
-                        <input type="text" placeholder="Enter Last Name" value="{{data.last_name}}" class="form-control" name="last_name" />
+                        <input type="text" placeholder="Enter Last Name" value="{{particularField data "last_name"}}" class="form-control" name="last_name" />
                         {{#if error.last_name}}
-                          <span class="error invalid-feedback" style="display:block">Please enter Last Name</span>
+                          <span class="error invalid-feedback"  style="display:block">Please enter Last Name</span>
                         {{/if}}                        
                       </div>
                     </div>
@@ -75,7 +76,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="email">Email <span class="ip-req">*</span></label>
-                        <input type="email" placeholder="Enter Email Address" id="email" value="{{data.email}}" class="form-control" name="email" />                  
+                        <input type="email" placeholder="Enter Email Address" id="email" value="{{particularField data "email"}}" class="form-control" name="email" />                  
                          {{#if error.email}}
                           <span class="error invalid-feedback" style="display:block">Please enter Email</span>
                         {{/if}}   
@@ -88,7 +89,7 @@
                         {{log error "error"}}
                         {{log data "data"}}
                         {{log response "response"}}
-                        <input type="text" placeholder="Enter Username" value="{{data.username}}" class="form-control" name="username" />
+                        <input type="text" placeholder="Enter Username" value="{{particularField data "username"}}" class="form-control" name="username" />
                         {{#if error.username}}
                           <span class="error invalid-feedback" style="display:block">Please enter Username</span>
                         {{/if}}   
@@ -99,7 +100,7 @@
                     <div class="col-md-6">                      
                       <div class="form-group">
                         <label>Password <span class="ip-req">*</span></label>
-                        <input type="password" id="password" placeholder="Enter Password" value="{{data.password}}" class="form-control" name="password" />
+                        <input type="password" id="password" placeholder="Enter Password" value="{{particularField data "password"}}" class="form-control" name="password" />
                         {{#if error.password}}
                           <span class="error invalid-feedback" style="display:block">Please enter password</span>
                         {{/if}}
@@ -108,7 +109,7 @@
                     <div class="col-md-6">                        
                       <div class="form-group">
                         <label>Confirm Password <span class="ip-req">*</span></label>
-                        <input type="password" placeholder="Confirm your Password" value="{{data.confirm_password}}" class="form-control" name="confirm_password" />
+                        <input type="password" placeholder="Confirm your Password" value="{{particularField data "password"}}" class="form-control" name="confirm_password" />
                         {{#if error.confirm_password}}
                           <span class="error invalid-feedback" style="display:block">Please enter confirm password</span>
                         {{/if}}
@@ -119,10 +120,16 @@
                     <div class="col-md-6"> 
                       <div class="form-group">
                         <label>Site <span class="ip-req">*</span></label>
-                        <select class="form-control" name="site_id" id="site_id">
-                          <option value="">Select Site</option>
-                          <option value="1">Cosmo</option>
-                          <option value="2">Harper Bazaar</option>
+
+                        <div style="display: none;">
+                        {{!-- <div style="display: none;" class="Siteinput">"{{particularField data "site_id"}}"</div> --}}
+                        <input style="display: none;" id="siteinput" value="{{particularField data "site_id"}}">This is the text contedn</input>
+
+                        </div>
+                        <select id="siteselect" class="form-control" name="site_id" id="site_id">
+                          <option selected="false" value="">Select Site</option>
+                          <option  value="1">Cosmo</option>
+                          <option value="2" >Harper Bazaar</option>
                         </select>
                          {{#if error.site_id}}
                           <span class="error invalid-feedback" style="display:block">Please enter Site Id</span>
@@ -134,7 +141,7 @@
                         <label>Role <span class="ip-req">*</span></label>
                         <select class="select2" name="role_id" id="role_id" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">                          
                           {{#each roles}}
-                            <option value={{this.value}}>{{this.name}}</option>
+                            <option  value={{this.value}}>{{this.name}}</option>
                           {{/each}}
                         </select>
                         {{error.role_id}}
@@ -182,13 +189,17 @@
 {{#section 'script'}}
 {{!-- <script src="../plugins/jquery/jquery.min.js"></script>
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+
 <script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>  
 <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
 <script>
     
 $(function () {
-  $('.select2').select2()
+    {{!-- console.log("====popat{{basePath}}----") --}}
+    {{!-- {{log "hello" "hello"}} --}}
+    {{!-- {{log data "data"}} --}}
+
   $.validator.setDefaults({
     submitHandler: function (e) {
       e.preventDefault();
@@ -285,6 +296,11 @@ $(function () {
     }
   })
 })
+let sitedata=document.getElementById('siteinput').value
+console.log("sitedata==", sitedata)
+let a=$("select option[value="+sitedata+"]").prop('selected','selected')
+console.log(a,"==a")
+{{!-- $("#siteselect option").value('1')​.attr("selected", true)​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ --}}
 </script>
 {{/section}}
 {{!-- let token=document.getElementById("token")

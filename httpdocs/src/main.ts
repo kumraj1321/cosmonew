@@ -24,13 +24,6 @@ async function bootstrap() {
     partialsDir: join(__dirname, '..', '/views/', optLayout, 'partials'),
     helpers: {...customHelpers, ...helperLib},
   }))
-//   app.set('trust proxy', 1) // trust first proxy
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { secure: true,maxAge: 20 },
-//   }))
   app.setViewEngine('hbs')
   app.useGlobalPipes(new ValidationPipe());
   const port = parseInt(process.env.PORT, 10) || 3000;
