@@ -1,7 +1,7 @@
 {{#section 'css'}}
-<link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<link rel="stylesheet" href="{{basePath}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="{{basePath}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="{{basePath}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 {{/section}}
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -31,6 +31,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+              {{log this "this testing"}}
               <table id="userListing" class="table table-bordered table-striped">
                 <thead>
                   <tr>
@@ -44,6 +45,8 @@
                   </tr>
                 </thead>
                   <tbody>
+                    {{!-- {{length users}} --}}
+                    {{!-- {{#contains {{length users}} 0}}Active{{else}}In-Active{{/contains}} --}}
                     {{#forEach users}}
                       <tr>
                         <td>{{add @index 1}}</td>
@@ -52,7 +55,7 @@
                         <td><ul>{{#each this.role_id}} <li>{{this}}</li> {{/each}}</ul></td>
                         <td>{{dateFormat 'DD-MM-YY' this.created_at }}</td>
                         <td>{{#unless this.is_login}}No{{else}}{{#contains this.is_login 1}}Yes{{else}}No{{/contains}}{{/unless}}</td>
-                        <td><a href={{append "/edituser/" this._id}}><i class="fas fa-edit"></i> Edit </a></td>
+                        <td><a href="users/edituser/{{this._id}}"><i class="fas fa-edit"></i> Edit</a></td>
                       </tr>
                     {{/forEach}}
                   </tbody>
@@ -70,30 +73,28 @@
   </section>
   <!-- /.content -->
 </div>
-<!-- jQuery -->
-{{!-- <script src="../../assets/plugins/jquery/jquery.min.js"></script> --}}
-<script src="../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+{{#section 'script'}}
 <!-- DataTables  & Plugins -->
-<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../plugins/jszip/jszip.min.js"></script>
-<script src="../plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../plugins/pdfmake/vfs_fonts.js"></script>
-<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="{{basePath}}/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="{{basePath}}/plugins/jszip/jszip.min.js"></script>
+<script src="{{basePath}}/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="{{basePath}}/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="{{basePath}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
   $(function () {
-   // $("#userListing").DataTable({
-    //  "responsive": true, "lengthChange": false, "autoWidth": false,
-    //  "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-   // }).buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
+    $("#userListing").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": false,
+      //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    })
+    //.buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
 
   });
 </script>
+{{/section}}

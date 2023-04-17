@@ -5,12 +5,6 @@ export type UserDocument = User & Document;
 @Schema({ collection: 'user'})
 
 export class User {
-
-    // @ObjectIdColumn()
-    // _id: string;
-  
-    // @PrimaryColumn()
-    // id: string;
     @Prop({required:true})
     first_name: string;
 
@@ -29,7 +23,7 @@ export class User {
     @Prop({required:true})
     role_id: Array<any>;
 
-    @Prop({default: "0"})
+    @Prop({required:true})
     site_id: string;
 
     @Prop({required:true})
