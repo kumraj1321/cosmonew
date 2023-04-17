@@ -34,11 +34,25 @@ export class UserController {
 
   @Get('/edituser/:id')
   async edituser(@Res() res:Response,@Req() req:Request){
+    if(Object.keys(req.query).length>0){
+      let updatedata:any=req.query
+      if(updatedata["password"]){
+        updatedata["password"]=CryptoJS.AES.encrypt(updatedata["password"], 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9').toString(); 
+      }
+      await this.userService.updateById(req.params.id,updatedata)
+    }
     let id=req.params.id
     let user:any=await this.userService.findById(id)
-    console.log(user,"user from user controller")
     user=user[0]
-    return res.render('users/edituser', { title: 'Create User', roles: data.roles, data:user });
+    let password=user["password"]
+    const bytes = CryptoJS.AES.decrypt(password, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9');
+      const decryptdPassword = bytes.toString(CryptoJS.enc.Utf8);
+      user["password"]=decryptdPassword
+    return res.render('users/edituser', { title: 'Create User', roles: data.roles, data:user,site_id:user["site_id"],role_id:user['role_id'],status:user["status"] },);
+  }
+
+  @Patch('/:id')
+  async editUser(@Res() res:Response,@Req() req:Request){
   }
 
 
@@ -66,7 +80,7 @@ export class UserController {
       return res.render('users/userlist', { title: 'Users', users:users });
     }).catch((err:any) => {
      // throw new BadRequestException(err)
-      console.log(err)
+      // console.log(err)
       return res.render('users/userlist', { title: 'Users', users: [] });
     });
   }
