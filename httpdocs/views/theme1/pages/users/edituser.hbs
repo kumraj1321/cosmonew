@@ -35,6 +35,9 @@
               <p class="alert alert-danger">{{ error.msg }}</p>
             {{!-- {{/each}} --}}
             {{/if}}
+            {{# if successmessage }}
+              <p class="alert alert-success">{{successmessage}}</p>
+            {{/if}}
                      
             <div class="card card-info">
               <div class="card-header">
@@ -132,7 +135,6 @@
                           
                           {{#each roles}}
                           {{findIndex ../role_id this.value}}
-                          {{!-- {{log ../role_id "role_id"}} --}}
                           {{#if (findIndex ../role_id this.value)}}
                             <option selected="selected" value={{this.value}}>{{this.name}}</option>
                             {{else}}

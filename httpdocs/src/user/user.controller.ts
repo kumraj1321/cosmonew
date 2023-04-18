@@ -34,12 +34,14 @@ export class UserController {
 
   @Get('/edituser/:id')
   async edituser(@Res() res:Response,@Req() req:Request){
+    let successmessage=''
     if(Object.keys(req.query).length>0){
       let updatedata:any=req.query
       if(updatedata["password"]){
         updatedata["password"]=CryptoJS.AES.encrypt(updatedata["password"], 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9').toString(); 
       }
       await this.userService.updateById(req.params.id,updatedata)
+      successmessage='Data Saved Successfully'
     }
     let id=req.params.id
     let user:any=await this.userService.findById(id)
@@ -48,7 +50,7 @@ export class UserController {
     const bytes = CryptoJS.AES.decrypt(password, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9');
       const decryptdPassword = bytes.toString(CryptoJS.enc.Utf8);
       user["password"]=decryptdPassword
-    return res.render('users/edituser', { title: 'Create User', roles: data.roles, data:user,site_id:user["site_id"],role_id:user['role_id'],status:user["status"] },);
+    return res.render('users/edituser', { title: 'Create User',successmessage, roles: data.roles, data:user,site_id:user["site_id"],role_id:user['role_id'],status:user["status"] },);
   }
 
   @Patch('/:id')
@@ -71,7 +73,15 @@ export class UserController {
         return  res.render('login', { layout: 'withoutHeadFoot',data:result,err:"Invalid Login Credentials!" });
 
       }
-      return  res.render('dashboard', { title: 'Users' });
+      //update query to set login time and islogin variables
+      try{
+        await this.userService.setLoginInfo(result["response"]["_id"])
+
+        return  res.render('dashboard', { title: 'Users' });
+      }catch(e:any){
+        return  res.render('login', { layout: 'withoutHeadFoot',data:result,err:"Invalid Login Credentials!" });
+      }
+      
     }
   }
   @Get()
