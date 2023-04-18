@@ -41,16 +41,14 @@
                 <h3 class="card-title">Enter User Details</h3>
               </div>
               <div class="card-body">
-                <form id="newUser" method="post" action="/users">
+                <form id="newUser" method="put" action="">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>First Name <span class="ip-req">*</span></label>
                         
-                        {{!-- {{log data}} --}}
-                        {{log error "error"}}
-                        {{log data "data of the email"}}
-                        {{log response "response"}}
+                        
+                        
                         <input type="text" value=" {{particularField data "first_name"}} " class="form-control" name="first_name" placeholder="Enter First Name"/>                        
                         {{#if error.first_name}}
                           <span class="error invalid-feedback" style="display:block">Please enter First Name</span>
@@ -60,10 +58,7 @@
                     <div class="col-md-6">                      
                       <div class="form-group">
                         <label>Last Name <span class="ip-req">*</span></label>
-                        {{!-- {{log data}} --}}
-                        {{log error "error"}}
-                        {{log data "data"}}
-                        {{log response "response"}}
+                      
                         <input type="text" placeholder="Enter Last Name" value="{{particularField data "last_name"}}" class="form-control" name="last_name" />
                         {{#if error.last_name}}
                           <span class="error invalid-feedback"  style="display:block">Please enter Last Name</span>
@@ -85,10 +80,7 @@
                     <div class="col-md-6">  
                       <div class="form-group">
                         <label>Username <span class="ip-req">*</span></label>
-                        {{!-- {{log data}} --}}
-                        {{log error "error"}}
-                        {{log data "data"}}
-                        {{log response "response"}}
+                       
                         <input type="text" placeholder="Enter Username" value="{{particularField data "username"}}" class="form-control" name="username" />
                         {{#if error.username}}
                           <span class="error invalid-feedback" style="display:block">Please enter Username</span>
@@ -120,16 +112,12 @@
                     <div class="col-md-6"> 
                       <div class="form-group">
                         <label>Site <span class="ip-req">*</span></label>
-
-                        <div style="display: none;">
-                        {{!-- <div style="display: none;" class="Siteinput">"{{particularField data "site_id"}}"</div> --}}
-                        <input style="display: none;" id="siteinput" value="{{particularField data "site_id"}}">This is the text contedn</input>
-
-                        </div>
                         <select id="siteselect" class="form-control" name="site_id" id="site_id">
+                            {{#select site_id}}
                           <option selected="false" value="">Select Site</option>
-                          <option  value="1">Cosmo</option>
+                          <option  value="1" >Cosmo</option>
                           <option value="2" >Harper Bazaar</option>
+                            {{/select}}
                         </select>
                          {{#if error.site_id}}
                           <span class="error invalid-feedback" style="display:block">Please enter Site Id</span>
@@ -138,16 +126,27 @@
                     </div>
                     <div class="col-12 col-md-6">                        
                       <div class="form-group">
+                        {{!-- {{}} --}}
                         <label>Role <span class="ip-req">*</span></label>
                         <select class="select2" name="role_id" id="role_id" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">                          
+                          
                           {{#each roles}}
+                          {{findIndex ../role_id this.value}}
+                          {{!-- {{log ../role_id "role_id"}} --}}
+                          {{#if (findIndex ../role_id this.value)}}
+                            <option selected="selected" value={{this.value}}>{{this.name}}</option>
+                            {{else}}
                             <option  value={{this.value}}>{{this.name}}</option>
+                            {{/if}}
                           {{/each}}
+
+                          
                         </select>
                         {{error.role_id}}
                       </div>
                     </div>
                   </div>
+                 
                  <div class="row">
                     <div class="col-md-6">  
                       <div class="form-group">
@@ -155,13 +154,17 @@
                         <div class="row mt-2">
                           <div class="col-md-6">                           
                             <div class="custom-control custom-radio">
-                              <input class="custom-control-input" type="radio" id="customRadio1" name="status" value="1" checked>
+                                {{#statusselect status}}
+                              <input class="custom-control-input" type="radio" id="customRadio1" name="status" value="1" >
+                              {{/statusselect}}
                               <label for="customRadio1" class="custom-control-label">Active</label>
                             </div> 
                           </div>
                           <div class="col-md-6">                           
                             <div class="custom-control custom-radio">
+                                {{#statusselect status}}
                               <input class="custom-control-input" type="radio" id="customRadio2" name="status" value="0">
+                              {{/statusselect}}
                               <label for="customRadio2" class="custom-control-label">In-Active</label>
                             </div>
                           </div>  
@@ -186,20 +189,17 @@
   </section>
   <!-- /.content -->
 </div>
+
 {{#section 'script'}}
 {{!-- <script src="../plugins/jquery/jquery.min.js"></script>
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
-
 <script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>  
 <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
 <script>
     
 $(function () {
-    {{!-- console.log("====popat{{basePath}}----") --}}
-    {{!-- {{log "hello" "hello"}} --}}
-    {{!-- {{log data "data"}} --}}
-
+  $('.select2').select2()
   $.validator.setDefaults({
     submitHandler: function (e) {
       e.preventDefault();
@@ -296,15 +296,5 @@ $(function () {
     }
   })
 })
-let sitedata=document.getElementById('siteinput').value
-console.log("sitedata==", sitedata)
-let a=$("select option[value="+sitedata+"]").prop('selected','selected')
-console.log(a,"==a")
-{{!-- $("#siteselect option").value('1')​.attr("selected", true)​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​ --}}
 </script>
 {{/section}}
-{{!-- let token=document.getElementById("token")
-let tokenvalue=localStorage.getItem('USER_TOKEN')
-console.log("tokenvalue",tokenvalue)
-token.value=tokenvalue --}}
-{{!-- </script> --}}

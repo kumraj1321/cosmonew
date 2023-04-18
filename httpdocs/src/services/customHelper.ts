@@ -28,9 +28,33 @@ const customHelpers = {
       return config.BASE_PATH
     },
     particularField:function(object:any,req:any){
-      console.log("object req",object,object["req"])
       return object[req]
+    },
+    select:function(selected:any,options:any){
+      if(typeof selected==='string'){
+      return options.fn(this).replace(
+        new RegExp(' value=\"' + selected + '\"'),
+        '$& selected="selected"');
+     }else{
+      
+     }
+    },
+    //this is to already selected status at edit time
+    statusselect:function(selected:any,options:any){
+      return options.fn(this).replace(
+        new RegExp(' value=\"' + selected + '\"'),
+        '$& checked');
+    },
+    findIndex:function(role_id:any,value:any){
+      let ind=role_id.indexOf(value)
+      if(ind>=0){
+        return true
+      }return false
     }
+   
+
   }
+   
+  
 
   export default customHelpers;

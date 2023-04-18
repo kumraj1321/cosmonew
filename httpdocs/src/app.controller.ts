@@ -30,6 +30,5 @@ export class AppController {
 
   @Post('readUser')
   readUser(@Body('email') email: string, @Body('password') password: string){
-    console.log(email, password)
   }
 }
