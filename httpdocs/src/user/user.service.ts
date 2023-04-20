@@ -39,7 +39,14 @@ export class UserService {
 
   async findById(id:any){
      id=new ObjectId(id)
-    return await this.model.find({"status":1,"_id":id})
+    return await this.model.find({"_id":id})
+    
+  }
+  async setLoginInfo(id:any){
+    await this.model.updateOne({_id:id},{$set:{is_login:1,last_login:new Date()}})
+  }
+  async updateById(id:any,data:any){
+   await this.model.findByIdAndUpdate({_id:new ObjectId(id)},data)
     
   }
 

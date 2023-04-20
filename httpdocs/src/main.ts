@@ -23,6 +23,8 @@ async function bootstrap() {
     partialsDir: join(__dirname, '..', '/views/', optLayout, 'partials'),
     helpers: {...customHelpers, ...helperLib},
   }))
+ 
+
   app.setViewEngine('hbs')
   app.useGlobalPipes(new ValidationPipe());
   const port = parseInt(process.env.PORT, 10) || 3000;
