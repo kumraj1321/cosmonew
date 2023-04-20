@@ -9,12 +9,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Users listing</h1>
+          <h1>Builder Collections Listing</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-            <li class="breadcrumb-item active"><a href="/users/new">Add New</a></li>
+            <li class="breadcrumb-item active"><a href="/collection-builder/new">Add New</a></li>
           </ol>
         </div>
       </div>
@@ -27,7 +27,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Listed Users</h3>
+              <h3 class="card-title">Listed Collections</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -35,26 +35,16 @@
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th>Role</th>
-                    <th>Created</th>
-                    <th>Is Login</th>
+                    <th>Collection Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                   <tbody>
-                    {{!-- {{length users}} --}}
-                    {{!-- {{#contains {{length users}} 0}}Active{{else}}In-Active{{/contains}} --}}
-                    {{#forEach users}}
+                    {{#forEach collections}}
                       <tr>
                         <td>{{add @index 1}}</td>
-                        <td>{{this.first_name}}  {{this.last_name}}</td>
-                        <td>{{#contains this.status "1"}}Active{{else}}In-Active{{/contains}}</td>
-                        <td><ul>{{#each this.role_id}} <li>{{this}}</li> {{/each}}</ul></td>
-                        <td>{{dateFormat 'DD-MM-YY' this.created_at }}</td>
-                        <td>{{#unless this.is_login}}No{{else}}{{#contains this.is_login 1}}Yes{{else}}No{{/contains}}{{/unless}}</td>
-                        <td><a href="users/edituser/{{this._id}}"><i class="fas fa-edit"></i> Edit</a></td>
+                        <td>{{this.name}}</td>
+                        <td></td>
                       </tr>
                     {{/forEach}}
                   </tbody>

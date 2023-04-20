@@ -36,7 +36,6 @@ export class UserController {
   async edituser(@Res() res:Response,@Req() req:Request){
     let id=req.params.id
     let user:any=await this.userService.findById(id)
-    console.log(user,"user from user controller")
     user=user[0]
     return res.render('users/edituser', { title: 'Create User', roles: data.roles, data:user });
   }
@@ -45,20 +44,20 @@ export class UserController {
   @Post('/login')
   async login(@Res() res: Response,@Req() req:Request) {
     
-    let username=req.body.username
-    let result= await this.userService.findUnique(username)
-    if(result.status===404){
-      return  res.render('login', { layout: 'withoutHeadFoot', data:result,err:"Invalid Login Credentials!"  });
+    // let username=req.body.username
+    // let result= await this.userService.findUnique(username)
+    // if(result.status===404){
+    //   return  res.render('login', { layout: 'withoutHeadFoot', data:result,err:"Invalid Login Credentials!"  });
 
-    }else{
-      const bytes = CryptoJS.AES.decrypt(result["response"]["password"], 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9');
-      const decryptdPassword = bytes.toString(CryptoJS.enc.Utf8);
-      if(decryptdPassword!=req.body.password ){
-        return  res.render('login', { layout: 'withoutHeadFoot',data:result,err:"Invalid Login Credentials!" });
+    // }else{
+    //   const bytes = CryptoJS.AES.decrypt(result["response"]["password"], 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9');
+    //   const decryptdPassword = bytes.toString(CryptoJS.enc.Utf8);
+    //   if(decryptdPassword!=req.body.password ){
+    //     return  res.render('login', { layout: 'withoutHeadFoot',data:result,err:"Invalid Login Credentials!" });
 
-      }
+    //   }
       return  res.render('dashboard', { title: 'Users' });
-    }
+    // }
   }
   @Get()
   async findAll(@Res() res: Response) {
