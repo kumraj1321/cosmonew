@@ -22,7 +22,7 @@ export class CollectionBuilderService {
       collections.forEach((item:any, index:number)=>{
         const exploded:Array<any> = (item.name).split("_");
         if((exploded.length === 3) && (exploded[0] === 'builder') && (exploded[2] === 'entity')){
-          listedCollections.push({name: exploded[1].charAt(0).toUpperCase() + exploded[1].slice(1)});
+          listedCollections.push({name: exploded[1].charAt(0).toUpperCase() + exploded[1].slice(1), originalName:exploded[1]});
         }      
       })
       return listedCollections;
@@ -31,7 +31,7 @@ export class CollectionBuilderService {
     }
   }
 
-  async readData(collectionName:string){
+  async readData(collectionName:string, returnList:number=0){
     const collectionList = await this.findAll();
     let exists:boolean = false;
     collectionList.forEach((item:any, index:number) => {
@@ -39,7 +39,11 @@ export class CollectionBuilderService {
         exists = true;
       }
     })
-    return exists;
+    if(returnList){
+      return {data:collectionList, exists}
+    }else{
+      return exists;
+    }
     //return await this.connection.db.admin().validateCollection(collectionName);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Req } from '@nestjs/common';
 import { CollectionBuilderService } from './collection-builder.service';
 import { CreateCollectionBuilderDto } from './dto/create-collection-builder.dto';
 import { Response, Request } from 'express';
@@ -34,6 +34,17 @@ export class CollectionBuilderController {
     }else{
       return res.render('builder-collections/createCollection', { title: 'Create Collection', error: {msg:'Collection already exists'}});
     }
+  }
 
+  @Get('/editcollection/:name')
+  async edituser(@Res() res:Response,@Req() req:Request){
+    let name:string = req.params.name
+    let collection:any=await this.collectionBuilderService.readData(name, 1)
+    if(collection.exists){
+      return res.render('builder-collections/editcollection', { title: 'Edit Collection', data:{collection:name} });
+    }else{
+      return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections: collection.data});
+    }
+    
   }
 }
