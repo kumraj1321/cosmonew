@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateCollectionBuilderDto {
-   // @IsNotEmpty()
+   //@IsNotEmpty()
     collection:string
 }

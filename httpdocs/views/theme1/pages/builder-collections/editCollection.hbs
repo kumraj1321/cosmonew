@@ -41,14 +41,14 @@
                 <h3 class="card-title">Update Collection Details</h3>
               </div>
               <div class="card-body">
-                <form id="newCollection" method="post" action="/collection-builder">
-                  <div class="row">
-                    <div class="col-md-2">
+                <form id="newCollection" method="post" action="/collection-builder/{{data.collection}}">
+                  <div class="row mt-5">
+                    <div class="col-md-3 mt-2">
                       <div class="form-group">
-                        <label>Collection Name <span class="ip-req">*</span></label> 
+                        <label>New Collection Name <span class="ip-req">*</span></label> 
                       </div>
                     </div>
-                     <div class="col-md-10">
+                     <div class="col-md-9">
                       <div class="form-group">
                         <input type="text" class="form-control" name="collection" value="{{data.collection}}" placeholder="Enter Collection Name"/>                        
                         {{#if error.collection}}

@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Req, Patch, Param } from '@nestjs/common';
 import { CollectionBuilderService } from './collection-builder.service';
 import { CreateCollectionBuilderDto } from './dto/create-collection-builder.dto';
+import { UpdateCollectionBuilderDto } from './dto/update-collection-builder.dto';
 import { Response, Request } from 'express';
 
 @Controller('collection-builder')
@@ -14,6 +15,24 @@ export class CollectionBuilderController {
     }).catch((err:any)=>{
       return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections:[] });
     })
+  }
+
+  @Post('/:name')
+  async updateCollection(@Param('name') name: string, @Body() data: Partial<UpdateCollectionBuilderDto>, @Res() res: Response){
+      const collectionExists:any = await this.collectionBuilderService.readData(name, 1);
+
+      if(collectionExists.exists){
+        await this.collectionBuilderService.updateCollection(name, data.collection)
+        .then((success:any)=>{
+          return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections:collectionExists.data });
+        })
+        .catch((err:any)=>{
+          console.log(err)
+          return res.render('builder-collections/editcollection', { title: 'Edit Collection', error:{msg:'Collection Name not updated. Contact Admin!'} });
+        })
+      }else{
+        return res.render('builder-collections/editcollection', { title: 'Edit Collection', error:{msg:"Collection you're going to update doesn't exist!"} });
+      }
   }
 
   @Get("/new")
@@ -39,12 +58,11 @@ export class CollectionBuilderController {
   @Get('/editcollection/:name')
   async edituser(@Res() res:Response,@Req() req:Request){
     let name:string = req.params.name
-    let collection:any=await this.collectionBuilderService.readData(name, 1)
+    let collection:any=await this.collectionBuilderService.readData(name, 1);
     if(collection.exists){
       return res.render('builder-collections/editcollection', { title: 'Edit Collection', data:{collection:name} });
     }else{
       return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections: collection.data});
-    }
-    
+    }    
   }
 }

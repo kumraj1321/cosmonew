@@ -46,4 +46,8 @@ export class CollectionBuilderService {
     }
     //return await this.connection.db.admin().validateCollection(collectionName);
   }
+
+  async updateCollection(from:string, to:string){
+    return await this.connection.db.renameCollection('builder_'+from+'_entity', 'builder_'+to+'_entity');
+  }
 }
