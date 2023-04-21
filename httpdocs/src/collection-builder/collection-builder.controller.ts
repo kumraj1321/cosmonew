@@ -3,6 +3,7 @@ import { CollectionBuilderService } from './collection-builder.service';
 import { CreateCollectionBuilderDto } from './dto/create-collection-builder.dto';
 import { UpdateCollectionBuilderDto } from './dto/update-collection-builder.dto';
 import { Response, Request } from 'express';
+import settings from 'src/config/settings';
 
 @Controller('collection-builder')
 export class CollectionBuilderController {
@@ -15,6 +16,15 @@ export class CollectionBuilderController {
     }).catch((err:any)=>{
       return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections:[] });
     })
+  }
+
+  @Get("/view")
+  async viewBuilderAssets(@Res() res: Response){
+    // await this.collectionBuilderService.findAll(1).then((collections:any)=>{
+    //   return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections: collections });
+    // }).catch((err:any)=>{
+      return res.render('builder-collections/builder-view', { title: 'Builder View', view:settings});
+    // })
   }
 
   @Post('/:name')
