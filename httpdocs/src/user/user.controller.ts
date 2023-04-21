@@ -56,8 +56,6 @@ export class UserController {
   @Patch('/:id')
   async editUser(@Res() res:Response,@Req() req:Request){
   }
-
-
   @Post('/login')
   async login(@Res() res: Response,@Req() req:Request) {
     
