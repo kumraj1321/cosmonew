@@ -23,8 +23,12 @@ export class CollectionBuilderController {
 
       if(collectionExists.exists){
         await this.collectionBuilderService.updateCollection(name, data.collection)
-        .then((success:any)=>{
-          return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections:collectionExists.data });
+        .then(async (success:any)=>{
+          await this.collectionBuilderService.findAll(1).then((collections:any)=>{
+            return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections: collections });
+          }).catch((err:any)=>{
+            return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections:[] });
+          })
         })
         .catch((err:any)=>{
           console.log(err)
@@ -59,6 +63,7 @@ export class CollectionBuilderController {
   async edituser(@Res() res:Response,@Req() req:Request){
     let name:string = req.params.name
     let collection:any=await this.collectionBuilderService.readData(name, 1);
+    console.log(collection)
     if(collection.exists){
       return res.render('builder-collections/editcollection', { title: 'Edit Collection', data:{collection:name} });
     }else{

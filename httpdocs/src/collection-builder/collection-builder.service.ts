@@ -19,10 +19,17 @@ export class CollectionBuilderService {
     const collections:Array<any> =  await this.connection.db.listCollections({}, {nameOnly:true}).toArray();
     if(validateBuilderCollections === 1){
       const listedCollections:Array<any> = [];
-      collections.forEach((item:any, index:number)=>{
+
+      collections.forEach(async (item:any, index:number)=>{
+
         const exploded:Array<any> = (item.name).split("_");
         if((exploded.length === 3) && (exploded[0] === 'builder') && (exploded[2] === 'entity')){
-          listedCollections.push({name: exploded[1].charAt(0).toUpperCase() + exploded[1].slice(1), originalName:exploded[1]});
+          const documentsList:any = await this.connection.db.collection(item.name).find().toArray();
+          listedCollections.push({
+            name: exploded[1].charAt(0).toUpperCase() + exploded[1].slice(1), 
+            originalName:exploded[1],
+            showEdit:(documentsList.length > 0) ? false : true
+          });
         }      
       })
       return listedCollections;
