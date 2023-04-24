@@ -27,95 +27,57 @@ const settings = {
           "input_name":"long_text"
         }
       ],
-      "advanced_setting":[]
+      "advanced_setting":[
+        {
+          "name":"Default value",
+          "info": "",
+          "type":"text",
+          "field":"input",          
+          "input_name":"default_value"
+        },
+        {
+          "name":"RegExp pattern",
+          "info": "The text of the regular expression",
+          "type":"text",
+          "field":"input",          
+          "input_name":"regex_pattern"
+        },
+      ]
     },
     {
-      "type":"text",
+      "type":"email",
       "name":"Email",
-      "info": "Small or long text like title or description",
+      "info": "Email field with validations format",
       "basic_setting":[
         {
-          "name":"name",
+          "name":"Name",
           "info": "No space is allowed for the name of the attribute",
           "type":"text",
           "field":"input",          
-          "input_name":"name"
-        },
-        {
-          "name":"Short Text",
-          "info": "Best for titles, names, links (URL). It also enables exact search on the field.",
-          "type":"radio",
-          "field":"input",
-          "input_name":"short_text"
-        },
-        {
-          "name":"Long Text",
-          "info": "Best for descriptions, biography. Exact search is disabled.",
-          "type":"radio",
-          "field":"input",
-          "input_name":"long_text"
+          "input_name":"email"
         }
       ],
-      "advanced_setting":[]
-    },
-    {
-      "type":"text",
-      "name":"Rich Text",
-      "info": "Small or long text like title or description",
-      "basic_setting":[
+      "advanced_setting":[
         {
-          "name":"name",
-          "info": "No space is allowed for the name of the attribute",
+          "name":"Default value",
+          "info": "",
           "type":"text",
           "field":"input",          
-          "input_name":"name"
+          "input_name":"email"
         },
         {
-          "name":"Short Text",
-          "info": "Best for titles, names, links (URL). It also enables exact search on the field.",
-          "type":"radio",
-          "field":"input",
-          "input_name":"short_text"
-        },
-        {
-          "name":"Long Text",
-          "info": "Best for descriptions, biography. Exact search is disabled.",
-          "type":"radio",
-          "field":"input",
-          "input_name":"long_text"
+          "settings":[
+            {
+              "name":"Required field",
+              "info": "You won't be able to create an entry if this field is empty",
+              "type":"checkbox",
+              "field":"input",          
+              "input_name":"required_field"
+            },
+          ]
         }
-      ],
-      "advanced_setting":[]
-    },
-    {
-      "type":"text",
-      "name":"Text",
-      "info": "Small or long text like title or description",
-      "basic_setting":[
-        {
-          "name":"name",
-          "info": "No space is allowed for the name of the attribute",
-          "type":"text",
-          "field":"input",          
-          "input_name":"name"
-        },
-        {
-          "name":"Short Text",
-          "info": "Best for titles, names, links (URL). It also enables exact search on the field.",
-          "type":"radio",
-          "field":"input",
-          "input_name":"short_text"
-        },
-        {
-          "name":"Long Text",
-          "info": "Best for descriptions, biography. Exact search is disabled.",
-          "type":"radio",
-          "field":"input",
-          "input_name":"long_text"
-        }
-      ],
-      "advanced_setting":[]
-    },
+      ]
+    }
   ]
 }
 
