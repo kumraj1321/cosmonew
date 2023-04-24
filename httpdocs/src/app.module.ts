@@ -9,6 +9,7 @@ import dbconfig from './config/dbconfig';
 import { MongooseModelsModule } from './schemas/mongoose-models.module';
 import { UserModule } from './user/user.module';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 import mongoose from 'mongoose';
 
 setTimeout(()=>{console.log(mongoose.connection.readyState);},10000)
@@ -22,7 +23,7 @@ setTimeout(()=>{console.log(mongoose.connection.readyState);},10000)
     SettingsModule,    
    // MongooseModelsModule,
  //   UsersModule,
-    UserModule
+    UserModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

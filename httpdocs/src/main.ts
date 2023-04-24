@@ -4,7 +4,9 @@ import * as hbs from 'express-handlebars';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
-// var session = require('express-session')
+//  var session = require('express-session')
+import * as session from 'express-session'
+import * as passport from 'passport'
 import { ValidationPipe } from '@nestjs/common';
 import customHelpers from "./services/customHelper";
 // import * as helperLib from "handlebars-helpers";
@@ -22,9 +24,19 @@ async function bootstrap() {
     defaultLayout: 'main',
     layoutsDir: join(__dirname, '..', '/views/', optLayout, 'layouts'),
     partialsDir: join(__dirname, '..', '/views/', optLayout, 'partials'),
-    helpers: {...customHelpers, ...helperLib},
+    helpers: { ...customHelpers, ...helperLib },
   }))
- 
+
+  app.use(
+    session({
+      secret: 'SECRET',
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 6000000 }
+    })
+  )
+  app.use(passport.initialize())
+  app.use(passport.session())
 
   app.setViewEngine('hbs')
   app.useGlobalPipes(new ValidationPipe());
