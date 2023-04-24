@@ -15,7 +15,6 @@ dotenv.config();
 // console.log(helperLib)
 async function bootstrap() {
   const optLayout = process.env.OPT_LAYOUT;
-  console.log(optLayout);
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   app.useStaticAssets(join(__dirname, '..', 'views/', optLayout, 'assets'))
   app.setBaseViewsDir(join(__dirname, '..', 'views/', optLayout, 'pages'))
