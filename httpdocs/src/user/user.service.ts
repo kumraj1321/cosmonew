@@ -17,6 +17,39 @@ export class UserService {
     return await this.findAll();
   }
 
+  async findFilter(search: any, start: any, length: any) {
+
+    let filterdata: any = await this.model.find()
+    let total_records = filterdata.length
+    if (search && search.length > 0) {
+      search = new RegExp(search, 'i')
+      filterdata = await this.model.aggregate([
+        { $match: { username: search } }
+      ])
+    }
+    let end = start + length
+    if (end > filterdata.length) {
+      end = filterdata.length
+    }
+    let finalresult: any = []
+    for (let i = start; i < end; i++) {
+      let user: any = filterdata[i]
+      let userRoles: any = [];
+      user['role_id'].forEach((ele: any, ind: number) => {
+        userRoles.push((data.roles.find(item => item.value === ele)).name);
+      })
+      user["role_id"] = userRoles
+      finalresult.push(user)
+    }
+    return {
+      data: finalresult,
+      total_records: total_records,
+      recordsFiltered: filterdata.length
+    }
+
+
+  }
+
   async findAll() {
     const result: any = await this.model.find().lean();
     if (result.length > 0) {
