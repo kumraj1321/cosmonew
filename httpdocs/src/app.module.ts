@@ -9,14 +9,10 @@ import dbconfig from './config/dbconfig';
 import { MongooseModelsModule } from './schemas/mongoose-models.module';
 import { UserModule } from './user/user.module';
 import { join } from 'path';
-<<<<<<< HEAD
 import { AuthModule } from './auth/auth.module';
-=======
-import { CollectionBuilderModule } from './collection-builder/collection-builder.module';
->>>>>>> 7d631b02655883f259069d2c84162eeed075bd3a
 import mongoose from 'mongoose';
 
-setTimeout(()=>{console.log(mongoose.connection.readyState);},10000)
+setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
 @Module({
   imports: [
     // ServeStaticModule.forRoot({
@@ -24,17 +20,13 @@ setTimeout(()=>{console.log(mongoose.connection.readyState);},10000)
     // exclude: ['/src*'],
     // }),
     MongooseModule.forRoot(dbconfig.url),
-    SettingsModule,    
-   // MongooseModelsModule,
- //   UsersModule,
-<<<<<<< HEAD
+    SettingsModule,
+    // MongooseModelsModule,
+    //   UsersModule,
     UserModule, AuthModule
-=======
-    UserModule, CollectionBuilderModule
->>>>>>> 7d631b02655883f259069d2c84162eeed075bd3a
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
- }
+}

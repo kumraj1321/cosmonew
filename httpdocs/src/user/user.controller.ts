@@ -104,10 +104,45 @@ export class UserController {
 
     }
     await this.userService.findAll().then((users: any) => {
-      return res.render('users/userlist', { title: 'Users', users: users });
+      return res.render('users/userlist', { title: 'Users', users: users, data: { data: users } });
     }).catch((err: any) => {
       return res.render('users/userlist', { title: 'Users', users: [] });
     });
+    // await this.userService.findAll().then((users: any) => {
+    //   return res.render('users/userlist', { title: 'Users', users: users, data: { data: users } });
+    // }).catch((err: any) => {
+    //   return res.render('users/userlist', { title: 'Users', users: [] });
+    // });
+  }
+
+  // @Get('/userlistnew')
+  // async findAllnew(@Res() res: Response, @Req() req: Request) {
+
+  //   await this.userService.findAll().then((users: any) => {
+  //     return res.render('users/userlistnew', { title: 'Users', users: users, data: { data: users } });
+  //   }).catch((err: any) => {
+  //     return res.render('users/userlistnew', { title: 'Users', users: [] });
+  //   });
+  // }
+  @Get('/userlistnewdata')
+  async findAllnewdata(@Res() res: Response, @Req() req: Request) {
+    let search = req.query.search["value"]
+    let start = req.query.start
+    let length = req.query.length
+    let draw = req.query.draw
+    console.log("search start and length", search, start, length)
+    await this.userService.findFilter(search, start, length).then((result: any) => {
+      let finalresult: any = {}
+      finalresult["draw"] = draw
+      finalresult["data"] = result["data"]
+      finalresult["recordsTotal"] = result["total_records"]
+      finalresult["recordsFiltered"] = result["recordsFiltered"]
+      console.log("finalresult===", finalresult)
+      return res.json(finalresult)
+    }).catch((err: any) => {
+      console.log("some error occured in search api")
+    })
+
   }
 
   @UseGuards(AuthenticatedGuard)
