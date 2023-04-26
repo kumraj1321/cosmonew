@@ -20,11 +20,11 @@ export class CollectionBuilderController {
 
   @Get("/view")
   async viewBuilderAssets(@Res() res: Response){
-    // await this.collectionBuilderService.findAll(1).then((collections:any)=>{
-    //   return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections: collections });
-    // }).catch((err:any)=>{
-      return res.render('builder-collections/builder-view', { title: 'Builder View', view:settings});
-    // })
+    await this.collectionBuilderService.findAll(1).then((collections:any)=>{
+      return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections: collections });
+    }).catch((err:any)=>{
+      return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections:[] });
+    })
   }
 
   @Post('/:name')
@@ -60,13 +60,21 @@ export class CollectionBuilderController {
     const details:any = await this.collectionBuilderService.readData(createCollectionBuilderDto.collection);
     if(!details){
       await this.collectionBuilderService.create(createCollectionBuilderDto).then((collections:any)=>{
-        return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections });
+        // return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections });
+        console.log(settings)
+        return res.render('collections/collection-entity', { title: 'Entity Selection', settings });
       }).catch((err:any)=>{
         return res.render('builder-collections/createCollection', { title: 'Create Collection', error: err.errors});
       })
     }else{
       return res.render('builder-collections/createCollection', { title: 'Create Collection', error: {msg:'Collection already exists'}});
     }
+  }
+
+  @Get('/collection-entity')
+  async showEntityForm(@Res() res: Response){
+    console.log(settings)
+    return res.render('collections/collection-entity', { title: 'Entity Selection', settings });
   }
 
   @Get('/editcollection/:name')
