@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, UseFilters } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // import { ServeStaticModule } from '@nestjs/serve-static';
@@ -10,8 +10,11 @@ import { MongooseModelsModule } from './schemas/mongoose-models.module';
 import { UserModule } from './user/user.module';
 import { join } from 'path';
 import mongoose from 'mongoose';
+import { HomemanagerModule } from './homemanager/homemanager.module';
+import { HttpExceptionFilter } from './http-exception.filter';
+import { UserService } from './user/user.service';
 
-setTimeout(()=>{console.log(mongoose.connection.readyState);},10000)
+setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
 @Module({
   imports: [
     // ServeStaticModule.forRoot({
@@ -19,13 +22,16 @@ setTimeout(()=>{console.log(mongoose.connection.readyState);},10000)
     // exclude: ['/src*'],
     // }),
     MongooseModule.forRoot(dbconfig.url),
-    SettingsModule,    
-   // MongooseModelsModule,
- //   UsersModule,
-    UserModule
+    SettingsModule,
+    // MongooseModelsModule,
+    //   UsersModule,
+    UserModule,
+    HomemanagerModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
+
+@UseFilters(new HttpExceptionFilter())
 export class AppModule {
- }
+}

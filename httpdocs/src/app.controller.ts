@@ -12,9 +12,11 @@ export class AppController {
     return res.render('blank', { title: 'Hello World' });
   }
   @Get('/dashboard')
-  getDashboard(@Res() res: Response) {
+  async getDashboard(@Res() res: Response) {
     /* return res.render('home',{layout:'layout1',message:'Hello World!'}); */
-    return res.render('dashboard', { title: 'Hello dashboard' });
+
+    let resp = await this.appService.findCount()
+    return res.render('dashboard', { title: 'Users', count: resp });
   }
 
   @Get('/')
@@ -29,6 +31,6 @@ export class AppController {
   }
 
   @Post('readUser')
-  readUser(@Body('email') email: string, @Body('password') password: string){
+  readUser(@Body('email') email: string, @Body('password') password: string) {
   }
 }
