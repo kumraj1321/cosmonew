@@ -10,7 +10,7 @@ import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { get } from 'http';
 @Controller('users')
 export class UserController {
-  constructor (private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) { }
 
   @UseGuards(AuthenticatedGuard)
   @Post()
@@ -86,8 +86,7 @@ export class UserController {
       //update query to set login time and islogin variables
       try {
         await this.userService.setLoginInfo(result["_id"])
-
-        return res.render('dashboard', { title: 'Users' });
+        res.redirect("/dashboard")
       } catch (e: any) {
         return res.render('login', { layout: 'withoutHeadFoot', data: result, err: "Invalid Login Credentials!" });
       }
