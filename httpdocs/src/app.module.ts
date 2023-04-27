@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, UseFilters } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 // import { ServeStaticModule } from '@nestjs/serve-static';
@@ -11,6 +11,8 @@ import { UserModule } from './user/user.module';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import mongoose from 'mongoose';
+import { HomemanagerModule } from './homemanager/homemanager.module';
+import { HttpExceptionFilter } from './http-exception.filter';
 
 setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
 @Module({
@@ -23,10 +25,13 @@ setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
     SettingsModule,
     // MongooseModelsModule,
     //   UsersModule,
-    UserModule, AuthModule
+    UserModule, AuthModule,
+    HomemanagerModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
+
+@UseFilters(new HttpExceptionFilter())
 export class AppModule {
 }
