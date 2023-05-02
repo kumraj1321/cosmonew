@@ -9,6 +9,7 @@ import * as session from 'express-session'
 import * as passport from 'passport'
 import { ValidationPipe } from '@nestjs/common';
 import customHelpers from "./services/customHelper";
+import { HttpExceptionFilter } from './http-exception.filter';
 // import * as helperLib from "handlebars-helpers";
 var helperLib = require('handlebars-helpers')();
 dotenv.config();
@@ -39,6 +40,7 @@ async function bootstrap() {
 
   app.setViewEngine('hbs')
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new HttpExceptionFilter());
   const port = parseInt(process.env.PORT, 10) || 3000;
   console.log('Runnin on ', port)
   await app.listen(port);

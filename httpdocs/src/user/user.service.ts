@@ -10,7 +10,7 @@ import * as CryptoJS from 'crypto-js'
 import { ObjectId } from 'mongodb'
 @Injectable()
 export class UserService {
-  constructor (@InjectModel(User.name) private readonly model: Model<UserDocument>) { }
+  constructor(@InjectModel(User.name) private readonly model: Model<UserDocument>) { }
 
   async create(createUserDto: CreateUserDto) {
     await new this.model(createUserDto).save();
@@ -95,5 +95,8 @@ export class UserService {
     }
     return user
 
+  }
+  async findCount() {
+    return await this.model.count()
   }
 }
