@@ -1,8 +1,8 @@
 {{#section 'css'}}
-<link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="{{basePath}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-<link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.css">
-<link rel="stylesheet" href="{{basePath}}/dist/css/main.css">
+  <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="{{basePath}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.css">
+  <link rel="stylesheet" href="{{basePath}}/dist/css/main.css">
 {{/section}}
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -22,7 +22,7 @@
       </div>
     </div><!-- /.container-fluid -->
   </section>
-{{!-- {{error}} --}}
+  {{!-- {{error}} --}}
 
   <!-- Main content -->
   <section class="content">
@@ -31,144 +31,154 @@
         <div class="container">
           <div class="col-md-12">
             {{# if error }}
-            {{!-- {{# each errors }} --}}
+              {{!-- {{# each errors }} --}}
               <p class="alert alert-danger">{{ error.msg }}</p>
-            {{!-- {{/each}} --}}
-            {{/if}}
-            
-            <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Enter User Details</h3>
-              </div>
-              <div class="card-body">
-                <form id="newUser" method="post" action="/users">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>First Name <span class="ip-req">*</span></label>
-                        {{!-- {{log data}} --}}
-                        {{log error "error"}}
-                        {{log data "data"}}
-                        {{log response "response"}}
-                        <input type="text" value="{{data.first_name}}" class="form-control" name="first_name" placeholder="Enter First Name"/>                        
-                        {{#if error.first_name}}
-                          <span class="error invalid-feedback" style="display:block">Please enter First Name</span>
-                        {{/if}} 
+              {{!-- {{/each}} --}}
+              {{/if}}
+
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Enter User Details</h3>
+                </div>
+                <div class="card-body">
+                  <form id="newUser" method="post" action="/users">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>First Name <span class="ip-req">*</span></label>
+                          {{!-- {{log data}} --}}
+                          {{log error "error"}}
+                          {{log data "data"}}
+                          {{log response "response"}}
+                          <input type="text" value="{{data.first_name}}" class="form-control" name="first_name"
+                            placeholder="Enter First Name" />
+                          {{#if error.first_name}}
+                            <span class="error invalid-feedback" style="display:block">Please enter First Name</span>
+                          {{/if}}
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Last Name <span class="ip-req">*</span></label>
+                          {{!-- {{log data}} --}}
+                          {{log error "error"}}
+                          {{log data "data"}}
+                          {{log response "response"}}
+                          <input type="text" placeholder="Enter Last Name" value="{{data.last_name}}"
+                            class="form-control" name="last_name" />
+                          {{#if error.last_name}}
+                            <span class="error invalid-feedback" style="display:block">Please enter Last Name</span>
+                          {{/if}}
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-6">                      
-                      <div class="form-group">
-                        <label>Last Name <span class="ip-req">*</span></label>
-                        {{!-- {{log data}} --}}
-                        {{log error "error"}}
-                        {{log data "data"}}
-                        {{log response "response"}}
-                        <input type="text" placeholder="Enter Last Name" value="{{data.last_name}}" class="form-control" name="last_name" />
-                        {{#if error.last_name}}
-                          <span class="error invalid-feedback" style="display:block">Please enter Last Name</span>
-                        {{/if}}                        
+                    {{!-- <input type="text" style="display: none;" id="token" name="token" placeholder="Token" value="12345678"> --}}
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="email">Email <span class="ip-req">*</span></label>
+                          <input type="email" placeholder="Enter Email Address" id="email" value="{{data.email}}"
+                            class="form-control" name="email" />
+                          {{#if error.email}}
+                            <span class="error invalid-feedback" style="display:block">Please enter Email</span>
+                          {{/if}}
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Username <span class="ip-req">*</span></label>
+                          {{!-- {{log data}} --}}
+                          {{log error "error"}}
+                          {{log data "data"}}
+                          {{log response "response"}}
+                          <input type="text" placeholder="Enter Username" value="{{data.username}}" class="form-control"
+                            name="username" />
+                          {{#if error.username}}
+                            <span class="error invalid-feedback" style="display:block">Please enter Username</span>
+                          {{/if}}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {{!-- <input type="text" style="display: none;" id="token" name="token" placeholder="Token" value="12345678"> --}}
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="email">Email <span class="ip-req">*</span></label>
-                        <input type="email" placeholder="Enter Email Address" id="email" value="{{data.email}}" class="form-control" name="email" />                  
-                         {{#if error.email}}
-                          <span class="error invalid-feedback" style="display:block">Please enter Email</span>
-                        {{/if}}   
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Password <span class="ip-req">*</span></label>
+                          <input type="password" id="password" placeholder="Enter Password" value="{{data.password}}"
+                            class="form-control" name="password" />
+                          {{#if error.password}}
+                            <span class="error invalid-feedback" style="display:block">Please enter password</span>
+                          {{/if}}
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Confirm Password <span class="ip-req">*</span></label>
+                          <input type="password" placeholder="Confirm your Password" value="{{data.confirm_password}}"
+                            class="form-control" name="confirm_password" />
+                          {{#if error.confirm_password}}
+                            <span class="error invalid-feedback" style="display:block">Please enter confirm
+                              password</span>
+                          {{/if}}
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-6">  
-                      <div class="form-group">
-                        <label>Username <span class="ip-req">*</span></label>
-                        {{!-- {{log data}} --}}
-                        {{log error "error"}}
-                        {{log data "data"}}
-                        {{log response "response"}}
-                        <input type="text" placeholder="Enter Username" value="{{data.username}}" class="form-control" name="username" />
-                        {{#if error.username}}
-                          <span class="error invalid-feedback" style="display:block">Please enter Username</span>
-                        {{/if}}   
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Site <span class="ip-req">*</span></label>
+                          <select class="form-control" name="site_id" id="site_id">
+                            <option value="">Select Site</option>
+                            <option value="1">Cosmo</option>
+                            <option value="2">Harper Bazaar</option>
+                          </select>
+                          {{#if error.site_id}}
+                            <span class="error invalid-feedback" style="display:block">Please enter Site Id</span>
+                          {{/if}}
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <div class="form-group">
+                          <label>Role <span class="ip-req">*</span></label>
+                          <select class="select2" name="role_id" id="role_id" multiple="multiple"
+                            data-placeholder="Select a State" style="width: 100%;">
+                            {{#each roles}}
+                              <option value={{this.value}}>{{this.name}}</option>
+                            {{/each}}
+                          </select>
+                          {{error.role_id}}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">                      
-                      <div class="form-group">
-                        <label>Password <span class="ip-req">*</span></label>
-                        <input type="password" id="password" placeholder="Enter Password" value="{{data.password}}" class="form-control" name="password" />
-                        {{#if error.password}}
-                          <span class="error invalid-feedback" style="display:block">Please enter password</span>
-                        {{/if}}
-                      </div>
-                    </div>
-                    <div class="col-md-6">                        
-                      <div class="form-group">
-                        <label>Confirm Password <span class="ip-req">*</span></label>
-                        <input type="password" placeholder="Confirm your Password" value="{{data.confirm_password}}" class="form-control" name="confirm_password" />
-                        {{#if error.confirm_password}}
-                          <span class="error invalid-feedback" style="display:block">Please enter confirm password</span>
-                        {{/if}}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6"> 
-                      <div class="form-group">
-                        <label>Site <span class="ip-req">*</span></label>
-                        <select class="form-control" name="site_id" id="site_id">
-                          <option value="">Select Site</option>
-                          <option value="1">Cosmo</option>
-                          <option value="2">Harper Bazaar</option>
-                        </select>
-                         {{#if error.site_id}}
-                          <span class="error invalid-feedback" style="display:block">Please enter Site Id</span>
-                        {{/if}}
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6">                        
-                      <div class="form-group">
-                        <label>Role <span class="ip-req">*</span></label>
-                        <select class="select2" name="role_id" id="role_id" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">                          
-                          {{#each roles}}
-                            <option value={{this.value}}>{{this.name}}</option>
-                          {{/each}}
-                        </select>
-                        {{error.role_id}}
-                      </div>
-                    </div>
-                  </div>
-                 <div class="row">
-                    <div class="col-md-6">  
-                      <div class="form-group">
-                        <label>Status <span class="ip-req">*</span></label>
-                        <div class="row mt-2">
-                          <div class="col-md-6">                           
-                            <div class="custom-control custom-radio">
-                              <input class="custom-control-input" type="radio" id="customRadio1" name="status" value="1" checked>
-                              <label for="customRadio1" class="custom-control-label">Active</label>
-                            </div> 
-                          </div>
-                          <div class="col-md-6">                           
-                            <div class="custom-control custom-radio">
-                              <input class="custom-control-input" type="radio" id="customRadio2" name="status" value="0">
-                              <label for="customRadio2" class="custom-control-label">In-Active</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Status <span class="ip-req">*</span></label>
+                          <div class="row mt-2">
+                            <div class="col-md-6">
+                              <div class="custom-control custom-radio">
+                                <input class="custom-control-input" type="radio" id="customRadio1" name="status"
+                                  value="1" checked>
+                                <label for="customRadio1" class="custom-control-label">Active</label>
+                              </div>
                             </div>
-                          </div>  
-                        </div>                      
-                        {{error.status}}
+                            <div class="col-md-6">
+                              <div class="custom-control custom-radio">
+                                <input class="custom-control-input" type="radio" id="customRadio2" name="status"
+                                  value="0">
+                                <label for="customRadio2" class="custom-control-label">In-Active</label>
+                              </div>
+                            </div>
+                          </div>
+                          {{error.status}}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="form-group mt-5">
-                    <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit</button>
-                  </div>
-                </form>
+                    <div class="form-group mt-5">
+                      <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-             </div>
           </div>
         </div>
         <!-- /.col -->
@@ -180,112 +190,120 @@
   <!-- /.content -->
 </div>
 {{#section 'script'}}
-{{!-- <script src="../plugins/jquery/jquery.min.js"></script>
+  {{!-- <script src="../plugins/jquery/jquery.min.js"></script>
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
-<script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>  
-<script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
-<script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
-<script>
-    
-$(function () {
-  $('.select2').select2()
-  $.validator.setDefaults({
-    submitHandler: function (e) {
-      e.preventDefault();
-      $("btn-submit").text("Creating User")
-      $( "#newUser" ).submit();
-     
-    }
-  });
-  $.validator.addMethod("matchRegex", function(value, element){
-    if ( /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(value)) {
-        return true;
-    } else {
-        return false;
-    };
-  }, "Password must have at least 1 special character, one letter and 1 number"); 
-  $('#newUser').validate({
-     rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 8,
-        matchRegex:true
-      },
-      confirm_password: {
-        required: true,
-        minlength: 8,        
-        equalTo: "#password"
-      },
-      first_name: {
-        required: true
-      },
-      last_name: {
-        required: true
-      },
-      username: {
-        required: true
-      },
-      role_id: {
-        required: true
-      },
-      site_id: {
-        required: true
-      },
-      status: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a valid email address"
-      },
-      password: {
-        required: "Please enter password",
-        minlength: "Your password must be at least 8 characters long"
-      },
-      confirm_password: {
-        required: "Please enter confirm password",
-        minlength: "Your password must be at least 8 characters long",
-        equalTo: "Passwords don't match"
-      },
-      first_name: {
-        required: "Please enter a First Name"
-      },
-      last_name: {
-        required: "Please enter a Last Name"
-      },
-      username: {
-        required: "Please enter a User Name"
-      },
-      role_id: {
-        required: "Please select Role Id"
-      },
-      site_id: {
-        required: "Please select Site Id"
-      },
-      status: {
-        required: "Please select status"
-      },
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  })
-})
-</script>
+  <script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
+  <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
+  <script>
+
+    $( function ()
+    {
+      $( '.select2' ).select2()
+      $.validator.setDefaults( {
+        submitHandler: function ( e )
+        {
+          e.preventDefault();
+          $( "btn-submit" ).text( "Creating User" )
+          $( "#newUser" ).submit();
+
+        }
+      } );
+      $.validator.addMethod( "matchRegex", function ( value, element )
+      {
+        if ( /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test( value ) )
+        {
+          return true;
+        } else
+        {
+          return false;
+        };
+      }, "Password must have at least 1 special character, one letter and 1 number" );
+      $( '#newUser' ).validate( {
+        rules: {
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 8,
+            matchRegex: true
+          },
+          confirm_password: {
+            required: true,
+            minlength: 8,
+            equalTo: "#password"
+          },
+          first_name: {
+            required: true
+          },
+          last_name: {
+            required: true
+          },
+          username: {
+            required: true
+          },
+          role_id: {
+            required: true
+          },
+          site_id: {
+            required: true
+          },
+          status: {
+            required: true
+          },
+        },
+        messages: {
+          email: {
+            required: "Please enter a email address",
+            email: "Please enter a valid email address"
+          },
+          password: {
+            required: "Please enter password",
+            minlength: "Your password must be at least 8 characters long"
+          },
+          confirm_password: {
+            required: "Please enter confirm password",
+            minlength: "Your password must be at least 8 characters long",
+            equalTo: "Passwords don't match"
+          },
+          first_name: {
+            required: "Please enter a First Name"
+          },
+          last_name: {
+            required: "Please enter a Last Name"
+          },
+          username: {
+            required: "Please enter a User Name"
+          },
+          role_id: {
+            required: "Please select Role Id"
+          },
+          site_id: {
+            required: "Please select Site Id"
+          },
+          status: {
+            required: "Please select status"
+          },
+        },
+        errorElement: 'span',
+        errorPlacement: function ( error, element )
+        {
+          error.addClass( 'invalid-feedback' );
+          element.closest( '.form-group' ).append( error );
+        },
+        highlight: function ( element, errorClass, validClass )
+        {
+          $( element ).addClass( 'is-invalid' );
+        },
+        unhighlight: function ( element, errorClass, validClass )
+        {
+          $( element ).removeClass( 'is-invalid' );
+        }
+      } )
+    } )
+  </script>
 {{/section}}
 {{!-- let token=document.getElementById("token")
 let tokenvalue=localStorage.getItem('USER_TOKEN')

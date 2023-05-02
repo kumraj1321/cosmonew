@@ -137,7 +137,6 @@ export class UserController {
       finalresult["data"] = result["data"]
       finalresult["recordsTotal"] = result["total_records"]
       finalresult["recordsFiltered"] = result["recordsFiltered"]
-      console.log("finalresult===", finalresult)
       return res.json(finalresult)
     }).catch((err: any) => {
       console.log("some error occured in search api")

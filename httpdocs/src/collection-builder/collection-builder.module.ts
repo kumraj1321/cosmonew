@@ -4,6 +4,7 @@ import { CollectionBuilderController } from './collection-builder.controller';
 
 @Module({
   controllers: [CollectionBuilderController],
-  providers: [CollectionBuilderService]
+  providers: [CollectionBuilderService],
+  exports: [CollectionBuilderService]
 })
-export class CollectionBuilderModule {}
+export class CollectionBuilderModule { }

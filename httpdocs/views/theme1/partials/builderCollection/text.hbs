@@ -1,0 +1,125 @@
+{{#section 'css'}}
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="{{basePath}}/dist/css/main.css">
+{{/section}}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    {{!-- {{error}} --}}
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-12">
+
+
+                        <div class="card card-info">
+                            <div class="card-header">
+
+                                <h2 class="card-title">Text</h2>
+                                <br />
+                                <p>Small or long text like title or description</p>
+
+                            </div>
+                            <div class="card-body">
+                                <form id="text" method="post" action="/field-structure">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+
+                                                <label> Name <span class="ip-req">*</span></label>
+                                                <input type="text" name="collection_name" value={{collection_name}}
+                                                    style="display: none;">
+                                                <input type="text" name="field_type" value="text"
+                                                    style="display: none;">
+                                                <input type="text" class="form-control" name="field_name"
+                                                    placeholder="Name of the text field" />
+                                                <label style="font-size: smaller;">No space is allowed for the name of
+                                                    the attribute</label>
+
+                                                {{#if error.first_name}}
+                                                    <span class="error invalid-feedback" style="display:block">Please
+                                                        enter First Name</span>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Text Type <span class="ip-req">*</span></label>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio1" name="text_type" value="1" checked>
+                                                            <label for="customRadio1" class="custom-control-label">
+                                                                <div>
+                                                                    <lable>Short Text</lable>
+                                                                    <br />
+                                                                    <lable style="font-size: small;">Best for titles,
+                                                                        names, links
+                                                                        (URL). It also enables exact
+                                                                        search on the field.</lable>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio2" name="text_type" value="0">
+                                                            <label for="customRadio2" class="custom-control-label">
+                                                                <div>
+                                                                    <lable>Long Text</lable>
+                                                                    <br />
+                                                                    <lable style="font-size: small;">Best for titles,
+                                                                        names, links
+                                                                        (URL). It also enables exact
+                                                                        search on the field.</lable>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{error.status}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-5">
+                                        <button type="submit" class="btn btn-info btn-block"
+                                            id="btn-submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {{!-- </div> --}}
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{{#section 'script'}}
+    {{!-- <script src="../plugins/jquery/jquery.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+    <script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
+    <script>
+
+    </script>
+{{/section}}
+{{!-- let token=document.getElementById("token")
+let tokenvalue=localStorage.getItem('USER_TOKEN')
+console.log("tokenvalue",tokenvalue)
+token.value=tokenvalue --}}
+{{!-- </script> --}}

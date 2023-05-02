@@ -1,0 +1,10 @@
+{{!-- <label>{{field_name}}</label>
+{{log data "field_name from email.hbs"}}
+<input name="email" placeholder="email" type="email"></input> --}}
+
+<div class="form-group">
+    <label for="email">{{data.field_name}} </label>
+    <input type="email" placeholder="Enter Email Address" id="email" value="" class="form-control"
+        name={{data.field_name}} />
+
+</div>

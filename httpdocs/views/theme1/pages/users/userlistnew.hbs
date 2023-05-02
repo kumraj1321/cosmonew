@@ -1,0 +1,154 @@
+{{#section 'css'}}
+    <link rel="stylesheet" href="{{basePath}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+{{/section}}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Users listing</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                        <li class="breadcrumb-item active"><a href="/users/new">Add New</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Listed Users </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="userListing" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th> Name</th>
+                                        <th>Status</th>
+                                        <th>Roles</th>
+                                        <th>Created</th>
+                                        {{!-- <th>Is Login?</th> --}}
+                                        <th>Edit User</th>
+                                    </tr>
+                                </thead>
+
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+{{#section 'script'}}
+    <!-- DataTables  & Plugins -->
+    <script src="{{basePath}}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{basePath}}/plugins/jszip/jszip.min.js"></script>
+    <script src="{{basePath}}/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="{{basePath}}/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script type="module">
+        let i = 1
+        $( '#userListing' ).DataTable( {
+            "serverSide": true,
+            "ajax": "/users/userlistnewdata",
+            "columns": [
+
+                {
+                    "render": function ( data, type, row, meta )
+                    {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    "data": "first_name",
+                    "render": function ( data, type, row, meta )
+                    {
+                        if ( type === 'display' )
+                        {
+                            data = `${ row.first_name } ${ row.last_name }`;
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "data": "status",
+                    "render": function ( data, type, row, meta )
+                    {
+                        if ( type === 'display' )
+                        {
+                            if ( data === '0' )
+                            {
+                                data = "In-Active"
+                            } else
+                            {
+                                data = 'Active'
+                            }
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "data": "role_id",
+
+                },
+                { "data": "created_at" },
+                {{!-- {
+                    "render": function ( data, type, row, meta )
+                    {
+                        if ( type === 'display' )
+                        {
+                            if ( row[ "is_login" ] === '1' )
+                            {
+                                data = 'Yes'
+                            } else
+                            {
+                                data = 'No'
+                            }
+                        }
+                        return data;
+                    }
+                }, --}}
+            {
+                "data": "role_id",
+                "render": function ( data, type, row, meta )
+                {
+                    if ( type === 'display' )
+                    {
+                        data = `<a href="/users/edituser/${ row._id }"><i class="fas fa-edit"></i>Edit</a>`;
+                    }
+                    return data;
+                }
+            }
+            ]
+        } )
+
+
+    </script>
+{{/section}}

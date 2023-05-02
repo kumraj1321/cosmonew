@@ -11,19 +11,16 @@ import { UserModule } from './user/user.module';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import mongoose from 'mongoose';
+import { CollectionBuilderModule } from './collection-builder/collection-builder.module'
+import { FieldStructureModule } from './field-structure/field-structure.module';
 
 setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
 @Module({
   imports: [
-    // ServeStaticModule.forRoot({
-    // rootPath: join(__dirname, '../..', 'build'),
-    // exclude: ['/src*'],
-    // }),
+
     MongooseModule.forRoot(dbconfig.url),
     SettingsModule,
-    // MongooseModelsModule,
-    //   UsersModule,
-    UserModule, AuthModule
+    UserModule, AuthModule, CollectionBuilderModule, FieldStructureModule
   ],
   controllers: [AppController],
   providers: [AppService],
