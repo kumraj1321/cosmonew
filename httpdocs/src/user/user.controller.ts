@@ -10,7 +10,7 @@ import { AuthenticatedGuard } from '../auth/authenticated.guard';
 import { get } from 'http';
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor (private readonly userService: UserService) { }
 
   @UseGuards(AuthenticatedGuard)
   @Post()
@@ -129,7 +129,6 @@ export class UserController {
     let start = req.query.start
     let length = req.query.length
     let draw = req.query.draw
-    console.log("search start and length", search, start, length)
     await this.userService.findFilter(search, start, length).then((result: any) => {
       let finalresult: any = {}
       finalresult["draw"] = draw

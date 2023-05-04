@@ -3,14 +3,13 @@
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 {{/section}}
-{{header/mainHeader}}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Partials Listing according to user</h1>
+                    <h1>Listing page of {{collection_name}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -30,18 +29,20 @@
                         <div class="card-header">
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
-                        <form method="post" action="/data-filing">
-                            <!-- /.card-header -->
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="collectionListing" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Title</th>
+                                        <th>Created At</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
 
-                            {{#each collectionData}}
-                                {{>(dynamicPartial this.field_type) data=this}}
-
-                            {{/each}}
-
-                            <input name="collection_name" value={{collection_name}} type="text"
-                                style="display: none;"></input>
-                            <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit Data</button>
-                        </form>
+                            </table>
+                        </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
@@ -69,6 +70,31 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        $( '#collectionListing' ).DataTable( {
+            "serverSide": true,
+            "ajax": "/data-filing/tabledata/{{collection_name}}",
+            "columns": [
+                { "data": "_id" },
+                {
+                    "render": function ( data, type, row, meta )
+                    {
+                        return row[ "text_field" ] ? row[ "text_field" ] : ''
+                    }
+                },
+                { "data": "created_at" },
+                {
+                    "render": function ( data, type, row, meta )
+                    {
+                        if ( type === 'display' )
+                        {
+                            console.log( "row and row_id", row, row._id )
+                            data = `<a href="/field-structure/editPartialManager/${ row._id }"><i class="fas fa-edit"></i>Edit</a>`;
+                        }
+                        return data;
+                    }
+                }
 
+            ]
+        } )
     </script>
 {{/section}}

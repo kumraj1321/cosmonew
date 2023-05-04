@@ -1,12 +1,9 @@
-{{!-- <label>{{field_name}}</label>
-{{log data "field_name from text.hbs"}}
-<input type="text" placeholder="text" name="text"></input> --}}
-
 <div>
     <div class="form-group">
         <label>{{data.field_name}}<span class="ip-req">*</span></label>
 
-        <input type="text" placeholder="Enter Text value" value="" class="form-control" name={{data.field_name}} />
+        <input type="text" placeholder="Enter Text value" value="{{particularField filingdata data.field_name}}"
+            class="form-control" name={{data.field_name}} />
 
     </div>
 </div>

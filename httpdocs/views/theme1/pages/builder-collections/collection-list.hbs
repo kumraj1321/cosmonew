@@ -37,6 +37,7 @@
                     <th>Id</th>
                     <th>Collection Name</th>
                     <th>Manage Collection</th>
+                    <th>Go to Listing</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -46,7 +47,9 @@
                       <td><a href="collection-builder/editcollection/{{this.originalName}}">{{this.name}}</a></td>
                       <td>{{#if this.showEdit}}<a href="collection-builder/collectionManager/{{this.originalName}}"><i
                               class="fas fa-edit"></i>Manage</a>{{/if}}</td>
+                      <td><a href="{{basePath}}/data-filing/{{this.originalName}}">Listing</a></td>
                     </tr>
+
                   {{/forEach}}
                 </tbody>
               </table>

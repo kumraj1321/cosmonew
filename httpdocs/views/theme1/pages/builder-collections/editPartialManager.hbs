@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Partials Listing according to user</h1>
+                    <h1>Edit partials according to user</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -30,14 +30,13 @@
                         <div class="card-header">
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
-                        <form method="post" action="/data-filing">
+                        <form method="post" action="/data-filing/edit/{{particularField filingdata "_id"}}">
                             <!-- /.card-header -->
 
+
                             {{#each collectionData}}
-                                {{>(dynamicPartial this.field_type) data=this}}
-
+                                {{>(dynamicPartial this.field_type) data=this filingdata=../filingdata}}
                             {{/each}}
-
                             <input name="collection_name" value={{collection_name}} type="text"
                                 style="display: none;"></input>
                             <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit Data</button>

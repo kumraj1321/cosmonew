@@ -15,6 +15,7 @@ import { HomemanagerModule } from './homemanager/homemanager.module';
 import { HttpExceptionFilter } from './http-exception.filter';
 import { CollectionBuilderModule } from './collection-builder/collection-builder.module'
 import { FieldStructureModule } from './field-structure/field-structure.module';
+import { DataFilingModule } from './data-filing/data-filing.module';
 
 setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
 @Module({
@@ -22,7 +23,7 @@ setTimeout(() => { console.log(mongoose.connection.readyState); }, 10000)
 
     MongooseModule.forRoot(dbconfig.url),
     SettingsModule,
-    UserModule, AuthModule, CollectionBuilderModule, FieldStructureModule, HomemanagerModule
+    UserModule, AuthModule, CollectionBuilderModule, FieldStructureModule, HomemanagerModule, DataFilingModule
   ],
   controllers: [AppController],
   providers: [AppService],

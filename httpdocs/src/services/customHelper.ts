@@ -28,7 +28,11 @@ const customHelpers = {
     return config.BASE_PATH
   },
   particularField: function (object: any, req: any) {
-    return object[req]
+    if (object && req) {
+      return object[req]
+    }
+    return ""
+
   },
   select: function (selected: any, options: any) {
     if (typeof selected === 'string') {
@@ -53,7 +57,7 @@ const customHelpers = {
   },
   dynamicPartial: function (partialName: any) {
     return `builderPartials/${partialName}`
-  }
+  },
 
 
 }

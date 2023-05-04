@@ -1,5 +1,6 @@
 import { Controller, UseGuards, Get, Post, Body, Req, Patch, Param, Res, Delete, Render, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
 import { FieldStructureService } from './field-structure.service';
+import { DataFilingService } from 'src/data-filing/data-filing.service';
 import { CreateFieldStructureDto } from './dto/create-field-structure.dto';
 import { UpdateFieldStructureDto } from './dto/update-field-structure.dto';
 import { Request, Response } from 'express';
@@ -8,7 +9,7 @@ import { table } from 'console';
 
 @Controller('field-structure')
 export class FieldStructureController {
-  constructor (private readonly fieldStructureService: FieldStructureService) { }
+  constructor (private readonly fieldStructureService: FieldStructureService, private readonly dataFilingService: DataFilingService) { }
 
   @UseGuards(AuthenticatedGuard)
   @Post()
@@ -31,15 +32,9 @@ export class FieldStructureController {
       return this.fieldStructureService.updateUnique(data["_id"], { site_id, user_id, field_structure, collection_name })
     } else {
       field_structure = JSON.stringify([field_structure])
-      return this.fieldStructureService.create({ site_id, user_id, field_structure, collection_name });
+      return this.fieldStructureService.create({ site_id, user_id, field_structure, collection_name, "testfield": "abcdef", "test_field2": 56789 });
     }
 
-  }
-  @Post('/dataEntry')
-  async dataEntry(@Req() req: Request, @Res() res: Response) {
-    console.log("req.query of data entry", req.query)
-    console.log("req.body of data entry", req.body)
-    console.log("req.params of data entry", req.params)
   }
 
 
@@ -49,11 +44,35 @@ export class FieldStructureController {
       return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
 
     }
+
     let site_id: any = req["session"]["passport"]["user"]["site_id"]
     let collection_name = req.query["collection_name"]
     let data = await this.fieldStructureService.findCollection({ site_id, collection_name })
     let finaldata = JSON.parse(data["field_structure"])
-    return res.render('builder-collections/partialManager', { collectionData: finaldata })
+
+    // return res.render('builder-collections/editPartialManager', { filingdata: '', collectionData: finaldata, collection_name: data["collection_name"] })
+
+    return res.render('builder-collections/partialManager', { collectionData: finaldata, collection_name: data["collection_name"] })
+  }
+
+  @Get('/editPartialManager/:id')
+  async editPartialManager(@Req() req: Request, @Res() res: Response) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+
+    }
+    let id: any = req.params["id"]
+    let filingdata: any = await this.dataFilingService.findOne(id)
+    if (Object.keys(filingdata).length > 0) {
+      let site_id: any = filingdata["site_id"]
+      let collection_name = filingdata["collection_name"]
+      let data = await this.fieldStructureService.findCollection({ site_id, collection_name })
+      let finaldata = JSON.parse(data["field_structure"])
+      return res.render('builder-collections/editPartialManager', { filingdata, collectionData: finaldata, collection_name: data["collection_name"] })
+    } else {
+      return res.render('builder-collections/editPartialManager', { filingdata: '', collectionData: [], collection_name: '' })
+    }
+
   }
 
   @Get()
