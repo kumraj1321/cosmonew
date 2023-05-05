@@ -1,0 +1,16 @@
+<div>
+    <div class="form-group">
+        {{log (particularField filingdata data.field_name)  "filingdata new here" }}
+        <label>{{data.field_name}}<span class="ip-req">*</span></label>
+        {{#each data.field_value}}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="{{../data.field_name}}"
+                    {{defaultCheck (particularField ../filingdata ../data.field_name) this.value}}
+                    value="{{this.value}}">
+                <label class="form-check-label">{{this.key}}</label>
+            </div>
+        {{/each}}
+    </div>
+</div>
+<script>
+</script>

@@ -98,6 +98,7 @@ export class CollectionBuilderController {
   @Get('/editcollection/:name')
   async edituser(@Res() res: Response, @Req() req: Request) {
     let name: string = req.params.name
+    console.log("name of the params", name)
     let collection: any = await this.collectionBuilderService.readData(name, 1);
     if (collection.exists) {
       return res.render('builder-collections/editcollection', { title: 'Edit Collection', data: { collection: name } });

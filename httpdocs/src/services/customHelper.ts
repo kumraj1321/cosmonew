@@ -55,6 +55,13 @@ const customHelpers = {
       return true
     } return false
   },
+  defaultCheck: function (value: any, currentValue: any) {
+    // console.log("current value and value", currentValue, value)
+    if (value && currentValue && (value === currentValue)) {
+      return 'checked'
+    }
+    return ''
+  },
   dynamicPartial: function (partialName: any) {
     return `builderPartials/${partialName}`
   },

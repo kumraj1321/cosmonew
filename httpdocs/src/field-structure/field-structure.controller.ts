@@ -20,10 +20,26 @@ export class FieldStructureController {
     }
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let user_id = req["session"]["passport"]["user"]["_id"]
-    let field_structure: any = { "field_name": req.body.field_name, "field_type": req.body.field_type }
+    let field_structure: any = { ...req.body }
+    delete field_structure["collection_name"]
+    if (field_structure["field_type"] === 'radio') {
+      let field_value = field_structure["field_value"]
+      field_value = field_value.split("\r\n")
+      let fieldvalue: any = []
+      for (let i = 0; i < field_value.length; i++) {
+        let a: any = {}
+        let aa = field_value[i].split(':')
+        if (aa.length === 2) {
+
+          a["key"] = aa[0]
+          a["value"] = aa[1]
+          fieldvalue.push(a)
+        }
+      }
+      field_structure["field_value"] = fieldvalue
+    }
     let collection_name: any = req.body["collection_name"]
     let data = await this.fieldStructureService.findCollection({ site_id, collection_name })
-
     if (data) {
 
       let fieldStructure = JSON.parse(data["field_structure"])
@@ -32,7 +48,7 @@ export class FieldStructureController {
       return this.fieldStructureService.updateUnique(data["_id"], { site_id, user_id, field_structure, collection_name })
     } else {
       field_structure = JSON.stringify([field_structure])
-      return this.fieldStructureService.create({ site_id, user_id, field_structure, collection_name, "testfield": "abcdef", "test_field2": 56789 });
+      return this.fieldStructureService.create({ site_id, user_id, field_structure, collection_name });
     }
 
   }
