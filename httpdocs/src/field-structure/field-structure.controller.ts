@@ -21,6 +21,7 @@ export class FieldStructureController {
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let user_id = req["session"]["passport"]["user"]["_id"]
     let field_structure: any = { ...req.body }
+    console.log("field_strucure from controller file", field_structure)
     delete field_structure["collection_name"]
     if (field_structure["field_type"] === 'radio') {
       let field_value = field_structure["field_value"]

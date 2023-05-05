@@ -1,0 +1,7 @@
+<div class="form-group">
+    {{log filingdata "filing data from date.hbs"}}
+    <label for="email">{{data.field_name}} : </label>
+    {{!-- <input type="date" id="birthday" name="{{data.field_name}}"> --}}
+    <input type="datetime-local" id="date" value="{{particularField filingdata data.field_name}}"
+        name="{{data.field_name}}">
+</div>
