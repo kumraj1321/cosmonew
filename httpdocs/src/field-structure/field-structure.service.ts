@@ -47,6 +47,10 @@ export class FieldStructureService {
     }
 
   }
+  async allCollection(site_id: any) {
+    let data = await this.model.find({ site_id })
+    return data
+  }
 
   async updateUnique(id: any, data: any) {
     id = new ObjectId(id)

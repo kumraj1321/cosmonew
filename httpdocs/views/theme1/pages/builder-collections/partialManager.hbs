@@ -2,6 +2,10 @@
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="{{basePath}}/dist/css/main.css">
 {{/section}}
 {{header/mainHeader}}
 <div class="content-wrapper">
@@ -56,6 +60,9 @@
 </div>
 {{#section 'script'}}
     <!-- DataTables  & Plugins -->
+    <script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
     <script src="{{basePath}}/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -69,6 +76,10 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        $( document ).ready( function ()
+        {
+            $( '.select2' ).select2();
+        } );
 
     </script>
 {{/section}}

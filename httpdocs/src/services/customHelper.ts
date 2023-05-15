@@ -28,7 +28,7 @@ const customHelpers = {
     return config.BASE_PATH
   },
   particularField: function (object: any, req: any) {
-    if (object && req) {
+    if (object && req && object[req]) {
       return object[req]
     }
     return ""
@@ -49,14 +49,8 @@ const customHelpers = {
       new RegExp(' value=\"' + selected + '\"'),
       '$& checked');
   },
-  findIndex: function (role_id: any, value: any) {
-    let ind = role_id.indexOf(value)
-    if (ind >= 0) {
-      return true
-    } return false
-  },
   defaultCheck: function (value: any, currentValue: any) {
-    // console.log("current value and value", currentValue, value)
+
     if (value && currentValue && (value === currentValue)) {
       return 'checked'
     }
@@ -65,6 +59,12 @@ const customHelpers = {
   dynamicPartial: function (partialName: any) {
     return `builderPartials/${partialName}`
   },
+  findIndex: function (allvalue: any, currentValue: any) {
+    if (allvalue && currentValue && (allvalue.indexOf(currentValue) >= 0)) {
+      return true
+    }
+    return false
+  }
 
 
 }

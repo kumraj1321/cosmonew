@@ -47,8 +47,6 @@ export class DataFilingController {
     let draw = req.query.draw
     let site_id: any = req["session"]["passport"]["user"]["site_id"]
     let collection_name = req.params["id"]
-    // console.log("req.query===>", req.query)
-    console.log("search start length and draw", search, start, length, draw, req.params["id"])
     await this.dataFilingService.tabledata(site_id, collection_name, search, start, length).then((result: any) => {
       let finalresult: any = {}
       finalresult["draw"] = draw

@@ -1,0 +1,15 @@
+<div class="form-group">
+    <label>{{data.field_name}}</label>
+    <select class="select2" name="{{data.field_name}}" id="role_id" multiple="multiple" value="" style="width: 100%;"
+        data-placeholder="Select a State">
+        {{#each data.field_value}}
+            {{#if (findIndex (particularField ../filingdata ../data.field_name) this.value)}}
+                <option selected="selected" value={{this.value}}>{{this.key}}</option>
+            {{else}}
+                <option value={{this.value}}>{{this.key}}</option>
+            {{/if}}
+
+
+        {{/each}}
+    </select>
+</div>

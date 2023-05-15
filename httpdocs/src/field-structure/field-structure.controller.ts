@@ -21,9 +21,8 @@ export class FieldStructureController {
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let user_id = req["session"]["passport"]["user"]["_id"]
     let field_structure: any = { ...req.body }
-    console.log("field_strucure from controller file", field_structure)
     delete field_structure["collection_name"]
-    if (field_structure["field_type"] === 'radio') {
+    if (field_structure["field_type"] === 'radio' || field_structure["field_type"] === 'staticSelect') {
       let field_value = field_structure["field_value"]
       field_value = field_value.split("\r\n")
       let fieldvalue: any = []
@@ -54,6 +53,16 @@ export class FieldStructureController {
 
   }
 
+  @Get('/allCollections')
+  async allCollection(@Req() req: Request, @Res() res: Response) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+
+    }
+    let site_id = req["session"]["passport"]["user"]["site_id"]
+    let alldata = await this.fieldStructureService.allCollection(site_id)
+    console.log("all data form dynamic multiselect", alldata)
+  }
 
   @Get('/partialManager')
   async partialManager(@Req() req: Request, @Res() res: Response) {
