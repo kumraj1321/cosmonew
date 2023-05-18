@@ -118,6 +118,15 @@
 
                     let b = "#" + thisid[ 0 ] + '\\,' + thisid[ 1 ]
                     $( b ).html( a )
+                    let c = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ]
+                    let ismultiple = $( c ).attr( 'name' )
+                    if ( ismultiple === '0' )
+                    {
+                        a = `<option value=''>'Select options'</option>` + a
+                        $( b ).html( a )
+                        $( b ).removeAttr( "multiple" )
+                        $( b ).removeAttr( "required" )
+                    }
                 }
             } );
         } )
