@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label>{{data.field_name}}</label>
+    <select class="dynamicSelect" name="{{data.field_name}}" id="{{data.collection_selected}},{{data.field_selected}}"
+        multiple="multiple" value="" style="width: 100%;" data-placeholder="Select a Dynamic State">
+
+        {{!-- {{log (getdata data.collection_selected data.field_selected site_id data.field_name) "data form the dynamic select"}} --}}
+
+        {{!-- {{#each (getdata data.collection_selected data.field_selected site_id)}}
+            <option value={{this.value}}>{{this.key}}</option>
+        {{/each}} --}}
+
+    </select>
+</div>

@@ -43,6 +43,26 @@
 
 
                                     </div>
+                                    {{!-- {{log alldata "alldata from dynamic select"}} --}}
+
+                                    <div class="form-group">
+                                        <label>Select Collection </label>
+                                        <select class="form-control" name="collection_selected"
+                                            id="collection_selected">
+                                            {{#each alldata}}
+                                                <option value={{this.collection_name}}>{{this.collection_name}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Select Field </label>
+                                        <select class="form-control" name="field_selected" id="field_selected">
+
+                                        </select>
+                                    </div>
+
+
                                     <div class="form-group">
                                         <label>Select Type </label>
                                         <select class="form-control" name="select_type" id="select_type">
@@ -75,7 +95,10 @@
     <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
     <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
     <script>
-
+        $( document ).ready( function ()
+        {
+            console.log( "document is ready from dynamic select" )
+        } );
     </script>
 {{/section}}
 {{!-- let token=document.getElementById("token")

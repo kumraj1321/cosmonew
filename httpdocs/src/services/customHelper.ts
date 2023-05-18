@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import config from 'src/config/config';
+import axios from 'axios';
 
 const customHelpers = {
   contentFor: function (name: any, options: any) {
@@ -64,6 +65,31 @@ const customHelpers = {
       return true
     }
     return false
+  },
+
+  getdata: async function (collection_name: any, field_name: any, site_id: any, id: any) {
+    // console.log("collection_name ,site_id,field_name from custom helper", collection_name, field_name, site_id)
+    // console.log("id of the custom helper", id)
+    await axios.get('http://localhost:3001/data-filing/multiselect', {
+      params: {
+        collection_name: collection_name,
+        field_name: field_name,
+        site_id: site_id
+      }
+    }).then((data: any) => {
+      if (data.data) {
+        console.log("data of the customhelper", data.data)
+        return data.data
+      } else {
+        return []
+      }
+    })
+
+
+
+  },
+  json: function (obj: any) {
+    return JSON.stringify(obj)
   }
 
 

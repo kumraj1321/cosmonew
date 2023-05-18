@@ -21,6 +21,7 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
+    <input class="alldata" value={{ json alldata}}></input>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -31,13 +32,14 @@
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
                         <!-- /.card-header -->
+
                         <div class="card-body">
-                            {{>builderCollection/text site_id="1"}}
-                            {{>builderCollection/email site_id="1"}}
+                            {{>builderCollection/text }}
+                            {{>builderCollection/email }}
                             {{>builderCollection/radio}}
                             {{>builderCollection/date}}
                             {{>builderCollection/staticSelect}}
-                            {{!-- {{>builderCollection/dynamicSelect}} --}}
+                            {{>builderCollection/dynamicSelect alldata=alldata}}
                         </div>
 
                         <!-- /.card-body -->
@@ -67,6 +69,30 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        $( document ).ready( function ()
+        {
+            $( "#collection_selected" ).change( function ()
+            {
+                var val = $( this ).val();
+
+                let alldata = $( '.alldata' ).val()
+                alldata = JSON.parse( alldata )
+                let a = ""
+                $.each( alldata, function ( index, data )
+                {
+
+                    if ( data[ "collection_name" ] === val )
+                    {
+                        let fields = data[ "field_name" ]
+                        $.each( fields, function ( ind, fieldData )
+                        {
+                            a += `<option value=${ fieldData }>${ fieldData }</option>`
+                        } )
+                    }
+                } )
+                $( "#field_selected" ).html( a );
+            } );
+        } );
         $( function ()
         {
             $( "#userListing" ).DataTable( {
@@ -76,5 +102,17 @@
             //.buttons().container().appendTo('#userListing_wrapper .col-md-6:eq(0)');
 
         } );
+        $.ajax( {
+            type: 'GET',
+            url: "/field-structure/allCollections",
+            success: function ( data )
+            {
+                if ( data.status === "200" )
+                {
+
+                }
+            }
+        } );
+
     </script>
 {{/section}}

@@ -15,6 +15,18 @@ export class DataFilingService {
     return 'Data Filed successfully';
   }
 
+  async multiselect(collection_name: any, field_name: any, site_id: any) {
+    let servicedata: any = await this.model.find({ collection_name, site_id })
+    let result: any = []
+    for (let i = 0; i < servicedata.length; i++) {
+      let a: any = {}
+      a["key"] = servicedata[i]["_id"] ? servicedata[i]["_id"] : ''
+      a["value"] = servicedata[i][field_name] ? servicedata[i][field_name] : ''
+      result.push(a)
+    }
+    return result
+  }
+
   async tabledata(site_id: any, collection_name: any, search: any, start: any, length: any) {
     let filterdata = await this.model.find({ site_id, collection_name })
     let total_records = filterdata.length
@@ -45,7 +57,6 @@ export class DataFilingService {
   }
   async updateById(id: any, data: any) {
     id = new ObjectId(id)
-    console.log("id and data from service", id, data)
     let res = await this.model.findByIdAndUpdate(id, data)
     return res
   }

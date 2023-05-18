@@ -31,10 +31,10 @@ export class CollectionBuilderController {
 
 
 
-  @Get('/addField')
-  async addField(@Res() res: Response, @Req() req: Request) {
-    return res.render('builder-collections/addField', { settings, collection_name: req.query["collection_name"] })
-  }
+  // @Get('/addField')
+  // async addField(@Res() res: Response, @Req() req: Request) {
+  //   return res.render('builder-collections/addField', { settings, collection_name: req.query["collection_name"] })
+  // }
 
   @Get("/view")
   async viewBuilderAssets(@Res() res: Response) {

@@ -75,9 +75,10 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
-        $( document ).ready( function ()
+        $( "select" ).each( function ()
         {
-            $( '.select2' ).select2();
+            var input = $( this ); // This is the jquery object of the input, do what you will
+            $( this ).select2()
         } );
 
 

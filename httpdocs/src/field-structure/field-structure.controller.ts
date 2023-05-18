@@ -6,6 +6,8 @@ import { UpdateFieldStructureDto } from './dto/update-field-structure.dto';
 import { Request, Response } from 'express';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 import { table } from 'console';
+import settings from 'src/config/settings';
+import { all } from 'axios';
 
 @Controller('field-structure')
 export class FieldStructureController {
@@ -53,16 +55,37 @@ export class FieldStructureController {
 
   }
 
-  @Get('/allCollections')
-  async allCollection(@Req() req: Request, @Res() res: Response) {
+
+  @Get('/addField')
+  async addField(@Res() res: Response, @Req() req: Request) {
     if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
       return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
-
     }
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let alldata = await this.fieldStructureService.allCollection(site_id)
-    console.log("all data form dynamic multiselect", alldata)
+    return res.render('builder-collections/addField', { settings, collection_name: req.query["collection_name"], alldata })
   }
+
+
+  // @Get('/allCollections')
+  // async allCollection(@Req() req: Request, @Res() res: Response) {
+  //   if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+  //     return res.json({
+  //       "status": "500",
+  //       "message": "session expired!",
+  //       "data": []
+  //     })
+
+  //   }
+  //   let site_id = req["session"]["passport"]["user"]["site_id"]
+  //   let alldata = await this.fieldStructureService.allCollection(site_id)
+  //   console.log("all data form dynamic multiselect", alldata)
+  //   return res.json({
+  //     "status": "200",
+  //     "message": "Date fetched successfully!",
+  //     "data": alldata
+  //   })
+  // }
 
   @Get('/partialManager')
   async partialManager(@Req() req: Request, @Res() res: Response) {
@@ -78,7 +101,7 @@ export class FieldStructureController {
 
     // return res.render('builder-collections/editPartialManager', { filingdata: '', collectionData: finaldata, collection_name: data["collection_name"] })
 
-    return res.render('builder-collections/partialManager', { collectionData: finaldata, collection_name: data["collection_name"] })
+    return res.render('builder-collections/partialManager', { collectionData: finaldata, site_id, collection_name: data["collection_name"] })
   }
 
   @Get('/editPartialManager/:id')
@@ -94,7 +117,7 @@ export class FieldStructureController {
       let collection_name = filingdata["collection_name"]
       let data = await this.fieldStructureService.findCollection({ site_id, collection_name })
       let finaldata = JSON.parse(data["field_structure"])
-      return res.render('builder-collections/editPartialManager', { filingdata, collectionData: finaldata, collection_name: data["collection_name"] })
+      return res.render('builder-collections/editPartialManager', { filingdata, collectionData: finaldata, site_id, collection_name: data["collection_name"] })
     } else {
       return res.render('builder-collections/editPartialManager', { filingdata: '', collectionData: [], collection_name: '' })
     }

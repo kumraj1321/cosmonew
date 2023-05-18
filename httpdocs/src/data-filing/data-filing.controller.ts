@@ -9,6 +9,20 @@ import data from 'src/services/data';
 export class DataFilingController {
   constructor (private readonly dataFilingService: DataFilingService) { }
 
+  @Get('/multiselect/:collection_name/:field_name')
+  async multiselect(@Req() req: Request, @Res() res: Response) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+
+    }
+    let site_id = req["session"]["passport"]["user"]["site_id"]
+    let collection_name = req.params.collection_name
+    let field_name = req.params.field_name
+    let result = await this.dataFilingService.multiselect(collection_name, field_name, site_id)
+    return res.json(result)
+  }
+
+
   @Post()
   async create(@Req() req: Request, @Res() res: Response) {
     if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {

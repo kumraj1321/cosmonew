@@ -38,7 +38,7 @@
                             <!-- /.card-header -->
 
                             {{#each collectionData}}
-                                {{>(dynamicPartial this.field_type) data=this}}
+                                {{>(dynamicPartial this.field_type) data=this site_id=../site_id}}
 
                             {{/each}}
 
@@ -76,10 +76,52 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
-        $( document ).ready( function ()
+
+
+        $( "select" ).each( function ()
         {
-            $( '.select2' ).select2();
+            var input = $( this ); // This is the jquery object of the input, do what you will
+            $( this ).select2()
         } );
+        let dynamicId = []
+        $( ".dynamicSelect" ).each( function ()
+        {
+            let startid = $( this ).attr( "id" )
+            dynamicId.push( startid )
+        } )
+        $.each( dynamicId, function ( index, id )
+        {
+            let splitid = id.split( ',' )
+            collection_selected = splitid[ 0 ]
+            field_selected = splitid[ 1 ]
+            $.ajax( {
+                type: 'GET',
+                context: this,
+                url: `/data-filing/multiselect/${ collection_selected }/${ field_selected }`,
+                success: function ( data )
+                {
+                    let a = ""
+                    $.each( data, function ( index, option )
+                    {
+                        a += `<option value=${ option.key }>${ option.value }</option>`
+                    } )
+                    let thisid = dynamicId[ index ]
+                    thisid = thisid.split( ',' )
+                    let b = "#" + thisid[ 0 ] + '\\,' + thisid[ 1 ]
+                    $( b ).html( a )
+                }
+            } );
+        } )
 
     </script>
 {{/section}}
+{{!-- $( document ).ready( function ()
+        {
+            $( '.staticSelect' ).select2(); 
+            $( '.dynamicSelect' ).select2();
+
+
+        } ); --}}
+
+{{!-- $( '#staticSelect' ).select2();
+        $( '#dynamicSelect' ).select2(); --}}

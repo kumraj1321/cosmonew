@@ -49,7 +49,22 @@ export class FieldStructureService {
   }
   async allCollection(site_id: any) {
     let data = await this.model.find({ site_id })
-    return data
+    let result: any = []
+
+    for (let i = 0; i < data.length; i++) {
+      let a: any = {}
+      a["collection_name"] = data[i]["collection_name"]
+      let field_structure: any = JSON.parse(data[i]["field_structure"])
+      let fields: any = []
+      for (let j = 0; j < field_structure.length; j++) {
+        if (field_structure[j]["field_type"] === 'text') {
+          fields.push(field_structure[j]["field_name"])
+        }
+      }
+      a["field_name"] = fields
+      result.push(a)
+    }
+    return result
   }
 
   async updateUnique(id: any, data: any) {
