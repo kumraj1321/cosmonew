@@ -80,7 +80,47 @@
             var input = $( this ); // This is the jquery object of the input, do what you will
             $( this ).select2()
         } );
+        let dynamicId = []
+        $( ".dynamicSelect" ).each( function ()
+        {
+            let startid = $( this ).attr( "id" )
+            dynamicId.push( startid )
+        } )
+        $.each( dynamicId, function ( index, id )
+        {
+            let splitid = id.split( ',' )
+            collection_selected = splitid[ 0 ]
+            field_selected = splitid[ 1 ]
+            $.ajax( {
+                type: 'GET',
+                context: this,
+                url: `/data-filing/multiselect/${ collection_selected }/${ field_selected }`,
+                success: function ( data )
+                {
+                    let thisid = dynamicId[ index ]
+                    thisid = thisid.split( ',' )
+                    let x = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ]
+                    let selectedinput = $( x ).val()
+                    selectedinput = selectedinput.split( ',' )
+                    let a = ""
+                    $.each( data, function ( index, option )
+                    {
+                        let ind = selectedinput.indexOf( option.key )
+                        if ( ind === -1 )
+                        {
+                            a += `<option value=${ option.key }>${ option.value }</option>`
+                        } else
+                        {
+                            a += `<option value=${ option.key } selected=selected>${ option.value }</option>`
 
+                        }
+                    } )
+
+                    let b = "#" + thisid[ 0 ] + '\\,' + thisid[ 1 ]
+                    $( b ).html( a )
+                }
+            } );
+        } )
 
 
     </script>
