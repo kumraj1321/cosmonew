@@ -15,7 +15,7 @@ export class FieldStructureController {
 
   @UseGuards(AuthenticatedGuard)
   @Post()
-  async create(@Req() req: Request, @Res() res: Response) {
+  async create(@Res() res: Response, @Req() req: Request) {
     if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
       return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
 
@@ -40,17 +40,31 @@ export class FieldStructureController {
       }
       field_structure["field_value"] = fieldvalue
     }
+    let select_field = field_structure["field_type"]
     let collection_name: any = req.body["collection_name"]
     let data = await this.fieldStructureService.findCollection({ site_id, collection_name })
+    let alldata = await this.fieldStructureService.allCollection(site_id)
     if (data) {
 
       let fieldStructure = JSON.parse(data["field_structure"])
       fieldStructure.push(field_structure)
+
       field_structure = JSON.stringify(fieldStructure)
-      return this.fieldStructureService.updateUnique(data["_id"], { site_id, user_id, field_structure, collection_name })
+      let datarecieved = await this.fieldStructureService.updateUnique(data["_id"], { site_id, user_id, field_structure, collection_name })
+
+
+      if (datarecieved.status === 200) {
+
+        return res.render('builder-collections/addField', { settings, collection_name: collection_name, alldata, select_field: select_field, success: "Field inserted successfully!" })
+
+      } else {
+        return res.render('builder-collections/addField', { settings, collection_name: collection_name, alldata, select_field: select_field, error: "Some error occured. Please try again!" })
+      }
     } else {
       field_structure = JSON.stringify([field_structure])
-      return this.fieldStructureService.create({ site_id, user_id, field_structure, collection_name });
+      await this.fieldStructureService.create({ site_id, user_id, field_structure, collection_name });
+      return res.render('builder-collections/addField', { settings, collection_name: collection_name, alldata, select_field: select_field, success: "Field inserted successfully!" })
+
     }
 
   }
@@ -63,29 +77,27 @@ export class FieldStructureController {
     }
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let alldata = await this.fieldStructureService.allCollection(site_id)
-    return res.render('builder-collections/addField', { settings, collection_name: req.query["collection_name"], alldata })
+    let select_field: any = 'text'
+    if (req.query.field_select && req.query.field_select != '') {
+      select_field = req.query.field_select
+    }
+    return res.render('builder-collections/addField', { settings, collection_name: req.query["collection_name"], alldata, select_field: select_field })
   }
 
-
-  // @Get('/allCollections')
-  // async allCollection(@Req() req: Request, @Res() res: Response) {
-  //   if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
-  //     return res.json({
-  //       "status": "500",
-  //       "message": "session expired!",
-  //       "data": []
-  //     })
-
-  //   }
-  //   let site_id = req["session"]["passport"]["user"]["site_id"]
-  //   let alldata = await this.fieldStructureService.allCollection(site_id)
-  //   console.log("all data form dynamic multiselect", alldata)
-  //   return res.json({
-  //     "status": "200",
-  //     "message": "Date fetched successfully!",
-  //     "data": alldata
-  //   })
-  // }
+  @Get('addField/:selectField/:collection_name')
+  async selectField(@Res() res: Response, @Req() req: Request) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+    }
+    let select_field = req.params["selectField"]
+    let collection_name = req.params["collection_name"]
+    let site_id = req["session"]["passport"]["user"]["site_id"]
+    let alldata = await this.fieldStructureService.allCollection(site_id)
+    if (select_field === 'undefined') {
+      select_field = 'text'
+    }
+    return res.render('builder-collections/addField', { settings, collection_name: collection_name, alldata, select_field })
+  }
 
   @Get('/partialManager')
   async partialManager(@Req() req: Request, @Res() res: Response) {

@@ -70,6 +70,17 @@ export class FieldStructureService {
   async updateUnique(id: any, data: any) {
     id = new ObjectId(id)
     let upadtedata = await this.model.findByIdAndUpdate({ _id: id }, data)
+    if (upadtedata) {
+      return {
+        "status": 200,
+        "message": "Data updated successfully"
+      }
+    } else {
+      return {
+        "status": 500,
+        "message": "Some error occured in insertion"
+      }
+    }
   }
 
   findAll() {

@@ -2,8 +2,14 @@
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{basePath}}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="{{basePath}}/plugins/select2/css/select2.css">
+    <link rel="stylesheet" href="{{basePath}}/dist/css/main.css">
 {{/section}}
 {{header/mainHeader}}
+
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -21,10 +27,14 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-    <input class="alldata" value={{ json alldata}}></input>
+
+
+
+    <input class="alldata" style="display: none;" value={{ json alldata}}></input>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -32,14 +42,41 @@
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
                         <!-- /.card-header -->
+                        {{#if success }}
+                            <p class="alert alert-success">Data inserted successfully!</p>
+                        {{/if}}
+                        <div style="position:static;">
+                            <ul>
 
-                        <div class="card-body">
-                            {{>builderCollection/text }}
+                                <li><a href="/field-structure/addField/text/{{collection_name}}">Text</a></li>
+                                <li><a href="/field-structure/addField/radio/{{collection_name}}">Radio</a></li>
+                                <li><a href="/field-structure/addField/email/{{collection_name}}">Email</a></li>
+                                <li><a href="/field-structure/addField/date/{{collection_name}}">Date</a></li>
+                                <li><a href="/field-structure/addField/staticSelect/{{collection_name}}">Static
+                                        Select</a></li>
+                                <li><a href="/field-structure/addField/dynamicSelect/{{collection_name}}">Dynamic
+                                        Select</a></li>
+
+                            </ul>
+                        </div>
+
+                        <div class="card-body partialRendered">
+                            {{!-- {{>builderCollection/text }}
                             {{>builderCollection/email }}
                             {{>builderCollection/radio}}
                             {{>builderCollection/date}}
                             {{>builderCollection/staticSelect}}
-                            {{>builderCollection/dynamicSelect alldata=alldata}}
+                            {{>builderCollection/dynamicSelect alldata=alldata}} --}}
+                            {{!-- {{>builderCollection/email }} --}}
+                            {{!-- {{#if select_field}} --}}
+
+                            {{!-- {{log collection_name "collection_name from add field"}} --}}
+                            {{log success "success message from the response"}}
+                            {{>(dynamicPartial 'builderCollection' select_field) collection_name=collection_name }}
+                            {{!-- {{>builderCollection/staticSelect}} --}}
+
+                            {{!-- {{/if}} --}}
+
                         </div>
 
                         <!-- /.card-body -->
@@ -56,6 +93,9 @@
 </div>
 {{#section 'script'}}
     <!-- DataTables  & Plugins -->
+    <script src="{{basePath}}/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="{{basePath}}/plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="{{basePath}}/plugins/select2/js/select2.full.min.js"></script>
     <script src="{{basePath}}/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -69,8 +109,11 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+
+
         $( document ).ready( function ()
         {
+            $( ".selectField" ).select2()
             $( "#collection_selected" ).change( function ()
             {
                 var val = $( this ).val();
@@ -116,3 +159,18 @@
 
     </script>
 {{/section}}
+{{!-- $( ".selectField" ).on( 'change', function ()
+        {
+            let selectedPartial = $( this ).val()
+
+            $.ajax( {
+                type: 'GET',
+                context: this,
+                url: `/field-structure/addField/${ selectedPartial }`,
+                success: function ( data )
+                {
+
+                }
+            } );
+
+        } ) --}}

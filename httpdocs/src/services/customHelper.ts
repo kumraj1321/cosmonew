@@ -1,6 +1,7 @@
 import * as moment from 'moment';
 import config from 'src/config/config';
 import axios from 'axios';
+import { dirname } from 'path/posix';
 
 const customHelpers = {
   contentFor: function (name: any, options: any) {
@@ -57,8 +58,16 @@ const customHelpers = {
     }
     return ''
   },
-  dynamicPartial: function (partialName: any) {
-    return `builderPartials/${partialName}`
+  dynamicPartial: function (dirName: any, partialName: any) {
+    let a: any = ''
+    if (dirName && partialName) {
+      a = `${dirName}/${partialName}`
+    } else {
+      a = `${dirName}/text`
+    }
+    // console.log("partial name and dir name", partialName, dirName, a)
+    return a
+
   },
   findIndex: function (allvalue: any, currentValue: any) {
     if (allvalue && currentValue && (allvalue.indexOf(currentValue) >= 0)) {
@@ -78,7 +87,7 @@ const customHelpers = {
       }
     }).then((data: any) => {
       if (data.data) {
-        console.log("data of the customhelper", data.data)
+
         return data.data
       } else {
         return []

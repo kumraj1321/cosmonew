@@ -38,7 +38,7 @@
                             <!-- /.card-header -->
 
                             {{#each collectionData}}
-                                {{>(dynamicPartial this.field_type) data=this site_id=../site_id}}
+                                {{>(dynamicPartial 'builderPartials' this.field_type) data=this site_id=../site_id}}
 
                             {{/each}}
 
@@ -114,7 +114,6 @@
                     let ismultiple = $( c ).attr( 'name' )
                     if ( ismultiple === '0' )
                     {
-                        a = `<option value=' '>'Select options'</option>` + a
                         $( b ).html( a )
                         $( b ).removeAttr( "multiple" )
                         $( b ).removeAttr( "required" )

@@ -12,7 +12,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
+            <div class=" row">
                 <div class="container">
                     <div class="col-md-12">
 
@@ -31,13 +31,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label> Name <span class="ip-req">*</span></label>
-                                                <input type="text" name="collection_name" value={{collection_name}}
-                                                    style="display: none;">
+                                                <input style="display: none;" type="text" name="collection_name"
+                                                    value={{collection_name}}>
                                                 <input type="text" value="email" style="display:none"
                                                     name="field_type" />
                                                 <input type="text" value="{{data.first_name}}" class="form-control"
                                                     name="field_name" placeholder="Please enter Email Field Name" />
-                                                <label style="font-size: smaller;">No space is allowed for the name of
+                                                <label style="font-size: smaller;">No space is allowed for the name
+                                                    of
                                                     the attribute</label>
 
                                                 {{#if error.first_name}}
