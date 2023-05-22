@@ -34,11 +34,10 @@
                         <div class="card-header">
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
-                        <form method="post" action="/data-filing/edit/{{particularField filingdata "_id"}}">
+                        <form method="post" action="/data-filing/edit/{{particularField filingdata "_id"}}" novalidate>
                             <!-- /.card-header -->
 
                             {{#each collectionData}}
-                                {{log this.field_type "this.field_type in edit partial"}}
                                 {{>(dynamicPartial 'builderPartials' this.field_type) data=this filingdata=../filingdata}}
                             {{/each}}
                             <input name="collection_name" value={{collection_name}} type="text"
@@ -75,11 +74,74 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        $( 'form' ).submit( function ( e )
+        {
+            let submit = 0
+            e.preventDefault()
+            $( '.text' ).each( function ()
+            {
+                let minLength = $( this ).attr( 'minlength' )
+                let maxLength = $( this ).attr( 'maxlength' )
+                let data = $( this ).val()
+                let idname = $( this ).attr( 'id' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+
+                if ( required >= 0 && data.length === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                    return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+
+                }
+                if ( data.length < minLength )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'Please fulfil minimum length requirement.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+
+                    return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+
+
+            } )
+
+            if ( submit === 0 )
+            {
+                e.currentTarget.submit()
+            }
+        } )
         $( "select" ).each( function ()
         {
             var input = $( this ); // This is the jquery object of the input, do what you will
             $( this ).select2()
         } );
+
+        $( ".text" ).keyup( function ()
+        {
+            let minLength = $( this ).attr( 'minlength' )
+            let maxLength = $( this ).attr( 'maxlength' )
+            let data = $( this ).val()
+            if ( data.length < minLength )
+            {
+                $( this ).css( 'color', 'red' );
+            } else
+            {
+                $( this ).css( 'color', 'black' );
+            }
+            if ( maxLength >= 0 && data.length >= maxLength )
+            {
+                $( this ).css( 'color', 'green' );
+            }
+
+        } )
+
         let dynamicId = []
         $( ".dynamicSelect" ).each( function ()
         {

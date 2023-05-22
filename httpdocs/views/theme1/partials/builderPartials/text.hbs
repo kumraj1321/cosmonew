@@ -3,8 +3,11 @@
         <label>{{data.field_name}}
             {{#if (equal data.required '1')}}
                 <span class="ip-req">*</span>
+                <span class=" ip-req required {{data.field_name}}" style="display: none;"></span>
+            {{else}}
+                <span class=" ip-req {{data.field_name}}" style="display: none;"></span>
             {{/if}}
-            <span class=" ip-req {{data.field_name}}" style="display: none;"></span>
+
 
         </label>
         <br />

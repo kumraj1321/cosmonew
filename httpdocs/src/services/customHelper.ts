@@ -81,7 +81,6 @@ const customHelpers = {
     return false
   },
   minMaxLength: function (a: any) {
-    console.log("a from the minmaxfunction", a)
     if (a && Number(a)) {
       return Number(a)
     }

@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
-                        <form id="datafiling" method="post" action="/data-filing">
+                        <form id="datafiling" method="post" action="/data-filing" novalidate>
                             <!-- /.card-header -->
 
                             {{#each collectionData}}
@@ -79,6 +79,7 @@
     <script>
         $( 'form' ).submit( function ( e )
         {
+            let submit = 1
             e.preventDefault()
             $( '.text' ).each( function ()
             {
@@ -86,12 +87,23 @@
                 let maxLength = $( this ).attr( 'maxlength' )
                 let data = $( this ).val()
                 let idname = $( this ).attr( 'id' )
-                console.log( "idname===", idname )
-                if ( data.length < minLength )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+
+                if ( required >= 0 && data.length === 0 )
                 {
-                    $( '.' + idname ).text( 'Please fulfil minimum length requirement' )
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
                     $( '.' + idname ).removeAttr( 'style' );
                     return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+                if ( data.length < minLength )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'Please fulfil minimum length requirement.' )
+                    $( '.' + idname ).removeAttr( 'style' );
                 } else
                 {
                     $( '.' + idname ).text( '' )
@@ -101,8 +113,10 @@
             } )
 
 
-
-            e.currentTarget.submit()
+            if ( submit === 0 )
+            {
+                e.currentTarget.submit()
+            }
         } )
 
         $( "select" ).each( function ()
@@ -124,7 +138,7 @@
             }
             if ( maxLength >= 0 && data.length >= maxLength )
             {
-                alert( "Reached max character limit" )
+                $( this ).css( 'color', 'green' );
             }
 
         } )
@@ -138,7 +152,6 @@
             let startid = $( this ).attr( "id" )
             dynamicId.push( startid )
         } )
-        console.log( "dynamicid==", dynamicId )
         $.each( dynamicId, function ( index, id )
         {
             let splitid = id.split( ',' )
