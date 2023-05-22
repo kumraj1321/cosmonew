@@ -1,9 +1,24 @@
 <div>
     <div class="form-group">
-        <label>{{data.field_name}}<span class="ip-req">*</span></label>
+        <label>{{data.field_name}}
+            {{#if (equal data.required '1')}}
+                <span class="ip-req">*</span>
+            {{/if}}
+            <span class=" ip-req {{data.field_name}}" style="display: none;"></span>
 
-        <input type="text" placeholder="Enter Text value" value="{{particularField filingdata data.field_name}}"
-            class="form-control" name={{data.field_name}} />
+        </label>
+        <br />
 
+
+        {{#if (equal data.text_type '0') }}
+            <input class="text" minlength="{{minMaxLength data.minLength}}" maxlength="{{minMaxLength data.maxLength}}"
+                id="{{data.field_name}}" type="text" placeholder="Enter Text value"
+                value="{{particularField filingdata data.field_name}}" class="form-control" name={{data.field_name}} />
+        {{else}}
+            <textarea class="text" id="{{data.field_name}}" minlength="{{minMaxLength data.minLength}}"
+                maxlength="{{minMaxLength data.maxLength}}" placeholder="Enter long format text here" rows="3"
+                cols="150" name="{{data.field_name}}"
+                value="{{particularField filingdata data.field_name}}">{{particularField filingdata data.field_name}}</textarea>
+        {{/if}}
     </div>
 </div>

@@ -37,9 +37,9 @@
                         <form method="post" action="/data-filing/edit/{{particularField filingdata "_id"}}">
                             <!-- /.card-header -->
 
-
                             {{#each collectionData}}
-                                {{>(dynamicPartial this.field_type) data=this filingdata=../filingdata}}
+                                {{log this.field_type "this.field_type in edit partial"}}
+                                {{>(dynamicPartial 'builderPartials' this.field_type) data=this filingdata=../filingdata}}
                             {{/each}}
                             <input name="collection_name" value={{collection_name}} type="text"
                                 style="display: none;"></input>

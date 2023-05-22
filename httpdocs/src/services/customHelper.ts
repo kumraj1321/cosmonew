@@ -65,7 +65,6 @@ const customHelpers = {
     } else {
       a = `${dirName}/text`
     }
-    // console.log("partial name and dir name", partialName, dirName, a)
     return a
 
   },
@@ -75,10 +74,21 @@ const customHelpers = {
     }
     return false
   },
+  equal: function (a: any, b: any) {
+    if (a && b && (a === b)) {
+      return true
+    }
+    return false
+  },
+  minMaxLength: function (a: any) {
+    console.log("a from the minmaxfunction", a)
+    if (a && Number(a)) {
+      return Number(a)
+    }
+    return -1
+  },
 
   getdata: async function (collection_name: any, field_name: any, site_id: any, id: any) {
-    // console.log("collection_name ,site_id,field_name from custom helper", collection_name, field_name, site_id)
-    // console.log("id of the custom helper", id)
     await axios.get('http://localhost:3001/data-filing/multiselect', {
       params: {
         collection_name: collection_name,

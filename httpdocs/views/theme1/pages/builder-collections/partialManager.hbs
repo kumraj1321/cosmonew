@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Listed Collections</h3>
                         </div>
-                        <form method="post" action="/data-filing">
+                        <form id="datafiling" method="post" action="/data-filing">
                             <!-- /.card-header -->
 
                             {{#each collectionData}}
@@ -44,7 +44,8 @@
 
                             <input name="collection_name" value={{collection_name}} type="text"
                                 style="display: none;"></input>
-                            <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit Data</button>
+                            <button type="submit" class="datafilingSubmit btn btn-info btn-block" id="btn-submit">Submit
+                                Data</button>
                         </form>
                         <!-- /.card-body -->
                     </div>
@@ -76,13 +77,61 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        $( 'form' ).submit( function ( e )
+        {
+            e.preventDefault()
+            $( '.text' ).each( function ()
+            {
+                let minLength = $( this ).attr( 'minlength' )
+                let maxLength = $( this ).attr( 'maxlength' )
+                let data = $( this ).val()
+                let idname = $( this ).attr( 'id' )
+                console.log( "idname===", idname )
+                if ( data.length < minLength )
+                {
+                    $( '.' + idname ).text( 'Please fulfil minimum length requirement' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                    return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
 
+
+            } )
+
+
+
+            e.currentTarget.submit()
+        } )
 
         $( "select" ).each( function ()
         {
             var input = $( this ); // This is the jquery object of the input, do what you will
             $( this ).select2()
         } );
+        $( ".text" ).keyup( function ()
+        {
+            let minLength = $( this ).attr( 'minlength' )
+            let maxLength = $( this ).attr( 'maxlength' )
+            let data = $( this ).val()
+            if ( data.length < minLength )
+            {
+                $( this ).css( 'color', 'red' );
+            } else
+            {
+                $( this ).css( 'color', 'black' );
+            }
+            if ( maxLength >= 0 && data.length >= maxLength )
+            {
+                alert( "Reached max character limit" )
+            }
+
+        } )
+
+
+
+
         let dynamicId = []
         $( ".dynamicSelect" ).each( function ()
         {

@@ -50,10 +50,11 @@ export class FieldStructureService {
   async allCollection(site_id: any) {
     let data = await this.model.find({ site_id })
     let result: any = []
-
+    console.log("site_id form service file", site_id, data)
     for (let i = 0; i < data.length; i++) {
       let a: any = {}
       a["collection_name"] = data[i]["collection_name"]
+
       let field_structure: any = JSON.parse(data[i]["field_structure"])
       let fields: any = []
       for (let j = 0; j < field_structure.length; j++) {

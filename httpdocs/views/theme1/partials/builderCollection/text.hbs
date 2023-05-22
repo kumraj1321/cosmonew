@@ -49,62 +49,108 @@
                                         </div>
 
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Text Type <span class="ip-req">*</span></label>
-                                                <div class="row mt-2">
-                                                    <div class="col-md-6">
-                                                        <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input" type="radio"
-                                                                id="customRadio1" name="text_type" value="1" checked>
-                                                            <label for="customRadio1" class="custom-control-label">
-                                                                <div>
-                                                                    <lable>Short Text</lable>
-                                                                    <br />
-                                                                    <lable style="font-size: small;">Best for titles,
-                                                                        names, links
-                                                                        (URL). It also enables exact
-                                                                        search on the field.</lable>
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="custom-control custom-radio">
-                                                            <input class="custom-control-input" type="radio"
-                                                                id="customRadio2" name="text_type" value="0">
-                                                            <label for="customRadio2" class="custom-control-label">
-                                                                <div>
-                                                                    <lable>Long Text</lable>
-                                                                    <br />
-                                                                    <lable style="font-size: small;">Best for titles,
-                                                                        names, links
-                                                                        (URL). It also enables exact
-                                                                        search on the field.</lable>
-                                                                </div>
-                                                            </label>
-                                                        </div>
-                                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <label> Minimum Characters </label>
+
+                                            <input type="number" class="form-control" name="minLength"
+                                                placeholder="minimum length for the field" />
+
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label> Maximum Characters </label>
+
+                                            <input type="number" class="form-control" name="maxLength"
+                                                placeholder="minimum length for the field" />
+
+                                        </div>
+                                    </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Required Field </label>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input class="custom-control-input" type="radio" id="customRadio11"
+                                                        name="required" value="0" checked>
+                                                    <label for="customRadio11" class="custom-control-label">No</label>
                                                 </div>
-                                                {{error.status}}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input class="custom-control-input" type="radio" id="customRadio22"
+                                                        name="required" value="1">
+                                                    <label for="customRadio22" class="custom-control-label">Yes</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group mt-5">
-                                        <button type="submit" class="btn btn-info btn-block"
-                                            id="btn-submit">Submit</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Text Type <span class="ip-req">*</span></label>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input class="custom-control-input" type="radio" id="customRadio1"
+                                                        name="text_type" value="0" checked>
+                                                    <label for="customRadio1" class="custom-control-label">
+                                                        <div>
+                                                            <lable>Short Text</lable>
+                                                            <br />
+                                                            <lable style="font-size: small;">Best for titles,
+                                                                names, links
+                                                                (URL). It also enables exact
+                                                                search on the field.</lable>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input class="custom-control-input" type="radio" id="customRadio2"
+                                                        name="text_type" value="1">
+                                                    <label for="customRadio2" class="custom-control-label">
+                                                        <div>
+                                                            <lable>Long Text</lable>
+                                                            <br />
+                                                            <lable style="font-size: small;">Best for titles,
+                                                                names, links
+                                                                (URL). It also enables exact
+                                                                search on the field.</lable>
+                                                        </div>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-5">
+                                <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit</button>
+                            </div>
+                            </form>
                         </div>
-                        {{!-- </div> --}}
                     </div>
-                    <!-- /.col -->
+                    {{!-- </div> --}}
                 </div>
-                <!-- /.row -->
+                <!-- /.col -->
             </div>
-            <!-- /.container-fluid -->
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
