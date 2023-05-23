@@ -40,7 +40,7 @@
                             {{#each collectionData}}
                                 {{>(dynamicPartial 'builderPartials' this.field_type) data=this filingdata=../filingdata}}
                             {{/each}}
-                            <input name="collection_name" value={{collection_name}} type="text"
+                            <input name="collection_name" value={{collection_name}} type="text" id="collection_name"
                                 style="display: none;"></input>
                             <button type="submit" class="btn btn-info btn-block" id="btn-submit">Submit Data</button>
                         </form>
@@ -74,10 +74,67 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        let _id = "{{ particularField filingdata "_id"}}"
         $( 'form' ).submit( function ( e )
         {
             let submit = 0
             e.preventDefault()
+
+            $( '.email' ).each( function ()
+            {
+                let emaildata = $( this ).val()
+                let emailregex = /^\w+([\.-]?\w+)*@\w+([\a-z-]?\w+)*(\.\w{2,3})+$/
+                let idname = $( this ).attr( 'id' )
+                let a = $( '.' + idname ).attr( 'class' )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 && emaildata.length === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                    return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+                if ( emaildata.length > 0 && !emailregex.test( emaildata ) )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'Please enter valid email.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                    return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+                let allclass = $( this ).attr( 'class' )
+                allclass = allclass.split( ' ' )
+                let collection_name = $( "#collection_name" ).val()
+                if ( allclass.indexOf( 'unique' ) >= 0 )
+                {
+                    console.log( "class name with unique==", allclass )
+                    $.ajax( {
+
+                        type: "post",
+                        url: '/data-filing/findunique',
+                        data: { data: JSON.stringify( { "collection_name": collection_name, "field_name": idname, "field_value": emaildata, "_id": _id } ) },
+                        success: function ( data )
+                        {
+                            if ( data )
+                            {
+                                submit += 1
+                                $( '.' + idname ).text( 'This value already exists!' )
+                                $( '.' + idname ).removeAttr( 'style' );
+                            } else
+                            {
+                                $( '.' + idname ).text( '' )
+                            }
+                        }
+                    } )
+                }
+            } )
+
             $( '.text' ).each( function ()
             {
                 let minLength = $( this ).attr( 'minlength' )

@@ -29,7 +29,6 @@ export class DataFilingController {
 
     }
     let site_id = req["session"]["passport"]["user"]["site_id"]
-    console.log("find unique request with the data", req.body, req.params, req.params)
     let data = JSON.parse(req.body["data"])
     data = { ...data, site_id }
     let result = await this.dataFilingService.findUnique(data)

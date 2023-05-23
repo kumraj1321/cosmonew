@@ -76,14 +76,14 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <script async>
+    <script>
         $( 'form' ).submit( function ( e )
         {
             let submit = 0
             e.preventDefault()
             let totalemail = $( '.email' )
 
-            $( '.email' ).each( async function ()
+            $( '.email' ).each( function ()
             {
                 let emaildata = $( this ).val()
                 let emailregex = /^\w+([\.-]?\w+)*@\w+([\a-z-]?\w+)*(\.\w{2,3})+$/
@@ -116,10 +116,11 @@
                 let collection_name = $( "#collection_name" ).val()
                 if ( allclass.indexOf( 'unique' ) >= 0 )
                 {
-                    await $.ajax( {
+                    $.ajax( {
 
                         type: "post",
                         url: '/data-filing/findunique',
+                        async: false,
                         data: { data: JSON.stringify( { "collection_name": collection_name, "field_name": idname, "field_value": emaildata } ) },
                         success: function ( data )
                         {

@@ -27,16 +27,23 @@ export class DataFilingService {
     return result
   }
   async findUnique(data: any) {
+
     let site_id = data["site_id"].trim()
     let collection_name = data["collection_name"].trim()
     let field_name = data["field_name"].trim()
     let field_value = data["field_value"].trim()
+    let reqid = data["_id"].trim()
     let query: any = { site_id: site_id, collection_name: collection_name }
     query[field_name] = field_value
-    console.log("query===", query)
     let result = await this.model.aggregate([
       { $match: query }
     ])
+    if (result.length === 1) {
+      let id = String(result[0]["_id"])
+      if (id === reqid) {
+        result = []
+      }
+    }
     return result
   }
 
