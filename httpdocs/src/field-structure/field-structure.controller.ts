@@ -72,12 +72,10 @@ export class FieldStructureController {
 
   @Get('/addField')
   async addField(@Res() res: Response, @Req() req: Request) {
-    console.log("add field here", req)
     if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
       return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
     }
     let site_id = req["session"]["passport"]["user"]["site_id"]
-    console.log("add field from here and site id", site_id)
     let alldata = await this.fieldStructureService.allCollection(site_id)
     let select_field: any = 'text'
     if (req.query.field_select && req.query.field_select != '') {

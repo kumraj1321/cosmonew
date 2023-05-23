@@ -22,6 +22,23 @@ export class DataFilingController {
     return res.json(result)
   }
 
+  @Post('/findunique')
+  async findUnique(@Req() req: Request, @Res() res: Response) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+
+    }
+    let site_id = req["session"]["passport"]["user"]["site_id"]
+    console.log("find unique request with the data", req.body, req.params, req.params)
+    let data = JSON.parse(req.body["data"])
+    data = { ...data, site_id }
+    let result = await this.dataFilingService.findUnique(data)
+    if (result.length === 0) {
+      return res.json(false)
+    }
+    return res.json(true)
+  }
+
 
   @Post()
   async create(@Req() req: Request, @Res() res: Response) {

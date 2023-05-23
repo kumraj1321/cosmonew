@@ -1,6 +1,24 @@
 <div class="form-group">
-    <label for="email">{{data.field_name}} </label>
-    <input type="email" placeholder="Enter Email Address" id="email"
-        value="{{particularField filingdata data.field_name}}" class="form-control" name={{data.field_name}} />
+    {{!-- <label for="email">{{data.field_name}} </label> --}}
+    <label>{{data.field_name}}
+        {{#if (equal data.required '1')}}
+            <span class="ip-req">*</span>
+            <span class=" ip-req required {{data.db_name}}" style="display: none;"></span>
+        {{else}}
+            <span class=" ip-req {{data.db_name}}" style="display: none;"></span>
+        {{/if}}
+
+
+    </label>
+    <br />
+    {{#if (equal data.required '1')}}
+        <input class="email unique" type="email" placeholder="Enter Email Address" id="{{data.db_name}} "
+            value="{{particularField filingdata data.db_name}}" class="form-control" name={{data.db_name}} />
+    {{else}}
+        <input class="email" type="email" placeholder="Enter Email Address" id="{{data.db_name}}"
+            value="{{particularField filingdata data.db_name}}" class="form-control" name={{data.db_name}} />
+    {{/if}}
+
+
 
 </div>

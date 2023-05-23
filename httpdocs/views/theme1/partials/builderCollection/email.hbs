@@ -35,19 +35,75 @@
                                                     value={{collection_name}}>
                                                 <input type="text" value="email" style="display:none"
                                                     name="field_type" />
-                                                <input type="text" value="{{data.first_name}}" class="form-control"
-                                                    name="field_name" placeholder="Please enter Email Field Name" />
-                                                <label style="font-size: smaller;">No space is allowed for the name
-                                                    of
-                                                    the attribute</label>
-
-                                                {{#if error.first_name}}
-                                                    <span class="error invalid-feedback" style="display:block">Please
-                                                        enter Email Field Name</span>
-                                                {{/if}}
+                                                <input type="text" class="form-control" name="field_name"
+                                                    placeholder="Please enter Email Field Name" />
                                             </div>
                                         </div>
 
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label> DataBase field name </label>
+
+                                                <input type="text" class="form-control" name="db_name"
+                                                    placeholder="Please enter the field name of database" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Required Field </label>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio11" name="required" value="0" checked>
+                                                            <label for="customRadio11"
+                                                                class="custom-control-label">No</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio22" name="required" value="1">
+                                                            <label for="customRadio22"
+                                                                class="custom-control-label">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Unique Field </label>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio1" name="unique" value="0" checked>
+                                                            <label for="customRadio1"
+                                                                class="custom-control-label">No</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio2" name="unique" value="1">
+                                                            <label for="customRadio2"
+                                                                class="custom-control-label">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-group mt-5">
