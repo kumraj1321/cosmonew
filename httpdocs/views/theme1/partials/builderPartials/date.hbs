@@ -1,6 +1,12 @@
 <div class="form-group">
-    <label for="email">{{data.field_name}} : </label>
+    <label for="date">{{data.field_name}}
+        {{#if (equal data.required '1')}}
+            <span class="ip-req">*</span>
+            <span class=" ip-req required {{data.db_name}}" style="display: none;"></span>
+        {{else}}
+            <span class=" ip-req {{data.db_name}}" style="display: none;"></span>
+        {{/if}} : </label>
     {{!-- <input type="date" id="birthday" name="{{data.field_name}}"> --}}
-    <input type="datetime-local" id="date" value="{{particularField filingdata data.field_name}}"
-        name="{{data.field_name}}">
+    <input class="date" type="datetime-local" id="{{data.db_name}}" value="{{particularField filingdata data.db_name}}"
+        name="{{data.db_name}}">
 </div>

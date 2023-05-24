@@ -80,6 +80,28 @@
             let submit = 0
             e.preventDefault()
 
+            //validation for all date field
+            $( '.date' ).each( function ()
+            {
+                let datedata = $( this ).val()
+                let idname = $( this ).attr( 'id' )
+                let a = $( '.' + idname ).attr( 'class' )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                console.log( "required===", required, datedata.length, datedata )
+                if ( required >= 0 && datedata.length === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                    return
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+            } )
+
+            //validations for all email field
             $( '.email' ).each( function ()
             {
                 let emaildata = $( this ).val()
