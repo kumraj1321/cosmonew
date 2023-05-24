@@ -87,10 +87,13 @@
             {
                 let emaildata = $( this ).val()
                 let emailregex = /^\w+([\.-]?\w+)*@\w+([\a-z-]?\w+)*(\.\w{2,3})+$/
+
                 let idname = $( this ).attr( 'id' )
                 let a = $( '.' + idname ).attr( 'class' )
                 b = $( '.' + idname ).attr( 'class' ).split( ' ' )
                 let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                console.log( "emaildata and idname", emaildata, idname, required )
+
                 if ( required >= 0 && emaildata.length === 0 )
                 {
                     submit += 1
@@ -124,6 +127,7 @@
                         data: { data: JSON.stringify( { "collection_name": collection_name, "field_name": idname, "field_value": emaildata } ) },
                         success: function ( data )
                         {
+
                             if ( data )
                             {
                                 submit += 1

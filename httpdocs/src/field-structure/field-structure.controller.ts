@@ -23,6 +23,8 @@ export class FieldStructureController {
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let user_id = req["session"]["passport"]["user"]["_id"]
     let field_structure: any = { ...req.body }
+    let db_name: any = field_structure["field_name"].replace(/\s/g, '_')
+    field_structure["db_name"] = db_name
     delete field_structure["collection_name"]
     if (field_structure["field_type"] === 'radio' || field_structure["field_type"] === 'staticSelect') {
       let field_value = field_structure["field_value"]
@@ -69,6 +71,20 @@ export class FieldStructureController {
 
   }
 
+
+  @Post('/uniqueField')
+  async uniqueField(@Res() res: Response, @Req() req: Request) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+    }
+    let site_id = req["session"]["passport"]["user"]["site_id"]
+    let data = JSON.parse(req.body["data"])
+    let collection_name = data["collection_name"]
+    let field_value = data["field_value"]
+    let result = await this.fieldStructureService.uniqueField(site_id, collection_name, field_value)
+
+    return res.json(result)
+  }
 
   @Get('/addField')
   async addField(@Res() res: Response, @Req() req: Request) {

@@ -71,7 +71,6 @@
                             {{!-- {{#if select_field}} --}}
 
                             {{!-- {{log collection_name "collection_name from add field"}} --}}
-                            {{log success "success message from the response"}}
                             {{>(dynamicPartial 'builderCollection' select_field) collection_name=collection_name }}
                             {{!-- {{>builderCollection/staticSelect}} --}}
 
@@ -109,7 +108,57 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        $( 'form' ).submit( function ( e )
+        {
+            let submit = 0
+            e.preventDefault()
+            let fieldname = $( '.field_name' ).val()
+            let collectionname = $( '.collection_name' ).val()
+            console.log( "fieldname==", fieldname )
+            if ( fieldname.length === 0 )
+            {
+                submit += 1
+                $( '#field_name' ).text( 'Field name cannot be empty.' )
+                $( '#field_name' ).removeAttr( 'style' );
+                return
+            } else
+            {
+                $( '#field_name' ).text( '' )
+            }
 
+
+            $.ajax( {
+                type: 'POST',
+                url: "/field-structure/uniqueField",
+                async: false,
+                data: {
+                    data: JSON.stringify( {
+                        collection_name: collectionname, field_value: fieldname
+                    } )
+                },
+
+                success: function ( data )
+                {
+                    if ( !data )
+                    {
+                        submit += 1
+                        $( '#field_name' ).text( 'Field name alread exists!.' )
+                        $( '#field_name' ).removeAttr( 'style' );
+                        return
+                    } else
+                    {
+                        $( '#field_name' ).text( '' )
+                    }
+                }
+            } );
+
+
+            console.log( "fieldname value", fieldname, "|||", collectionname )
+            if ( submit === 0 )
+            {
+                e.currentTarget.submit()
+            }
+        } )
 
         $( document ).ready( function ()
         {

@@ -3,9 +3,9 @@
         <label>{{data.field_name}}
             {{#if (equal data.required '1')}}
                 <span class="ip-req">*</span>
-                <span class=" ip-req required {{data.field_name}}" style="display: none;"></span>
+                <span class=" ip-req required {{data.db_name}}" style="display: none;"></span>
             {{else}}
-                <span class=" ip-req {{data.field_name}}" style="display: none;"></span>
+                <span class=" ip-req {{data.db_name}}" style="display: none;"></span>
             {{/if}}
 
 
@@ -15,13 +15,13 @@
 
         {{#if (equal data.text_type '0') }}
             <input class="text" minlength="{{minMaxLength data.minLength}}" maxlength="{{minMaxLength data.maxLength}}"
-                id="{{data.field_name}}" type="text" placeholder="Enter Text value"
-                value="{{particularField filingdata data.field_name}}" class="form-control" name={{data.field_name}} />
+                id="{{data.db_name}}" type="text" placeholder="Enter Text value"
+                value="{{particularField filingdata data.db_name}}" class="form-control" name={{data.db_name}} />
         {{else}}
-            <textarea class="text" id="{{data.field_name}}" minlength="{{minMaxLength data.minLength}}"
+            <textarea class="text" id="{{data.db_name}}" minlength="{{minMaxLength data.minLength}}"
                 maxlength="{{minMaxLength data.maxLength}}" placeholder="Enter long format text here" rows="3"
-                cols="150" name="{{data.field_name}}"
-                value="{{particularField filingdata data.field_name}}">{{particularField filingdata data.field_name}}</textarea>
+                cols="150" name="{{data.db_name}}"
+                value="{{particularField filingdata data.db_name}}">{{particularField filingdata data.db_name}}</textarea>
         {{/if}}
     </div>
 </div>

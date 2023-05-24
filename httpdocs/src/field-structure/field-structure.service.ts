@@ -47,6 +47,26 @@ export class FieldStructureService {
     }
 
   }
+
+  async uniqueField(site_id: any, collection_name: any, field_value: any) {
+    if (site_id.length === 0 || collection_name.length === 0 || field_value.length === 0) {
+      return false
+    }
+    field_value = field_value.trim()
+    let data = await this.model.findOne({ site_id, collection_name })
+    let field_structure = data.field_structure ? JSON.parse(data.field_structure) : ''
+    if (field_structure === '') {
+      return true
+    }
+    let result: any = true
+    field_structure.forEach(stru => {
+      if (stru.field_name === field_value) {
+        result = false
+      }
+    });
+    return result
+  }
+
   async allCollection(site_id: any) {
     let data = await this.model.find({ site_id })
     let result: any = []
