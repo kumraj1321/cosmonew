@@ -61,20 +61,8 @@
                         </div>
 
                         <div class="card-body partialRendered">
-                            {{!-- {{>builderCollection/text }}
-                            {{>builderCollection/email }}
-                            {{>builderCollection/radio}}
-                            {{>builderCollection/date}}
-                            {{>builderCollection/staticSelect}}
-                            {{>builderCollection/dynamicSelect alldata=alldata}} --}}
-                            {{!-- {{>builderCollection/email }} --}}
-                            {{!-- {{#if select_field}} --}}
-
-                            {{!-- {{log collection_name "collection_name from add field"}} --}}
                             {{>(dynamicPartial 'builderCollection' select_field) collection_name=collection_name }}
-                            {{!-- {{>builderCollection/staticSelect}} --}}
 
-                            {{!-- {{/if}} --}}
 
                         </div>
 
@@ -114,7 +102,6 @@
             e.preventDefault()
             let fieldname = $( '.field_name' ).val()
             let collectionname = $( '.collection_name' ).val()
-            console.log( "fieldname==", fieldname )
             if ( fieldname.length === 0 )
             {
                 submit += 1
@@ -152,8 +139,6 @@
                 }
             } );
 
-
-            console.log( "fieldname value", fieldname, "|||", collectionname )
             if ( submit === 0 )
             {
                 e.currentTarget.submit()
