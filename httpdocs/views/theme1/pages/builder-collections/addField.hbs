@@ -164,6 +164,8 @@
                     {
                         let fields = data[ "field_name" ]
                         let db_data = data[ "db_name" ]
+                        a += `<option disabled selected hidden>Please select field from here..
+                                            </option>`
                         $.each( fields, function ( ind, fieldData, )
                         {
                             a += `<option value=${ db_data[ ind ] }>${ fieldData }</option>`

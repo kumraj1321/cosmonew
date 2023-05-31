@@ -51,6 +51,8 @@
                                         <label>Select Collection </label>
                                         <select class="form-control" name="collection_selected"
                                             id="collection_selected">
+                                            <option disabled selected hidden>Please select collection from here..
+                                            </option>
                                             {{#each alldata}}
                                                 <option value={{this.collection_name}}>{{this.collection_name}}</option>
                                             {{/each}}
@@ -60,7 +62,8 @@
                                     <div class="form-group">
                                         <label>Select Field </label>
                                         <select class="form-control" name="field_selected" id="field_selected">
-
+                                            <option disabled selected hidden>Please select field from here..
+                                            </option>
                                         </select>
                                     </div>
 
@@ -71,6 +74,32 @@
                                             <option value="0">Single Select</option>
                                             <option value="1">Multi Select</option>
                                         </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Required Field </label>
+                                                <div class="row mt-2">
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio11" name="required" value="0" checked>
+                                                            <label for="customRadio11"
+                                                                class="custom-control-label">No</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="custom-control custom-radio">
+                                                            <input class="custom-control-input" type="radio"
+                                                                id="customRadio22" name="required" value="1">
+                                                            <label for="customRadio22"
+                                                                class="custom-control-label">Yes</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-group mt-5">

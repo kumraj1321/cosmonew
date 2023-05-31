@@ -1,10 +1,46 @@
 <div class="form-group">
     {{log data "data of teh dynamic select"}}
-    <label>{{data.field_name}}</label>
-    <input style="display: none;" class="{{data.collection_selected}},{{data.field_selected}}"
-        value="{{particularField filingdata data.field_name}}" name="{{data.select_type}}"></input>
-    <select class="dynamicSelect" name="{{data.field_name}}" id="{{data.collection_selected}},{{data.field_selected}}"
-        multiple="multiple" value="" style="width: 100%;" data-placeholder="Select a Dynamic State">
+    {{!-- <label>{{data.field_name}}</label> --}}
+    <label>{{data.field_name}}
+        {{#if (equal data.required '1')}}
+            <span class="ip-req">*</span>
+            <span class=" ip-req required {{data.db_name}}" style="display: none;"></span>
+        {{else}}
+            <span class=" ip-req {{data.db_name}}" style="display: none;"></span>
+        {{/if}}
 
-    </select>
+
+    </label>
+    {{!-- <input style="display: none;" class="{{data.collection_selected}},{{data.field_selected}}"
+        value="{{particularField filingdata data.db_name}}" name="{{data.select_type}}"></input> --}}
+    <span
+        class="{{data.collection_selected}},{{data.field_selected}}">{{particularField filingdata data.db_name}}</span>
+    {{#if (equal data.select_type '1')}}
+        <select class="dynamicSelect" name="{{data.db_name}}" id="{{data.collection_selected}},{{data.field_selected}}"
+            multiple="multiple" value="[]" style="width: 100%;" data-placeholder="Select a Dynamic State">
+
+        </select>
+    {{else}}
+        {{!-- <span>Dropdown for single select will be developed</span> --}}
+        <div class="form-group">
+            <select class="form-control" name="field_selected" id="field_selected">
+                <option disabled selected hidden>Please select field from here..
+                </option>
+                <option>Option 1</option>
+                <option>Option 2</option>
+            </select>
+        </div>
+        {{!-- <select class="dynamicSelectsingle" name="{{data.db_name}}"
+            id="{{data.collection_selected}},{{data.field_selected}}" value="" style="width: 100%;"
+            data-placeholder="Select a Single Dynamic State">
+            <option disabled selected hidden>Please select field from here..
+            </option>
+        </select> --}}
+    {{/if}}
+    {{!-- {{#if(equal data.select_type '1')}} --}}
+
+
+    {{!-- {{/if}}    --}}
+
+
 </div>

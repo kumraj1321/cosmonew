@@ -47,10 +47,9 @@ export class DataFilingController {
     }
     let site_id = req["session"]["passport"]["user"]["site_id"]
     let user_id = req["session"]["passport"]["user"]["_id"]
-    console.log("req.body===>", req.body)
 
     let data: any = { ...req.body, site_id, user_id, created_at: new Date(), updated_at: new Date() }
-    console.log("data========>", data)
+    // return
     let responsedata = await this.dataFilingService.create(data)
   }
 

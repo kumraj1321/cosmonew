@@ -77,10 +77,36 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
+        let selecteddefaultoption = '["646b20ff61e09c17cf816569"]'
         $( 'form' ).submit( function ( e )
         {
             let submit = 0
             e.preventDefault()
+
+            //validations for the dynamic select field
+            $( '.dynamicSelect' ).each( function ()
+            {
+                let value = $( this ).val()
+                let idname = $( this ).attr( 'name' )
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 && value.length === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+
+                if ( required < 0 && value.length === 0 )
+                {
+                    $( this ).val( selecteddefaultoption )
+                }
+
+            } )
 
             //validation for radio field
             $( '.radio' ).each( function ()
@@ -273,6 +299,7 @@
             let splitid = id.split( ',' )
             collection_selected = splitid[ 0 ]
             field_selected = splitid[ 1 ]
+
             $.ajax( {
                 type: 'GET',
                 context: this,
@@ -280,6 +307,7 @@
                 success: function ( data )
                 {
                     let a = ""
+
                     $.each( data, function ( index, option )
                     {
                         a += `<option value=${ option.key }>${ option.value }</option>`
@@ -288,14 +316,7 @@
                     thisid = thisid.split( ',' )
                     let b = "#" + thisid[ 0 ] + '\\,' + thisid[ 1 ]
                     $( b ).html( a )
-                    let c = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ]
-                    let ismultiple = $( c ).attr( 'name' )
-                    if ( ismultiple === '0' )
-                    {
-                        $( b ).html( a )
-                        $( b ).removeAttr( "multiple" )
-                        $( b ).removeAttr( "required" )
-                    }
+
                 }
             } );
         } )
