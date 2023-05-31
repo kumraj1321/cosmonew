@@ -5,7 +5,6 @@ import { CreateFieldStructureDto } from './dto/create-field-structure.dto';
 import { UpdateFieldStructureDto } from './dto/update-field-structure.dto';
 import { Request, Response } from 'express';
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
-import { table } from 'console';
 import settings from 'src/config/settings';
 import { all } from 'axios';
 

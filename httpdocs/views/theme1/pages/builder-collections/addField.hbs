@@ -28,9 +28,7 @@
         </div><!-- /.container-fluid -->
     </section>
 
-
-
-    <input class="alldata" style="display: none;" value={{ json alldata}}></input>
+    <input class="dynamicSelectalldata" style="display: none;" value={{ json alldata}}></input>
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -152,7 +150,11 @@
             {
                 var val = $( this ).val();
 
-                let alldata = $( '.alldata' ).val()
+                let alldata = $( '.dynamicSelectalldata' ).val()
+                while ( alldata.includes( '/' ) )
+                {
+                    alldata = alldata.replace( '/', ' ' )
+                }
                 alldata = JSON.parse( alldata )
                 let a = ""
                 $.each( alldata, function ( index, data )
@@ -161,9 +163,10 @@
                     if ( data[ "collection_name" ] === val )
                     {
                         let fields = data[ "field_name" ]
-                        $.each( fields, function ( ind, fieldData )
+                        let db_data = data[ "db_name" ]
+                        $.each( fields, function ( ind, fieldData, )
                         {
-                            a += `<option value=${ fieldData }>${ fieldData }</option>`
+                            a += `<option value=${ db_data[ ind ] }>${ fieldData }</option>`
                         } )
                     }
                 } )
@@ -193,18 +196,3 @@
 
     </script>
 {{/section}}
-{{!-- $( ".selectField" ).on( 'change', function ()
-        {
-            let selectedPartial = $( this ).val()
-
-            $.ajax( {
-                type: 'GET',
-                context: this,
-                url: `/field-structure/addField/${ selectedPartial }`,
-                success: function ( data )
-                {
-
-                }
-            } );
-
-        } ) --}}

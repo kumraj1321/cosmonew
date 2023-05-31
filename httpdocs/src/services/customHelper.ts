@@ -107,7 +107,14 @@ const customHelpers = {
 
   },
   json: function (obj: any) {
-    return JSON.stringify(obj)
+    // console.log("obj from json here", JSON.stringify(obj))
+    let res = JSON.stringify(obj)
+    res = res.replace(" ", "/")
+    while (res.includes(" ")) {
+      res = res.replace(" ", '/')
+    }
+    return res
+    // return JSON.stringify(obj)
   }
 
 

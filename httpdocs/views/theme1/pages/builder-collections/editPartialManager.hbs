@@ -80,6 +80,42 @@
             let submit = 0
             e.preventDefault()
 
+            //validation for radio field
+            $( '.radio' ).each( function ()
+            {
+                let radiodata = $( this ).val()
+                let idname = $( this ).attr( 'id' )
+                //to check if the radio field is required or not
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+
+                let allradio = $( '.' + idname )
+                let anychecked = 0
+                $( '.' + idname ).each( function ()
+                {
+                    let type = $( this ).attr( "type" )
+                    if ( type && type === 'radio' )
+                    {
+                        let check = $( this ).is( ':checked' )
+                        if ( check )
+                        {
+                            anychecked += 1
+                        }
+                    }
+                } )
+                if ( required >= 0 && anychecked === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+
+            } )
+
             //validation for all date field
             $( '.date' ).each( function ()
             {

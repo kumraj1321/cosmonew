@@ -1,11 +1,18 @@
 <div>
     <div class="form-group">
-        <label>{{data.field_name}}<span class="ip-req">*</span></label>
+        <label>{{data.field_name}}
+            {{#if (equal data.required '1')}}
+                <span class="ip-req">*</span>
+                <span class=" ip-req required {{data.db_name}}" style="display: none;"></span>
+            {{else}}
+                <span class=" ip-req {{data.db_name}}" style="display: none;"></span>
+            {{/if}}
+        </label>
         {{#each data.field_value}}
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="{{../data.field_name}}"
-                    {{defaultCheck (particularField ../filingdata ../data.field_name) this.value}}
-                    value="{{this.value}}">
+                <input class="form-check-input radio {{../data.db_name}}" id="{{../data.db_name}}" type="radio"
+                    name="{{../data.db_name}}"
+                    {{defaultCheck (particularField ../filingdata ../data.db_name) this.value}} value="{{this.value}}">
                 <label class="form-check-label">{{this.key}}</label>
             </div>
         {{/each}}

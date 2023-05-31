@@ -76,12 +76,15 @@ export class FieldStructureService {
 
       let field_structure: any = JSON.parse(data[i]["field_structure"])
       let fields: any = []
+      let db_name: any = []
       for (let j = 0; j < field_structure.length; j++) {
         if (field_structure[j]["field_type"] === 'text') {
           fields.push(field_structure[j]["field_name"])
+          db_name.push(field_structure[j]["db_name"])
         }
       }
       a["field_name"] = fields
+      a["db_name"] = db_name
       result.push(a)
     }
     return result
