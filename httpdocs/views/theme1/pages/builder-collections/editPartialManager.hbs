@@ -124,7 +124,6 @@
                 let a = $( '.' + idname ).attr( 'class' )
                 b = $( '.' + idname ).attr( 'class' ).split( ' ' )
                 let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
-                console.log( "required===", required, datedata.length, datedata )
                 if ( required >= 0 && datedata.length === 0 )
                 {
                     submit += 1
@@ -171,7 +170,6 @@
                 let collection_name = $( "#collection_name" ).val()
                 if ( allclass.indexOf( 'unique' ) >= 0 )
                 {
-                    console.log( "class name with unique==", allclass )
                     $.ajax( {
 
                         type: "post",
@@ -235,7 +233,12 @@
         $( "select" ).each( function ()
         {
             var input = $( this ); // This is the jquery object of the input, do what you will
-            $( this ).select2()
+            let inputclass = $( this ).attr( 'class' )
+            if ( inputclass.indexOf( 'dynamicSingleSelect' ) < 0 )
+            {
+                $( this ).select2()
+            }
+
         } );
 
         $( ".text" ).keyup( function ()
@@ -268,7 +271,6 @@
             let splitid = id.split( ',' )
             collection_selected = splitid[ 0 ]
             field_selected = splitid[ 1 ]
-            console.log( "collection and field selected of edit form", collection_selected, field_selected )
             $.ajax( {
                 type: 'GET',
                 context: this,
@@ -281,7 +283,7 @@
 
                     let x = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ]
                     let selectedinput = $( x ).text()
-                    console.log( "this id edit", selectedinput )
+                    console.log( "selected input for multi", selectedinput, x )
                     selectedinput = selectedinput.split( ',' )
                     let a = ""
                     $.each( data, function ( index, option )
@@ -299,19 +301,58 @@
 
                     let b = "#" + thisid[ 0 ] + '\\,' + thisid[ 1 ]
                     $( b ).html( a )
-                    let c = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ]
-                    let ismultiple = $( c ).attr( 'name' )
-                    if ( ismultiple === '0' )
-                    {
-                        a = `<option value=''>'Select options'</option>` + a
-                        $( b ).html( a )
-                        $( b ).removeAttr( "multiple" )
-                        $( b ).removeAttr( "required" )
-                    }
+
                 }
             } );
         } )
+        let dynamicSingleId = []
+        $( '.dynamicSingleSelect' ).each( function ()
+        {
+            let startid = $( this ).attr( "id" )
+            dynamicSingleId.push( startid )
+        } )
+        console.log( "dynamic single id", dynamicSingleId )
+        $.each( dynamicSingleId, function ( index, id )
+        {
+            let splitid = id.split( ',' )
+            collection_selected = splitid[ 0 ]
+            field_selected = splitid[ 1 ]
+            $.ajax( {
+                type: 'GET',
+                context: this,
+                url: `/data-filing/multiselect/${ collection_selected }/${ field_selected }`,
+                success: function ( data )
+                {
+                    let thisid = dynamicSingleId[ index ]
 
+                    thisid = thisid.split( ',' )
+
+                    let x = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ] + '\\,' + 'single'
+                    console.log( "x==>", $( x ) )
+                    let selectedinput = $( x ).text()
+                    console.log( "selected input", selectedinput, x )
+                    selectedinput = selectedinput.split( ',' )
+                    let a = ""
+                    $.each( data, function ( index, option )
+                    {
+                        let ind = selectedinput.indexOf( option.key )
+                        if ( ind === -1 )
+                        {
+                            a += `<option value=${ option.key }>${ option.value }</option>`
+                        } else
+                        {
+                            console.log( "hello everyone", option )
+                            a += `<option value=${ option.key } selected=selected>${ option.value }</option>`
+
+                        }
+                    } )
+
+                    let b = "#" + thisid[ 0 ] + '\\,' + thisid[ 1 ]
+                    $( b ).html( a )
+
+                }
+            } );
+        } )
 
     </script>
 {{/section}}

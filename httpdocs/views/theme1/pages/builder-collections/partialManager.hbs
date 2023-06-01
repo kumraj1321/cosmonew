@@ -264,7 +264,12 @@
         $( "select" ).each( function ()
         {
             var input = $( this ); // This is the jquery object of the input, do what you will
-            $( this ).select2()
+            let inputclass = $( this ).attr( 'class' )
+            if ( inputclass.indexOf( 'dynamicSingleSelect' ) < 0 )
+            {
+                $( this ).select2()
+            }
+
         } );
         $( ".text" ).keyup( function ()
         {
@@ -320,6 +325,8 @@
                 }
             } );
         } )
+
+
 
     </script>
 {{/section}}
