@@ -111,7 +111,6 @@
                 $( '#field_name' ).text( '' )
             }
 
-
             $.ajax( {
                 type: 'POST',
                 url: "/field-structure/uniqueField",
@@ -162,13 +161,35 @@
 
                     if ( data[ "collection_name" ] === val )
                     {
+                        let collectionname = $( '.collection_name' ).val()
                         let fields = data[ "field_name" ]
                         let db_data = data[ "db_name" ]
+                        let allreadyselectedfields = []
+                        //here is  api hit to disable those fields which has been selected allread
+                        $.ajax( {
+
+                            type: "post",
+                            url: '/field-structure/selectedoptions',
+                            async: false,
+                            data: { data: JSON.stringify( { "collection_name": collectionname, "collection_selected": val } ) },
+                            success: function ( data )
+                            {
+                                allreadyselectedfields = data
+                            }
+                        } )
+
                         a += `<option disabled selected hidden>Please select field from here..
                                             </option>`
                         $.each( fields, function ( ind, fieldData, )
                         {
-                            a += `<option value=${ db_data[ ind ] }>${ fieldData }</option>`
+                            if ( allreadyselectedfields.indexOf( db_data[ ind ] ) < 0 )
+                            {
+                                a += `<option value=${ db_data[ ind ] }>${ fieldData }</option>`
+                            } else
+                            {
+                                a += `<option disabled value=${ db_data[ ind ] }>${ fieldData }</option>`
+                            }
+
                         } )
                     }
                 } )

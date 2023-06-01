@@ -311,7 +311,6 @@
             let startid = $( this ).attr( "id" )
             dynamicSingleId.push( startid )
         } )
-        console.log( "dynamic single id", dynamicSingleId )
         $.each( dynamicSingleId, function ( index, id )
         {
             let splitid = id.split( ',' )
@@ -328,9 +327,7 @@
                     thisid = thisid.split( ',' )
 
                     let x = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ] + '\\,' + 'single'
-                    console.log( "x==>", $( x ) )
                     let selectedinput = $( x ).text()
-                    console.log( "selected input", selectedinput, x )
                     selectedinput = selectedinput.split( ',' )
                     let a = ""
                     $.each( data, function ( index, option )
@@ -341,7 +338,6 @@
                             a += `<option value=${ option.key }>${ option.value }</option>`
                         } else
                         {
-                            console.log( "hello everyone", option )
                             a += `<option value=${ option.key } selected=selected>${ option.value }</option>`
 
                         }

@@ -70,6 +70,17 @@ export class FieldStructureController {
 
   }
 
+  @Post('/selectedoptions')
+  async selectedoptions(@Res() res: Response, @Req() req: Request) {
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+    }
+    let site_id = req["session"]["passport"]["user"]["site_id"]
+    let collection_name: any = JSON.parse(req.body["data"])["collection_name"]
+    let collection_selected: any = JSON.parse(req.body["data"])["collection_selected"]
+    let result = await this.fieldStructureService.selectedoptions(site_id, collection_name, collection_selected)
+    return res.json(result)
+  }
 
   @Post('/uniqueField')
   async uniqueField(@Res() res: Response, @Req() req: Request) {

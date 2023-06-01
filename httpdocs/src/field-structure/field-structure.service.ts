@@ -47,6 +47,18 @@ export class FieldStructureService {
     }
 
   }
+  async selectedoptions(site_id: any, collection_name: any, collection_selected: any) {
+    let fieldstructuredata = await this.model.findOne({ site_id, collection_name })
+    let field_structure: any = fieldstructuredata["field_structure"] ? fieldstructuredata["field_structure"] : []
+    field_structure = JSON.parse(field_structure)
+    let result: any = []
+    for (let i = 0; i < field_structure.length; i++) {
+      if (field_structure[i]["field_type"] && field_structure[i]["field_type"] === 'dynamicSelect' && field_structure[i]["collection_selected"] === collection_selected) {
+        result.push(field_structure[i]["field_selected"])
+      }
+    }
+    return result
+  }
 
   async uniqueField(site_id: any, collection_name: any, field_value: any) {
     if (site_id.length === 0 || collection_name.length === 0 || field_value.length === 0) {
