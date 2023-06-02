@@ -80,6 +80,48 @@
             let submit = 0
             e.preventDefault()
 
+            //validation for the static select(multiple)
+            $( '.staticSelect' ).each( function ()
+            {
+                let value = $( this ).val()
+                let idname = $( this ).attr( 'name' )
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 && value.length === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+            } )
+
+
+            //validation for static select(single)
+            $( '.staticSingleSelect' ).each( function ()
+            {
+                let value = $( this ).val()
+                let idname = $( this ).attr( 'name' )
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 )
+                {
+                    if ( value === null || value === '' || value.length === 0 )
+                    {
+                        submit += 1
+                        $( '.' + idname ).text( 'This is required field.' )
+                        $( '.' + idname ).removeAttr( 'style' );
+                    } else
+                    {
+                        $( '.' + idname ).text( '' )
+                    }
+                }
+            } )
+
             $( '.dynamicSelect' ).each( function ()
             {
                 let value = $( this ).val()
@@ -99,11 +141,7 @@
                     $( '.' + idname ).text( '' )
                 }
 
-                if ( required < 0 && value.length === 0 )
-                {
-                    {
-                    }
-                }
+
 
             } )
 
@@ -282,7 +320,7 @@
         {
             var input = $( this ); // This is the jquery object of the input, do what you will
             let inputclass = $( this ).attr( 'class' )
-            if ( inputclass.indexOf( 'dynamicSingleSelect' ) < 0 )
+            if ( inputclass.indexOf( 'dynamicSingleSelect' ) < 0 && inputclass.indexOf( 'staticSingleSelect' ) )
             {
                 $( this ).select2()
             }

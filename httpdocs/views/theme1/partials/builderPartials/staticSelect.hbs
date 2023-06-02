@@ -1,15 +1,47 @@
 <div class="form-group">
-    <label>{{data.field_name}}</label>
-    <select class="staticSelect" name="{{data.field_name}}" id="{{data.field_name}}" multiple="multiple" value=""
-        style="width: 100%;" data-placeholder="Select a State">
-        {{#each data.field_value}}
-            {{#if (findIndex (particularField ../filingdata ../data.field_name) this.value)}}
-                <option selected="selected" value={{this.value}}>{{this.key}}</option>
-            {{else}}
-                <option value={{this.value}}>{{this.key}}</option>
-            {{/if}}
+    <label>{{data.field_name}}
+        {{#if (equal data.required '1')}}
+            <span class="ip-req">*</span>
+            <span class=" ip-req required {{data.db_name}}" style="display: none;"></span>
+        {{else}}
+            <span class=" ip-req {{data.db_name}}" style="display: none;"></span>
+        {{/if}}
 
 
-        {{/each}}
-    </select>
+    </label>
+
+    {{#if (equal data.select_type '1')}}
+        <select class="staticSelect" name="{{data.db_name}}" id="{{data.db_name}}" multiple="multiple" value=""
+            style="width: 100%;" data-placeholder="Select a State">
+            {{#each data.field_value}}
+                {{#if (findIndex (particularField ../filingdata ../data.db_name) this.value)}}
+                    <option selected="selected" value={{this.value}}>{{this.key}}</option>
+                {{else}}
+                    <option value={{this.value}}>{{this.key}}</option>
+                {{/if}}
+
+
+            {{/each}}
+        </select>
+    {{else}}
+        <select class="staticSingleSelect" name="{{data.db_name}}" id="{{data.db_name}}" value="" style="width: 100%;"
+            data-placeholder="Select a State">
+            <option disabled selected hidden>Please select field from here..
+            </option>
+            {{#each data.field_value}}
+                {{#if (findIndex (particularField ../filingdata ../data.db_name) this.value)}}
+                    <option selected="selected" value={{this.value}}>{{this.key}}</option>
+                {{else}}
+                    <option value={{this.value}}>{{this.key}}</option>
+                {{/if}}
+
+
+            {{/each}}
+        </select>
+
+
+
+    {{/if}}
+
+
 </div>

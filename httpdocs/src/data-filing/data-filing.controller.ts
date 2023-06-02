@@ -70,6 +70,13 @@ export class DataFilingController {
         data[md] = ''
       }
     })
+    let multiselectdatastatic = await this.fieldStructureService.allmultiselect(site_id, data["collection_name"], 'staticSelect')
+    datakeys = Object.keys(data)
+    multiselectdatastatic.forEach((md: any) => {
+      if (datakeys.indexOf(md) < 0) {
+        data[md] = ''
+      }
+    })
 
     let id = req.params["id"]
     let responsedata = await this.dataFilingService.updateById(req.params.id, data)
