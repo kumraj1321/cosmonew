@@ -80,6 +80,54 @@
             let submit = 0
             e.preventDefault()
 
+            $( '.dynamicSelect' ).each( function ()
+            {
+                let value = $( this ).val()
+                console.log( "value of the partial manager edit", value )
+
+                let idname = $( this ).attr( 'name' )
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 && value.length === 0 )
+                {
+                    submit += 1
+                    $( '.' + idname ).text( 'This is required field.' )
+                    $( '.' + idname ).removeAttr( 'style' );
+                } else
+                {
+                    $( '.' + idname ).text( '' )
+                }
+
+                if ( required < 0 && value.length === 0 )
+                {
+                    {
+                    }
+                }
+
+            } )
+
+            //validation for single select(dynamic)
+            $( '.dynamicSingleSelect' ).each( function ()
+            {
+                let val = $( this ).val()
+                let idname = $( this ).attr( 'name' )
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 )
+                {
+                    if ( !val || val === '' || val.length === 0 )
+                    {
+                        submit += 1
+                        $( '.' + idname ).text( 'This is required field.' )
+                        $( '.' + idname ).removeAttr( 'style' );
+                    } else
+                    {
+                        $( '.' + idname ).text( '' )
+                    }
+                }
+            } )
             //validation for radio field
             $( '.radio' ).each( function ()
             {
@@ -210,7 +258,7 @@
                     $( '.' + idname ).text( '' )
 
                 }
-                if ( data.length < minLength )
+                if ( data.length > 0 && data.length < minLength )
                 {
                     submit += 1
                     $( '.' + idname ).text( 'Please fulfil minimum length requirement.' )
@@ -283,7 +331,6 @@
 
                     let x = "." + thisid[ 0 ] + '\\,' + thisid[ 1 ]
                     let selectedinput = $( x ).text()
-                    console.log( "selected input for multi", selectedinput, x )
                     selectedinput = selectedinput.split( ',' )
                     let a = ""
                     $.each( data, function ( index, option )

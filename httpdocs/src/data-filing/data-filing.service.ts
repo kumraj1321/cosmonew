@@ -5,6 +5,7 @@ import { CreateDataFilingDto } from './dto/create-data-filing.dto';
 import { UpdateDataFilingDto } from './dto/update-data-filing.dto';
 import { DataFiling, DataFilingDocument } from './entities/data-filing.entity';
 import { filter } from 'rxjs';
+import { FieldStructureService } from 'src/field-structure/field-structure.service';
 import { ObjectId } from 'mongodb'
 
 @Injectable()
@@ -50,6 +51,12 @@ export class DataFilingService {
     }
     return result
   }
+  // async allmultiselect(site_id: any, collection_name: any, selecttype: any) {
+  //   console.log("site id and collection name from all multiselect in data filing service", site_id, collection_name, selecttype)
+  //   // let data=await  this.collection('field-structure').aggregate([])
+  //   // let data = await this.fieldStructureService.allCollection(site_id)
+  //   // console.log("data of the data filing service", data)
+  // }
 
   async tabledata(site_id: any, collection_name: any, search: any, start: any, length: any) {
     let filterdata = await this.model.find({ site_id, collection_name })

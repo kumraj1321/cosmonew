@@ -83,7 +83,7 @@
             let submit = 0
             e.preventDefault()
 
-            //validations for the dynamic select field
+            //validations for the dynamic select field(multiple)
             $( '.dynamicSelect' ).each( function ()
             {
                 let value = $( this ).val()
@@ -106,6 +106,28 @@
                     $( this ).val( selecteddefaultoption )
                 }
 
+            } )
+
+            //validation for single select(dynamic)
+            $( '.dynamicSingleSelect' ).each( function ()
+            {
+                let val = $( this ).val()
+                let idname = $( this ).attr( 'name' )
+                let a = $( '.' + idname )
+                b = $( '.' + idname ).attr( 'class' ).split( ' ' )
+                let required = $( '.' + idname ).attr( 'class' ).split( ' ' ).indexOf( 'required' )
+                if ( required >= 0 )
+                {
+                    if ( !val || val === '' || val.length === 0 )
+                    {
+                        submit += 1
+                        $( '.' + idname ).text( 'This is required field.' )
+                        $( '.' + idname ).removeAttr( 'style' );
+                    } else
+                    {
+                        $( '.' + idname ).text( '' )
+                    }
+                }
             } )
 
             //validation for radio field
@@ -242,7 +264,7 @@
                 {
                     $( '.' + idname ).text( '' )
                 }
-                if ( data.length < minLength )
+                if ( data.length > 0 && data.length < minLength )
                 {
                     submit += 1
                     $( '.' + idname ).text( 'Please fulfil minimum length requirement.' )
@@ -350,6 +372,8 @@
                     let selectedinput = $( x ).text()
                     selectedinput = selectedinput.split( ',' )
                     let a = ""
+                    a += `<option disabled selected hidden>Please select field from here..
+                </option>`
                     $.each( data, function ( index, option )
                     {
                         let ind = selectedinput.indexOf( option.key )

@@ -3,11 +3,12 @@ import { DataFilingService } from './data-filing.service';
 import { Request, Response, response } from 'express';
 import { CreateDataFilingDto } from './dto/create-data-filing.dto';
 import { UpdateDataFilingDto } from './dto/update-data-filing.dto';
+import { FieldStructureService } from 'src/field-structure/field-structure.service';
 import data from 'src/services/data';
 
 @Controller('data-filing')
 export class DataFilingController {
-  constructor (private readonly dataFilingService: DataFilingService) { }
+  constructor (private readonly dataFilingService: DataFilingService, private readonly fieldStructureService: FieldStructureService) { }
 
   @Get('/multiselect/:collection_name/:field_name')
   async multiselect(@Req() req: Request, @Res() res: Response) {
@@ -59,9 +60,17 @@ export class DataFilingController {
       return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
 
     }
-    // let site_id = req["session"]["passport"]["user"]["site_id"]
+    let site_id = req["session"]["passport"]["user"]["site_id"]
     let user_id = req["session"]["passport"]["user"]["_id"]
     let data: any = { ...req.body, user_id, updated_at: new Date() }
+    let multiselectdata = await this.fieldStructureService.allmultiselect(site_id, data["collection_name"], 'dynamicSelect')
+    let datakeys = Object.keys(data)
+    multiselectdata.forEach((md: any) => {
+      if (datakeys.indexOf(md) < 0) {
+        data[md] = ''
+      }
+    })
+
     let id = req.params["id"]
     let responsedata = await this.dataFilingService.updateById(req.params.id, data)
 

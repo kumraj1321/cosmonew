@@ -47,6 +47,20 @@ export class FieldStructureService {
     }
 
   }
+
+  async allmultiselect(site_id: any, collection_name: any, selecttype: any) {
+    let fieldstructuredata = await this.model.findOne({ site_id, collection_name })
+    let field_structure: any = fieldstructuredata["field_structure"] ? fieldstructuredata["field_structure"] : []
+    field_structure = JSON.parse(field_structure)
+    let result: any = []
+    for (let i = 0; i < field_structure.length; i++) {
+      if (field_structure[i]["field_type"] && field_structure[i]["field_type"] === selecttype) {
+        result.push(field_structure[i]["db_name"])
+      }
+    }
+    return result
+  }
+
   async selectedoptions(site_id: any, collection_name: any, collection_selected: any) {
     let fieldstructuredata = await this.model.findOne({ site_id, collection_name })
     let field_structure: any = fieldstructuredata["field_structure"] ? fieldstructuredata["field_structure"] : []

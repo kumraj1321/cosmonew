@@ -1,5 +1,4 @@
 <div class="form-group">
-    {{log data "data of teh dynamic select"}}
     <label>{{data.field_name}}
         {{#if (equal data.required '1')}}
             <span class="ip-req">*</span>
@@ -22,12 +21,9 @@
         <span style="display: none;"
             class="{{data.collection_selected}},{{data.field_selected}},single">{{particularField filingdata data.db_name}}</span>
         <div class="form-group">
-            <select class="form-control dynamicSingleSelect" name="{{data.db_name}}"
+            <select class="form-control dynamicSingleSelect" name="{{data.db_name}}" allowClear="true"
                 id="{{data.collection_selected}},{{data.field_selected}}">
-                <option disabled selected hidden>Please select field from here..
-                </option>
-                <option>Option 1</option>
-                <option>Option 2</option>
+
             </select>
         </div>
 
