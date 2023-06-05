@@ -20,15 +20,20 @@ export class FieldStructureService {
     return collectionData
   }
 
-  async findFilter(site_id: any, collection_name: any) {
+  async findFilter(site_id: any, collection_name: any, start, length) {
     let data = await this.model.findOne({ site_id, collection_name })
     let recordsTotal: any = 0
     let recordsFiltered: any = 0
     let field_structure: any = []
     let finaldata: any = []
+    let end: any = start + length
+
     if (data["field_structure"]) {
       field_structure = JSON.parse(data["field_structure"])
-      for (let i = 0; i < field_structure.length; i++) {
+      if (end > field_structure.length) {
+        end = field_structure.length
+      }
+      for (let i = start; i < end; i++) {
         if (field_structure[i][0]) {
           finaldata.push(field_structure[i][0])
         } else {
@@ -47,12 +52,13 @@ export class FieldStructureService {
     }
 
   }
-  async removedb_name(site_id: any, collection_name: any, db_name: any) {
+  async removedb_name(site_id: any, collection_name: any, db_name: any, start: any, length: any) {
     let data = await this.model.findOne({ site_id, collection_name })
     let recordsTotal: any = 0
     let recordsFiltered: any = 0
     let field_structure: any = []
     let finaldata: any = []
+    let finaldatasend: any = []
     let dataid: any = data["_id"]
     if (data["field_structure"]) {
       field_structure = JSON.parse(data["field_structure"])
@@ -79,8 +85,15 @@ export class FieldStructureService {
       recordsTotal = field_structure.length - 1
 
     }
+    let end = start + length
+    if (end > finaldata.length) {
+      end = finaldata.length
+    }
+    for (let i = start; i < end; i++) {
+      finaldatasend.push(finaldata[i])
+    }
     return {
-      data: finaldata,
+      data: finaldatasend,
       recordsFiltered,
       recordsTotal
     }
