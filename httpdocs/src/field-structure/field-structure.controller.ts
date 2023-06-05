@@ -164,6 +164,7 @@ export class FieldStructureController {
 
   }
 
+
   @Get()
   findAll(@Req() req: Request, @Res() res: Response) {
     return this.fieldStructureService.findAll();
@@ -178,6 +179,7 @@ export class FieldStructureController {
   @UseGuards(AuthenticatedGuard)
   @Get(':id')
   async findOne(@Req() req: Request, @Res() res: Response) {
+    // console.log("req of the datatable api")
     if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
       return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
 
@@ -197,6 +199,28 @@ export class FieldStructureController {
 
   }
 
+  @UseGuards(AuthenticatedGuard)
+  @Get(':id/:db_name')
+  async findOnedbname(@Req() req: Request, @Res() res: Response) {
+    // console.log("req of the datatable api with dbname", req.params)
+    if (!req["session"] || !req["session"]["passport"] || !req["session"]["passport"]["user"] || req["session"]["passport"]["user"]["Error"]) {
+      return res.render('login', { layout: 'withoutHeadFoot', data: [], err: "Session expired! Please login." });
+
+    }
+    let site_id: any = req["session"]["passport"]["user"]["site_id"]
+    let search = req.query.search["value"]
+    let start = req.query.start
+    let length = req.query.length
+    let draw = req.query.draw
+    let result = await this.fieldStructureService.removedb_name(site_id, req.params["id"], req.params["db_name"])
+    let finalresult: any = {}
+    finalresult["draw"] = draw
+    finalresult["data"] = result["data"]
+    finalresult["recordsTotal"] = result["total_records"]
+    finalresult["recordsFiltered"] = result["recordsFiltered"]
+    return res.json(finalresult)
+
+  }
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFieldStructureDto: UpdateFieldStructureDto) {
     return this.fieldStructureService.update(+id, updateFieldStructureDto);

@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <h1>Builder Collections Listing</h1>
                 </div>
-                <div class="col-sm-6">
+                <div class=" col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                         <li class="breadcrumb-item active"><a href="/collection-builder/new">Add New</a></li>
@@ -50,6 +50,8 @@
                                     <tr>
                                         <th>Field Name</th>
                                         <th> Field Type</th>
+                                        <th>Delete Field</th>
+
 
                                     </tr>
                                 </thead>
@@ -85,7 +87,9 @@
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{basePath}}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
-        $( '#collectionListing' ).DataTable( {
+
+        //delete on the click at third column
+        let table = $( '#collectionListing' ).DataTable( {
             "serverSide": true,
             "type": "GET",
             "ajax": `/field-structure/{{collection}}`,
@@ -97,8 +101,44 @@
                     "data": "field_name",
 
                 },
-                { "data": "field_type" }
+                { "data": "field_type" },
+                {
+                    "data": "db_name",
+                    "render": function ( data, type, row, meta )
+                    {
+                        if ( type === 'display' )
+                        {
+                            data = ` <i  class="fas fa-trash "></i>  <span class="deleteField" id="${ data }"> Delete</span>`;
+                        }
+                        return data;
+                    }
+                }
             ]
+
+        } )
+        $( '#collectionListing' ).on( 'click', 'td:nth-child(3)', function ()
+        {
+            let db_name = ""
+            $( this ).children().each( function ()
+            {
+                if ( $( this ).attr( "class" ) === 'deleteField' )
+                {
+                    db_name = $( this ).attr( "id" )
+                }
+            } )
+            if ( db_name.length > 0 )
+            {
+                if ( window.confirm( "do you want to delete this field?" ) )
+                {
+                    $( this ).parents( 'tr' ).remove()
+                    //keep the draw parameter false to keep the current page track 
+                    table.ajax.url( '/field-structure/{{collection}}/' + db_name )
+                    table.draw( false )
+                }
+
+
+
+            }
 
         } )
     </script>

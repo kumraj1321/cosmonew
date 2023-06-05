@@ -79,7 +79,7 @@ export class CollectionBuilderController {
     if (!details) {
       await this.collectionBuilderService.create(createCollectionBuilderDto).then((collections: any) => {
         // return res.render('builder-collections/collection-list', { title: 'Builder Collections', collections });
-        console.log(settings)
+        // console.log(settings)
         return res.render('collections/collection-entity', { title: 'Entity Selection', settings });
       }).catch((err: any) => {
         return res.render('builder-collections/createCollection', { title: 'Create Collection', error: err.errors });
@@ -91,14 +91,14 @@ export class CollectionBuilderController {
 
   @Get('/collection-entity')
   async showEntityForm(@Res() res: Response) {
-    console.log(settings)
+    // console.log(settings)
     return res.render('collections/collection-entity', { title: 'Entity Selection', settings });
   }
 
   @Get('/editcollection/:name')
   async edituser(@Res() res: Response, @Req() req: Request) {
     let name: string = req.params.name
-    console.log("name of the params", name)
+    // console.log("name of the params", name)
     let collection: any = await this.collectionBuilderService.readData(name, 1);
     if (collection.exists) {
       return res.render('builder-collections/editcollection', { title: 'Edit Collection', data: { collection: name } });

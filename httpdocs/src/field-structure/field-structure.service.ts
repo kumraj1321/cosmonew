@@ -47,6 +47,44 @@ export class FieldStructureService {
     }
 
   }
+  async removedb_name(site_id: any, collection_name: any, db_name: any) {
+    let data = await this.model.findOne({ site_id, collection_name })
+    let recordsTotal: any = 0
+    let recordsFiltered: any = 0
+    let field_structure: any = []
+    let finaldata: any = []
+    let dataid: any = data["_id"]
+    if (data["field_structure"]) {
+      field_structure = JSON.parse(data["field_structure"])
+      for (let i = 0; i < field_structure.length; i++) {
+        if (field_structure[i][0]) {
+
+          let x: any = field_structure[i][0]
+          if (x["db_name"] != db_name) {
+            finaldata.push(x)
+          }
+        } else {
+          let x: any = field_structure[i]
+          if (x["db_name"] != db_name) {
+            finaldata.push(x)
+          }
+
+        }
+
+      }
+      let updatedfield_structure = JSON.stringify(finaldata)
+      // data["field_structure"] = updatedfield_structure
+      await this.model.updateOne({ "_id": dataid }, { $set: { "field_structure": updatedfield_structure } })
+      recordsFiltered = finaldata.length
+      recordsTotal = field_structure.length - 1
+
+    }
+    return {
+      data: finaldata,
+      recordsFiltered,
+      recordsTotal
+    }
+  }
 
   async allmultiselect(site_id: any, collection_name: any, selecttype: any) {
     let fieldstructuredata = await this.model.findOne({ site_id, collection_name })
